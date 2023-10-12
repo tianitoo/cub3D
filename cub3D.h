@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:43 by hnait             #+#    #+#             */
-/*   Updated: 2023/10/10 18:07:09 by hnait            ###   ########.fr       */
+/*   Updated: 2023/10/12 17:29:25 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@
 
 # define PI 3.14159265359
 
+typedef struct s_ray
+{
+	double			distance;
+	struct s_ray	*next;
+}	t_ray;
+
 typedef struct s_data
 {
 	mlx_t		*mlx_ptr;
@@ -52,6 +58,7 @@ typedef struct s_data
 	int			player_dir;
 	int			player_walk_direction;
 	int			player_turn_direction;
+	t_ray		*rays;
 }	t_data;
 
 

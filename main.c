@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/10/11 17:35:27 by hnait            ###   ########.fr       */
+/*   Updated: 2023/10/12 18:59:25 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,45 @@ void	draw_fov(t_data *data, double player_mini_x, double player_mini_y)
 	// int		j;
 	int		color;
 	double		fov;
+	t_ray		*ray;
+	t_ray		*tmp;
+	// double		distance;
 
+	data->rays = NULL;
 	fov = -(FOV / 2);
 		color = get_rgba(255, 0, 0);
 	while (fov < FOV / 2)
 	{
 		i = 0;
-		player_mini_y = data->player_y / SQUARE_SIZE * MINIMAP_SQUARE_SIZE;
-		player_mini_x = data->player_x / SQUARE_SIZE * MINIMAP_SQUARE_SIZE;
-		while (is_wall(data, player_mini_x / MINIMAP_SQUARE_SIZE, player_mini_y / MINIMAP_SQUARE_SIZE) == 0 &&
-				is_wall(data, (player_mini_x + 1) / MINIMAP_SQUARE_SIZE, player_mini_y / MINIMAP_SQUARE_SIZE) == 0 &&
-				is_wall(data, (player_mini_x - 1) / MINIMAP_SQUARE_SIZE, player_mini_y / MINIMAP_SQUARE_SIZE) == 0 &&
-				is_wall(data, (player_mini_x) / MINIMAP_SQUARE_SIZE, (player_mini_y + 1) / MINIMAP_SQUARE_SIZE) == 0 &&
-				is_wall(data, (player_mini_x) / MINIMAP_SQUARE_SIZE, (player_mini_y - 1) / MINIMAP_SQUARE_SIZE) == 0)
-				
+		player_mini_y = data->player_y;
+		player_mini_x = data->player_x;
+		while (is_wall(data, player_mini_x / SQUARE_SIZE, player_mini_y / SQUARE_SIZE) == 0 &&
+				is_wall(data, (player_mini_x + 1) / SQUARE_SIZE, player_mini_y / SQUARE_SIZE) == 0 &&
+				is_wall(data, player_mini_x / SQUARE_SIZE, (player_mini_y + 1) / SQUARE_SIZE) == 0 &&
+				is_wall(data, (player_mini_x - 1) / SQUARE_SIZE, player_mini_y / SQUARE_SIZE) == 0 &&
+				is_wall(data, player_mini_x / SQUARE_SIZE, (player_mini_y - 1) / SQUARE_SIZE) == 0)
 		{
-			player_mini_y += cos((data->player_angle + fov) * PI / 180);
 			player_mini_x += sin((data->player_angle + fov) * PI / 180);
-			mlx_put_pixel(data->img, player_mini_y, player_mini_x, color);
+			player_mini_y += cos((data->player_angle + fov) * PI / 180);
+			mlx_put_pixel(data->img, player_mini_y / SQUARE_SIZE * MINIMAP_SQUARE_SIZE, player_mini_x / SQUARE_SIZE * MINIMAP_SQUARE_SIZE, color);
 			i++;
 		}
-		fov += 0.3;
+		ray = (t_ray *)malloc(sizeof(t_ray));
+		// distance on x axis
+		ray->distance = sqrt(pow(player_mini_x - data->player_x, 2) + pow(player_mini_y - data->player_y, 2));
+		// printf("distance = %f\n", ray->distance);
+		ray->next = NULL;
+		tmp = data->rays;
+		if (!tmp)
+			data->rays = ray;
+		else
+		{
+				while (tmp->next)
+					tmp = tmp->next;
+				tmp->next = ray;
+		}
+		fov += 0.1;
 	}
-		// exit(0);
 }
 
 void	draw_player(t_data *data)
@@ -119,14 +135,69 @@ void	draw_2d_map(t_data *data)
 	draw_fov(data, player_mini_x, player_mini_y);
 }
 
-void	draw_3d_map(data)
+void	draw_ray(t_data *data, t_ray *ray, int win_x)
 {
+	int	color;
+	double	i;
+	double	projection_distance;
+	double	wall_height;
+	double	wall_top;
+
+	i = 0;
+	projection_distance = (WIN_WIDTH * 4) / tan(FOV / 2);
+	if (projection_distance < 0)
+		projection_distance *= -1;
+	// printf("projection_distance = %f\n", projection_distance);
+	wall_height = (SQUARE_SIZE / ray->distance) * projection_distance;
+	// printf("wall_height = %f\n", wall_height);
+	while (i < WIN_HEIGHT / 2)
+	{
+		// ft_printf("i = %d < %dd\n", i, (WIN_HEIGHT / 2) - (wall_height / 2));
+		wall_top = (WIN_HEIGHT / 2) - (wall_height / 2);
+		if (i < wall_top)
+			color = get_rgba(0, 0, 0);
+		else
+			color = get_rgba(255, 0, 0);
+		mlx_put_pixel(data->img, win_x + MAP_WIDTH, i, color);
+		mlx_put_pixel(data->img, win_x + MAP_WIDTH, WIN_HEIGHT - i - 1, color);
+		i = i + 1;
+	}
+}
+
+void	draw_3d_map(t_data *data)
+{
+	t_ray	*ray;
+	int		i;
+	int		ii;
+
+	ray = data->rays;
+	i = 0;
+	while (ray)
+	{
+		ii = i;
+		while (i < ii + 2)
+		{
+			draw_ray(data, ray, i);
+			i++;
+		}
+		ray = ray->next;
+	}
 	
 }
 
 void	draw(t_data *data)
 {
 	draw_2d_map(data);
+	// print all rays
+	// int i = 0;
+	// t_ray	*ray;
+	// ray = data->rays;
+	// while (ray)
+	// {
+	// 	printf("ray id = %d, ray angle = %f, ray distance = %f\n", ray->id, ray->angle, ray->distance);
+	// 	ray = ray->next;
+	// }
+	// exit(0);
 	draw_3d_map(data);
 }
 
