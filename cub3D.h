@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:43 by hnait             #+#    #+#             */
-/*   Updated: 2023/10/12 17:29:25 by hnait            ###   ########.fr       */
+/*   Updated: 2023/10/14 10:39:53 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
+// # define WIN_WIDTH 920
+// # define WIN_HEIGHT 780
 # define SQUARE_SIZE 32
-# define MINIMAP_SQUARE_SIZE 15
-# define MAP_WIDTH 700
-# define MAP_HEIGHT 500
+# define MINIMAP_SQUARE_SIZE 6
+# define MAP_WIDTH 1920 / 5
+# define MAP_HEIGHT 1080 / 5
 # define FOV 60
 # define NORTH 0
 # define SOUTH 1
@@ -48,12 +50,12 @@ typedef struct s_data
 {
 	mlx_t		*mlx_ptr;
 	void		*mlx_win;
-	mlx_image_t *img;
+	mlx_image_t	*img;
 	char		**map;
 	int			map_width;
 	int			map_height;
-	double			player_x;
-	double			player_y;
+	double		player_x;
+	double		player_y;
 	int			player_angle;
 	int			player_dir;
 	int			player_walk_direction;
