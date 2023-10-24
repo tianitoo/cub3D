@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/10/14 11:48:19 by hnait            ###   ########.fr       */
+/*   Updated: 2023/10/24 16:17:50 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,137 +24,56 @@ int	is_wall(t_data *data, int x, int y)
 	return (0);
 }
 
-void	get_next_horizontal_y(t_data *data, double *player_mini_y, double *player_mini_x, double fov)
-{
-	fov = fov + data->player_angle;
-	if (fov >= 360)
-		fov -= 360;
-	else if (fov < 0)
-		fov += 360;
-	if (*player_mini_y == data->player_x)
-		*player_mini_y = data->player_y + (*player_mini_x - data->player_x) / tan((fov) * PI / 180);
-	else
-	{
-		if (fov >= 90 && fov < 270 && (SQUARE_SIZE / tan((fov) * PI / 180)) > 0)
-			*player_mini_y = *player_mini_y - (SQUARE_SIZE / tan((fov) * PI / 180));
-		else if ((fov < 90 || fov >= 270) && (SQUARE_SIZE / tan((fov) * PI / 180)) < 0)
-			*player_mini_y = *player_mini_y - (SQUARE_SIZE / tan((fov) * PI / 180));
-		else
-			*player_mini_y = *player_mini_y + (SQUARE_SIZE / tan((fov) * PI / 180));
-	}
-}
 
-void	get_next_horizontal_x(t_data *data, double *player_mini_x, double fov)
-{
-	fov = fov + data->player_angle;
-	if (fov >= 360)
-		fov -= 360;
-	else if (fov < 0)
-		fov += 360;
-	*player_mini_x = floor(*player_mini_x / SQUARE_SIZE) * SQUARE_SIZE;
-	if (fov >= 0 && fov < 180)
-		*player_mini_x += SQUARE_SIZE;
-	else
-		*player_mini_x -= SQUARE_SIZE;
-}
 
-void	get_horizontal_x_y(t_data *data, double *player_mini_x, double *player_mini_y, double fov)
-{
-	get_next_horizontal_x(data, player_mini_x, fov);
-	get_next_horizontal_y(data, player_mini_y, player_mini_x, fov);
-}
 
-void	get_next_vertical_x(t_data *data, double *player_mini_x, double *player_mini_y, double fov)
-{
-	fov = fov + data->player_angle;
-	if (fov >= 360)
-		fov -= 360;
-	else if (fov < 0)
-		fov += 360;
-	if (*player_mini_x == data->player_y)
-		*player_mini_x = data->player_x + (*player_mini_y - data->player_y) * tan((fov) * PI / 180);
-	else
-	{
-		if (fov >= 0 && fov < 180 && (SQUARE_SIZE * tan((fov) * PI / 180)) > 0)
-			*player_mini_x = *player_mini_x + (SQUARE_SIZE * tan((fov) * PI / 180));
-		else if (fov >= 180 && fov < 360 && (SQUARE_SIZE * tan((fov) * PI / 180)) < 0)
-			*player_mini_x = *player_mini_x + (SQUARE_SIZE * tan((fov) * PI / 180));
-		else
-			*player_mini_x = *player_mini_x - (SQUARE_SIZE * tan((fov) * PI / 180));
-	}
-}
 
-void	get_next_vertical_y(t_data *data, double *player_mini_y, double fov)
-{
-	fov = fov + data->player_angle;
-	if (fov >= 360)
-		fov -= 360;
-	else if (fov < 0)
-		fov += 360;
-	*player_mini_y = floor(*player_mini_y / SQUARE_SIZE) * SQUARE_SIZE;
-	if (fov >= 90 && fov < 270)
-		*player_mini_y -= SQUARE_SIZE;
-	else
-		*player_mini_y += SQUARE_SIZE;
-}
-
-void	get_vertical_x_y(t_data *data, double *player_mini_x, double *player_mini_y, double fov)
-{
-	get_next_vertical_y(data, player_mini_y, fov);
-	get_next_vertical_x(data, player_mini_x, player_mini_y, fov);
-}
-
-void	draw_fov(t_data *data, double player_mini_x, double player_mini_y)
+void	draw_fov(t_data *data)
 {
 	// int		j;
 	int		color;
-	double		fov;
+	double		angle;
+	double		ray_angle;
 	t_ray		*ray;
 	t_ray		*tmp;
-	double		distance_horizontal;
-	double		distance_vertical;
+	double		horizontal_distance;
+	double		vertical_distance;
 
 	data->rays = NULL;
-	fov = -FOV / 2;
+	angle = -FOV / 2;
 	color = get_rgba(255, 0, 0);
-	while (fov < FOV / 2)
+	while (angle < FOV / 2)
 	{
-		player_mini_y = data->player_y;
-		player_mini_x = data->player_x;
-		while (is_wall(data, player_mini_x / SQUARE_SIZE, player_mini_y / SQUARE_SIZE) == 0)
-		{
-			get_horizontal_x_y(data, &player_mini_x, &player_mini_y, fov);
-			if (player_mini_x <= 0 || player_mini_y <= 0 || player_mini_x >= data->map_height * SQUARE_SIZE || player_mini_y >= data->map_width * SQUARE_SIZE)
-				break ;
-			mlx_put_pixel(data->img, player_mini_y / SQUARE_SIZE * MINIMAP_SQUARE_SIZE, player_mini_x / SQUARE_SIZE * MINIMAP_SQUARE_SIZE, color);
-		}
-		distance_horizontal = 10000000000;//sqrt(pow(player_mini_x - data->player_x, 2) + pow(player_mini_y - data->player_y, 2));
-		player_mini_x = data->player_x;
-		player_mini_y = data->player_y;
-		while (is_wall(data, player_mini_x / SQUARE_SIZE, player_mini_y / SQUARE_SIZE) == 0)
-		{
-			get_vertical_x_y(data, &player_mini_x, &player_mini_y, fov);
-			if (player_mini_x <= 0 || player_mini_y <= 0 || player_mini_x >= data->map_height * SQUARE_SIZE || player_mini_y >= data->map_width * SQUARE_SIZE)
-				break ;
-			mlx_put_pixel(data->img, player_mini_y / SQUARE_SIZE * MINIMAP_SQUARE_SIZE, player_mini_x / SQUARE_SIZE * MINIMAP_SQUARE_SIZE, color);
-		}
-		distance_vertical = sqrt(pow(player_mini_x - data->player_x, 2) + pow(player_mini_y - data->player_y, 2));
+		ray_angle = data->player_angle + angle;
+		if (ray_angle >= 360)
+			ray_angle -= 360;
+		else if (ray_angle < 0)
+			ray_angle += 360;
+		// vertical_distance = 1000000;
+		horizontal_distance = get_horizontal_distance(data, ray_angle);
+		vertical_distance =  get_vertical_distance(data, ray_angle);
 		ray = (t_ray *)malloc(sizeof(t_ray));
-		if (distance_horizontal < distance_vertical)
-			ray->distance = distance_horizontal;
+		if (horizontal_distance < vertical_distance)
+		{
+			ray->distance = horizontal_distance;
+			ray->direction = 0;
+		}
 		else
-			ray->distance = distance_vertical;
+		{
+			ray->distance = vertical_distance;
+			ray->direction = 1;
+		}
 		ray->next = NULL;
 		tmp = data->rays;
 		if (!tmp)
 			data->rays = ray;
 		else
 		{
-				while (tmp->next)
-					tmp = tmp->next;
-				tmp->next = ray;
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = ray;
 		}
-		fov += 0.1;
+		angle += 0.0625;
 	}
 }
 
@@ -174,7 +93,7 @@ void	draw_player(t_data *data)
 		j = 0;
 		while (j < MINIMAP_SQUARE_SIZE)
 		{
-			color = get_rgba(0, 255, 0);
+			color = get_rgba(255, 255, 255);
 			mlx_put_pixel(data->img, player_mini_y + j, player_mini_x + i, color);
 			j++;
 		}
@@ -184,42 +103,42 @@ void	draw_player(t_data *data)
 
 void	draw_2d_map(t_data *data)
 {
-	int		i;
-	int		j;
-	int		color;
-	int		player_x;
-	int		player_y;
-	double		player_mini_x;
-	double		player_mini_y;
+	// int		i;
+	// int		j;
+	// int		color;
+	// int		player_x;
+	// int		player_y;
+	// double		player_mini_x;
+	// double		player_mini_y;
 
-	player_x = data->player_x / SQUARE_SIZE * MINIMAP_SQUARE_SIZE;
-	player_y = data->player_y / SQUARE_SIZE * MINIMAP_SQUARE_SIZE;
-	i = 0;
-	while (player_x + i < player_x + MAP_HEIGHT)
-	{
-		j = 0;
-		while (player_y + j < player_y + MAP_WIDTH)
-		{
-			// ft_printf("i = %d, j = %d\n", i / MINIMAP_SQUARE_SIZE, j / MINIMAP_SQUARE_SIZE);
-			if (i >= data->map_height * MINIMAP_SQUARE_SIZE || j >= data->map_width * MINIMAP_SQUARE_SIZE)
-				color = get_rgba(0, 0, 0);
-			else if (data->map[i / MINIMAP_SQUARE_SIZE][j / MINIMAP_SQUARE_SIZE] == '1')
-				color = get_rgba(255, 255, 255);
-			else if (data->map[i / MINIMAP_SQUARE_SIZE][j / MINIMAP_SQUARE_SIZE] == '0')
-				color = get_rgba(0, 0, 0);
-			// ft_printf("i = %d, j = %d\n", i, j);
-			if (i == player_x / MINIMAP_SQUARE_SIZE && j == player_y / MINIMAP_SQUARE_SIZE)
-			{
-				player_mini_x = i;
-				player_mini_y = j;
-			}
-			mlx_put_pixel(data->img, j, i, color);
-			j++;
-		}
-		i++;
-	}
-	draw_player(data);
-	draw_fov(data, player_mini_x, player_mini_y);
+	// player_x = data->player_x / SQUARE_SIZE * MINIMAP_SQUARE_SIZE;
+	// player_y = data->player_y / SQUARE_SIZE * MINIMAP_SQUARE_SIZE;
+	// i = 0;
+	// while (player_x + i < player_x + MAP_HEIGHT)
+	// {
+	// 	j = 0;
+	// 	while (player_y + j < player_y + MAP_WIDTH)
+	// 	{
+	// 		// ft_printf("i = %d, j = %d\n", i / MINIMAP_SQUARE_SIZE, j / MINIMAP_SQUARE_SIZE);
+	// 		if (i >= data->map_height * MINIMAP_SQUARE_SIZE || j >= data->map_width * MINIMAP_SQUARE_SIZE)
+	// 			color = get_rgba(0, 0, 0);
+	// 		else if (data->map[i / MINIMAP_SQUARE_SIZE][j / MINIMAP_SQUARE_SIZE] == '1')
+	// 			color = get_rgba(255, 255, 255);
+	// 		else if (data->map[i / MINIMAP_SQUARE_SIZE][j / MINIMAP_SQUARE_SIZE] == '0')
+	// 			color = get_rgba(0, 0, 0);
+	// 		// ft_printf("i = %d, j = %d\n", i, j);
+	// 		if (i == player_x / MINIMAP_SQUARE_SIZE && j == player_y / MINIMAP_SQUARE_SIZE)
+	// 		{
+	// 			player_mini_x = i;
+	// 			player_mini_y = j;
+	// 		}
+	// 		mlx_put_pixel(data->img, j, i, color);
+	// 		j++;
+	// 	}
+	// 	i++;
+	// }
+	// draw_player(data);
+	draw_fov(data);
 }
 
 void	draw_ray(t_data *data, t_ray *ray, int win_x)
@@ -244,9 +163,14 @@ void	draw_ray(t_data *data, t_ray *ray, int win_x)
 		if (i < wall_top)
 			color = get_rgba(0, 0, 0);
 		else
-			color = get_rgba(255, 0, 0);
-		mlx_put_pixel(data->img, win_x + MAP_WIDTH, i, color);
-		mlx_put_pixel(data->img, win_x + MAP_WIDTH, WIN_HEIGHT - i - 1, color);
+		{
+			if (ray->direction == HORIZONTAL)
+				color = get_rgba(0, 255, 0);
+			else
+				color = get_rgba(255, 0, 0);
+		}
+		mlx_put_pixel(data->img, win_x, i, color);
+		mlx_put_pixel(data->img, win_x, WIN_HEIGHT - i - 1, color);
 		i = i + 1;
 	}
 }
@@ -275,16 +199,6 @@ void	draw_3d_map(t_data *data)
 void	draw(t_data *data)
 {
 	draw_2d_map(data);
-	// print all rays
-	// int i = 0;
-	// t_ray	*ray;
-	// ray = data->rays;
-	// while (ray)
-	// {
-	// 	printf("ray id = %d, ray angle = %f, ray distance = %f\n", ray->id, ray->angle, ray->distance);
-	// 	ray = ray->next;
-	// }
-	// exit(0);
 	draw_3d_map(data);
 }
 
@@ -322,7 +236,7 @@ void	move_player(t_data *data)
 		data->player_walk_direction = -2;
 	else
 		data->player_walk_direction = 0;
-	move_step = data->player_walk_direction * 5;
+	move_step = data->player_walk_direction ;
 	if (data->player_walk_direction == 1 || data->player_walk_direction == -1)
 	{
 		new_player_x += sin(data->player_angle * PI / 180) * move_step * 2;

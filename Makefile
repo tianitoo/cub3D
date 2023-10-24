@@ -17,6 +17,8 @@ MLX = MLX42/build/libmlx42.a  -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/
 
 
 SRC = main.c\
+		./horizontal.c\
+		./vertical.c
 
 LIBFTSRC = ./libft/ft_atoi.c\
 		./libft/ft_bzero.c\
@@ -66,6 +68,7 @@ PRINTFSRC = ./ft_printf/ft_printf.c\
 
 GNLSRC = ./gnl/get_next_line.c\
 		./gnl/get_next_line.h
+		
 
 
 OBJ = $(SRC:.c=.o)
