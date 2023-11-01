@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/10/24 16:17:50 by hnait            ###   ########.fr       */
+/*   Updated: 2023/10/27 12:10:18 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	draw_fov(t_data *data)
 	double		vertical_distance;
 
 	data->rays = NULL;
+	tmp = data->rays;
 	angle = -FOV / 2;
 	color = get_rgba(255, 0, 0);
 	while (angle < FOV / 2)
@@ -49,30 +50,49 @@ void	draw_fov(t_data *data)
 			ray_angle -= 360;
 		else if (ray_angle < 0)
 			ray_angle += 360;
-		// vertical_distance = 1000000;
 		horizontal_distance = get_horizontal_distance(data, ray_angle);
 		vertical_distance =  get_vertical_distance(data, ray_angle);
 		ray = (t_ray *)malloc(sizeof(t_ray));
-		if (horizontal_distance < vertical_distance)
-		{
-			ray->distance = horizontal_distance;
-			ray->direction = 0;
-		}
-		else
-		{
-			ray->distance = vertical_distance;
-			ray->direction = 1;
-		}
-		ray->next = NULL;
-		tmp = data->rays;
 		if (!tmp)
+		{
 			data->rays = ray;
+			ray->prev = NULL;
+			ray->next = NULL;
+			tmp = ray;
+		}
 		else
 		{
 			while (tmp->next)
 				tmp = tmp->next;
 			tmp->next = ray;
+			ray->prev = tmp;
 		}
+		if (horizontal_distance < vertical_distance)
+		{
+			ray->distance = horizontal_distance;
+			if (ray_angle >= 0 && ray_angle < 180)
+				ray->direction = SOUTH;
+			else
+				ray->direction = NORTH;
+		}
+		else if (horizontal_distance > vertical_distance)
+		{
+			ray->distance = vertical_distance;
+			if (ray_angle >= 90 && ray_angle < 270)
+				ray->direction = WEST;
+			else
+				ray->direction = EAST;
+		}
+		else
+		{
+			ray->distance = horizontal_distance;
+			if (ray->prev)
+				ray->direction = ray->prev->direction;
+			else if (ray->next)
+				ray->direction = ray->next->direction;
+		}
+		ray->next = NULL;
+		tmp = data->rays;
 		angle += 0.0625;
 	}
 }
@@ -103,41 +123,41 @@ void	draw_player(t_data *data)
 
 void	draw_2d_map(t_data *data)
 {
-	// int		i;
-	// int		j;
-	// int		color;
-	// int		player_x;
-	// int		player_y;
-	// double		player_mini_x;
-	// double		player_mini_y;
+	int		i;
+	int		j;
+	int		color;
+	int		player_x;
+	int		player_y;
+	double		player_mini_x;
+	double		player_mini_y;
 
-	// player_x = data->player_x / SQUARE_SIZE * MINIMAP_SQUARE_SIZE;
-	// player_y = data->player_y / SQUARE_SIZE * MINIMAP_SQUARE_SIZE;
-	// i = 0;
-	// while (player_x + i < player_x + MAP_HEIGHT)
-	// {
-	// 	j = 0;
-	// 	while (player_y + j < player_y + MAP_WIDTH)
-	// 	{
-	// 		// ft_printf("i = %d, j = %d\n", i / MINIMAP_SQUARE_SIZE, j / MINIMAP_SQUARE_SIZE);
-	// 		if (i >= data->map_height * MINIMAP_SQUARE_SIZE || j >= data->map_width * MINIMAP_SQUARE_SIZE)
-	// 			color = get_rgba(0, 0, 0);
-	// 		else if (data->map[i / MINIMAP_SQUARE_SIZE][j / MINIMAP_SQUARE_SIZE] == '1')
-	// 			color = get_rgba(255, 255, 255);
-	// 		else if (data->map[i / MINIMAP_SQUARE_SIZE][j / MINIMAP_SQUARE_SIZE] == '0')
-	// 			color = get_rgba(0, 0, 0);
-	// 		// ft_printf("i = %d, j = %d\n", i, j);
-	// 		if (i == player_x / MINIMAP_SQUARE_SIZE && j == player_y / MINIMAP_SQUARE_SIZE)
-	// 		{
-	// 			player_mini_x = i;
-	// 			player_mini_y = j;
-	// 		}
-	// 		mlx_put_pixel(data->img, j, i, color);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
-	// draw_player(data);
+	player_x = data->player_x / SQUARE_SIZE * MINIMAP_SQUARE_SIZE;
+	player_y = data->player_y / SQUARE_SIZE * MINIMAP_SQUARE_SIZE;
+	i = 0;
+	while (player_x + i < player_x + MAP_HEIGHT)
+	{
+		j = 0;
+		while (player_y + j < player_y + MAP_WIDTH)
+		{
+			// ft_printf("i = %d, j = %d\n", i / MINIMAP_SQUARE_SIZE, j / MINIMAP_SQUARE_SIZE);
+			if (i >= data->map_height * MINIMAP_SQUARE_SIZE || j >= data->map_width * MINIMAP_SQUARE_SIZE)
+				color = get_rgba(0, 0, 0);
+			else if (data->map[i / MINIMAP_SQUARE_SIZE][j / MINIMAP_SQUARE_SIZE] == '1')
+				color = get_rgba(255, 255, 255);
+			else if (data->map[i / MINIMAP_SQUARE_SIZE][j / MINIMAP_SQUARE_SIZE] == '0')
+				color = get_rgba(0, 0, 0);
+			// ft_printf("i = %d, j = %d\n", i, j);
+			if (i == player_x / MINIMAP_SQUARE_SIZE && j == player_y / MINIMAP_SQUARE_SIZE)
+			{
+				player_mini_x = i;
+				player_mini_y = j;
+			}
+			mlx_put_pixel(data->img, j, i, color);
+			j++;
+		}
+		i++;
+	}
+	draw_player(data);
 	draw_fov(data);
 }
 
@@ -164,10 +184,14 @@ void	draw_ray(t_data *data, t_ray *ray, int win_x)
 			color = get_rgba(0, 0, 0);
 		else
 		{
-			if (ray->direction == HORIZONTAL)
-				color = get_rgba(0, 255, 0);
-			else
+			if (ray->direction == NORTH)
 				color = get_rgba(255, 0, 0);
+			else if (ray->direction == SOUTH)
+				color = get_rgba(0, 255, 0);
+			else if (ray->direction == EAST)
+				color = get_rgba(0, 0, 255);
+			else if (ray->direction == WEST)
+				color = get_rgba(255, 255, 0);
 		}
 		mlx_put_pixel(data->img, win_x, i, color);
 		mlx_put_pixel(data->img, win_x, WIN_HEIGHT - i - 1, color);
@@ -200,17 +224,18 @@ void	draw(t_data *data)
 {
 	draw_2d_map(data);
 	draw_3d_map(data);
+	draw_2d_map(data);
 }
 
 void	rotate_player(t_data *data)
 {
 	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_RIGHT))
-		data->player_turn_direction = 3;
+		data->player_turn_direction = 1;
 	else if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_LEFT))
-		data->player_turn_direction = -3;
+		data->player_turn_direction = -1;
 	else
 		data->player_turn_direction = 0;
-	data->player_angle += data->player_turn_direction;
+	data->player_angle += data->player_turn_direction * 2;
 	if (data->player_angle >= 360)
 		data->player_angle -= 360;
 	else if (data->player_angle < 0)
@@ -239,20 +264,20 @@ void	move_player(t_data *data)
 	move_step = data->player_walk_direction ;
 	if (data->player_walk_direction == 1 || data->player_walk_direction == -1)
 	{
-		new_player_x += sin(data->player_angle * PI / 180) * move_step * 2;
-		new_player_y += cos(data->player_angle * PI / 180) * move_step * 2;
+		new_player_x += sin(data->player_angle * PI / 180) * move_step * 4;
+		new_player_y += cos(data->player_angle * PI / 180) * move_step * 4;
 	}
 	else if (data->player_walk_direction == 2 || data->player_walk_direction == -2)
 	{
-		new_player_x += cos(data->player_angle * PI / 180) * move_step;
-		new_player_y -= sin(data->player_angle * PI / 180) * move_step;
+		new_player_x += cos(data->player_angle * PI / 180) * move_step * 2;
+		new_player_y -= sin(data->player_angle * PI / 180) * move_step * 2;
 	}
 	else
 		return ;
-	if (!is_wall(data, (new_player_x - SQUARE_SIZE / 2) / SQUARE_SIZE, (new_player_y - SQUARE_SIZE / 2) / SQUARE_SIZE) &&
-		!is_wall(data, (new_player_x + SQUARE_SIZE / 2) / SQUARE_SIZE, (new_player_y - SQUARE_SIZE / 2) / SQUARE_SIZE) &&
-		!is_wall(data, (new_player_x - SQUARE_SIZE / 2) / SQUARE_SIZE, (new_player_y + SQUARE_SIZE / 2) / SQUARE_SIZE) &&
-		!is_wall(data, (new_player_x + SQUARE_SIZE / 2) / SQUARE_SIZE, (new_player_y + SQUARE_SIZE / 2) / SQUARE_SIZE)
+	if (!is_wall(data, (new_player_x - SQUARE_SIZE / 3) / SQUARE_SIZE, (new_player_y - SQUARE_SIZE / 3) / SQUARE_SIZE) &&
+		!is_wall(data, (new_player_x + SQUARE_SIZE / 3) / SQUARE_SIZE, (new_player_y - SQUARE_SIZE / 3) / SQUARE_SIZE) &&
+		!is_wall(data, (new_player_x - SQUARE_SIZE / 3) / SQUARE_SIZE, (new_player_y + SQUARE_SIZE / 3) / SQUARE_SIZE) &&
+		!is_wall(data, (new_player_x + SQUARE_SIZE / 3) / SQUARE_SIZE, (new_player_y + SQUARE_SIZE / 3) / SQUARE_SIZE)
 	)
 	{
 		data->player_x = new_player_x;

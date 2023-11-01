@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:20:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/10/24 16:17:54 by hnait            ###   ########.fr       */
+/*   Updated: 2023/10/28 13:47:36 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,9 @@ int	is_horizontal_wall(t_data *data, double player_mini_x, double player_mini_y,
 {
 	if (player_mini_x <= 0 || player_mini_y <= 0 || player_mini_x >= data->map_height * SQUARE_SIZE || player_mini_y >= data->map_width * SQUARE_SIZE)
 		return (1);
-	if (fov >= 270)
+	if (fov >= 0 && fov < 90)
 	{
-		if (is_wall(data, (player_mini_x - 1) / SQUARE_SIZE, (player_mini_y) / SQUARE_SIZE) == 1)
-			return (1);
-	}
-	if (fov >= 180 && fov < 270)
-	{
-		if (is_wall(data, (player_mini_x - 1) / SQUARE_SIZE, (player_mini_y) / SQUARE_SIZE) == 1)
+		if (is_wall(data, (player_mini_x) / SQUARE_SIZE, (player_mini_y - 1) / SQUARE_SIZE) == 1)
 			return (1);
 	}
 	if (fov >= 90 && fov < 180)
@@ -32,9 +27,14 @@ int	is_horizontal_wall(t_data *data, double player_mini_x, double player_mini_y,
 		if (is_wall(data, (player_mini_x) / SQUARE_SIZE, (player_mini_y) / SQUARE_SIZE) == 1)
 			return (1);
 	}
-	if (fov >= 0 && fov < 90)
+	if (fov >= 180 && fov < 270)
 	{
-		if (is_wall(data, (player_mini_x) / SQUARE_SIZE, (player_mini_y) / SQUARE_SIZE) == 1)
+		if (is_wall(data, (player_mini_x - 1) / SQUARE_SIZE, (player_mini_y) / SQUARE_SIZE) == 1)
+			return (1);
+	}
+	if (fov >= 270)
+	{
+		if (is_wall(data, (player_mini_x - 1) / SQUARE_SIZE, (player_mini_y - 1) / SQUARE_SIZE) == 1)
 			return (1);
 	}
 	return (0);
@@ -42,7 +42,7 @@ int	is_horizontal_wall(t_data *data, double player_mini_x, double player_mini_y,
 
 void	get_horizontal_x(t_data *data, double *player_mini_x, double angle)
 {
-	if (*player_mini_x == data->player_x)
+	if (*player_mini_x == data->player_x  && (int) data->player_x % SQUARE_SIZE != 0)
 	{
 		if (angle >= 0 && angle < 180)
 			*player_mini_x = floor(data->player_x / SQUARE_SIZE) * SQUARE_SIZE;
@@ -129,6 +129,7 @@ int	get_horizontal_distance(t_data *data, double angle)
 		get_horizontal_x_y(data, &player_mini_x, &player_mini_y, angle);
 		if (player_mini_x <= 0 || player_mini_y <= 0 || player_mini_x >= data->map_height * SQUARE_SIZE || player_mini_y >= data->map_width * SQUARE_SIZE)
 			break ;
+		mlx_put_pixel(data->img, player_mini_y / SQUARE_SIZE * MINIMAP_SQUARE_SIZE, player_mini_x / SQUARE_SIZE * MINIMAP_SQUARE_SIZE, get_rgba(255, 0, 0));
 	}
 	x = player_mini_x - data->player_x;
 	y = player_mini_y - data->player_y;

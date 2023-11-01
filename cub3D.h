@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:43 by hnait             #+#    #+#             */
-/*   Updated: 2023/10/24 16:18:27 by hnait            ###   ########.fr       */
+/*   Updated: 2023/10/26 17:11:41 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_ray
 	double			distance;
 	double			direction;
 	struct s_ray	*next;
+	struct s_ray	*prev;
 }	t_ray;
 
 typedef struct s_data
@@ -59,7 +60,7 @@ typedef struct s_data
 	int			map_height;
 	double		player_x;
 	double		player_y;
-	int			player_angle;
+	double		player_angle;
 	int			player_dir;
 	int			player_walk_direction;
 	int			player_turn_direction;
