@@ -1,41 +1,35 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   ft_strnstr.c									   :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: hnait <hnait@student.42.fr>				+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2022/10/11 02:35:14 by hnait 	   		   #+#	#+#			 */
-/*   Updated: 2023/03/14 17:38:58 by hnait			###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/07 04:22:53 by hachahbo          #+#    #+#             */
+/*   Updated: 2022/10/23 18:59:49 by hachahbo         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <string.h>
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+char	*ft_strnstr(const char *haystack, const char *to_find, size_t len)
 {
-	int		i;
-	int		intlen;
-	int		ndlen;
+	size_t	i;
+	size_t	j;
 
-	ndlen = ft_strlen(needle);
 	i = 0;
-	intlen = (int) len;
-	if (haystack == 0 && len == 0)
-	{
-		return (0);
-	}
-	if (ndlen == 0 || needle == haystack)
+	j = 0;
+	if (!*to_find)
 		return ((char *)haystack);
-	while (haystack[i] != 0 && i < intlen - ndlen)
+	while (i < len && haystack[i] != '\0')
 	{
-		if (ft_strncmp(haystack, needle, ndlen) == 0)
-		{
-			return ((char *) haystack);
-		}
+		j = 0;
+		while (haystack[i + j] != '\0' && to_find[j] && i + j < len \
+			&& haystack[i + j] == to_find[j])
+			j++;
+		if (to_find[j] == '\0')
+			return ((char *)haystack + i);
 		i++;
-		haystack++;
 	}
 	return (0);
 }

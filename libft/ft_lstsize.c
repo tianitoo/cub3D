@@ -1,27 +1,27 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   ft_lstsize.c									   :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: hnait <hnait@student.42.fr>				+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2022/10/23 13:11:05 by hnait 	   		   #+#	#+#			 */
-/*   Updated: 2023/03/14 17:38:58 by hnait			###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/19 08:55:27 by hachahbo          #+#    #+#             */
+/*   Updated: 2022/10/20 11:37:36 by hachahbo         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 int	ft_lstsize(t_list *lst)
 {
-	int	i;
+	int		i;
+	t_list	*tmp;
 
 	i = 0;
-	if (!lst)
-		return (0);
-	while (lst)
+	tmp = lst;
+	while (tmp)
 	{
-		lst = lst->next;
+		tmp = tmp->next;
 		i++;
 	}
 	return (i);

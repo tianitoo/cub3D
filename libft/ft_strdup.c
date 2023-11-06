@@ -1,39 +1,24 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   ft_strdup.c										:+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: hnait <hnait@student.42.fr>				+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2022/10/12 16:31:55 by marvin 			  #+#	#+#			 */
-/*   Updated: 2023/03/14 17:38:58 by hnait			###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/07 05:43:27 by hachahbo          #+#    #+#             */
+/*   Updated: 2022/10/20 09:19:32 by hachahbo         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(const char *s1)
 {
-	int		i;
-	char	*ss;
+	char	*s2;
 
-	i = 1;
-	while (s[i] != 0)
-	{
-		i++;
-	}
-	ss = (char *) malloc (sizeof(char) * i + 1);
-	if (!ss)
-	{
-		ft_printf("malloc error\n");
+	s2 = (char *)malloc(ft_strlen(s1) + 1);
+	if (!s2)
 		return (0);
-	}
-	i = 0;
-	while (s[i] != 0)
-	{
-		ss[i] = s[i];
-		i++;
-	}
-	ss[i] = 0;
-	return (ss);
+	ft_memcpy(s2, s1, ft_strlen(s1) + 1);
+	return (s2);
 }

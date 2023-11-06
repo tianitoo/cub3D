@@ -1,40 +1,35 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   ft_putnbr_fd.c									 :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: hnait <hnait@student.42.fr>				+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2022/10/22 01:30:43 by hnait 	   		   #+#	#+#			 */
-/*   Updated: 2023/03/14 17:38:58 by hnait			###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/10 05:37:44 by hachahbo          #+#    #+#             */
+/*   Updated: 2022/10/13 23:51:38 by hachahbo         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	char	c;
-
-	if (n == 0)
-		c = '0';
-	if (n == INT_MIN)
+	if (n == -2147483648)
 	{
-		c = '8';
-		n = n / 10;
+		ft_putchar_fd('-', fd);
+		ft_putchar_fd('2', fd);
+		ft_putnbr_fd(147483648, fd);
 	}
-	else if (n < 0)
+	else if (n >= 0 && n <= 9)
+		ft_putchar_fd(n + '0', fd);
+	else if (n > 9)
 	{
-		n = -n;
-		c = '-';
-		write(fd, &c, 1);
+		ft_putnbr_fd((n / 10), fd);
+		ft_putnbr_fd((n % 10), fd);
 	}
-	if (n > 0)
+	else
 	{
-		c = n % 10 + '0';
-		n /= 10;
+		ft_putchar_fd('-', fd);
+		ft_putnbr_fd(n * (-1), fd);
 	}
-	if (n != 0)
-		ft_putnbr_fd(n, fd);
-	write(fd, &c, 1);
 }

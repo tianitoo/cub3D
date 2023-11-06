@@ -1,33 +1,30 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   ft_lstadd_back.c								   :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: hnait <hnait@student.42.fr>				+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2022/10/23 13:22:42 by hnait 	   		   #+#	#+#			 */
-/*   Updated: 2023/03/14 17:38:58 by hnait			###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/20 10:50:41 by hachahbo          #+#    #+#             */
+/*   Updated: 2022/10/20 15:40:01 by hachahbo         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	t_list	*node;
+	t_list	*tmp;
+	int		i;
 
+	i = 0;
 	if (!new)
 		return ;
-	if (lst)
+	if (!*lst)
 	{
-		node = *lst;
-		if (node)
-		{
-			while (node->next)
-				node = node->next;
-			node->next = new;
-		}
-		else
-			*lst = new;
+		*lst = new;
+		return ;
 	}
+	tmp = ft_lstlast(*lst);
+	tmp->next = new;
 }

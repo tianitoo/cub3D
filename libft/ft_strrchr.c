@@ -1,37 +1,41 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   ft_strrchr.c									   :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: hnait <hnait@student.42.fr>				+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2022/10/10 04:58:18 by hnait 	   		   #+#	#+#			 */
-/*   Updated: 2023/03/14 17:38:58 by hnait			###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/07 00:32:54 by hachahbo          #+#    #+#             */
+/*   Updated: 2022/10/25 15:47:50 by hachahbo         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strrchr(const char *str, int c)
 {
-	int		i;
-	char	*p;
-	char	*r;
+	int	i;
+	int	j;
 
-	p = (char *)s;
 	i = 0;
-	r = 0;
-	if (c == 0)
+	c = (unsigned char)c;
+	while (str[i] != '\0')
+	i++;
+	if (c == '\0')
 	{
-		while (p[i] != '\0')
-			i++;
-		return (&p[i]);
+		j = 0;
+		while (str[j])
+			j++;
+		return ((char *)str + j);
 	}
-	while (p[i] != '\0')
+	else
 	{
-		if (p[i] == c)
-			r = &p[i];
-		i++;
+		while (i >= 0)
+		{
+			if (str[i] == c)
+				return ((char *)str + i);
+			i--;
+		}
 	}
-	return (r);
+	return (0);
 }

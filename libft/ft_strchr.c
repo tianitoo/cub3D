@@ -1,37 +1,23 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   ft_strchr.c										:+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: hnait <hnait@student.42.fr>				+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2022/10/10 03:13:35 by hnait 	   		   #+#	#+#			 */
-/*   Updated: 2023/03/14 17:38:58 by hnait			###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/06 23:47:02 by hachahbo          #+#    #+#             */
+/*   Updated: 2022/10/25 15:46:47 by hachahbo         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 char	*ft_strchr(const char *s, int c)
 {
-	int		i;
-	char	*p;
-
-	p = (char *)s;
-	i = 0;
-	if (c == 0)
-	{
-		while (p[i] != '\0')
-			i++;
-		return (&p[i]);
-	}
-	while (p[i] != '\0')
-	{
-		if (p[i] == c)
-		{
-			return (&p[i]);
-		}
-		i++;
-	}
-	return (NULL);
+	c = (unsigned char)c;
+	while (*s != '\0' && c != *s)
+		s++;
+	if (c == *s)
+		return ((char *)s);
+	return (0);
 }

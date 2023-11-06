@@ -1,23 +1,25 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   ft_lstlast.c									   :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: hnait <hnait@student.42.fr>				+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2022/10/23 13:17:58 by hnait 	   		   #+#	#+#			 */
-/*   Updated: 2023/03/14 17:38:58 by hnait			###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/20 09:50:08 by hachahbo          #+#    #+#             */
+/*   Updated: 2022/10/21 13:38:06 by hachahbo         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	if (lst)
-	{
-		while (lst->next)
-			lst = lst->next;
-	}
-	return (lst);
+	t_list	*tmp;
+
+	if (!lst)
+		return (0);
+	tmp = lst;
+	while (tmp->next != 0)
+		tmp = tmp->next;
+	return (tmp);
 }

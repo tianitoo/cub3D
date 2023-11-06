@@ -1,58 +1,62 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   ft_itoa.c										  :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: hnait <hnait@student.42.fr>				+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2022/10/17 21:17:16 by hnait 	   		   #+#	#+#			 */
-/*   Updated: 2023/03/14 17:38:58 by hnait			###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/08 16:59:50 by hachahbo          #+#    #+#             */
+/*   Updated: 2022/10/19 23:53:33 by hachahbo         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	nlen(int n)
+int	ft_len(long nb)
 {
-	int		len;
+	int	len;
 
 	len = 0;
-	if (n < 0)
+	if (nb == 0)
+		return (1);
+	if (nb < 0)
 	{
+		nb *= -1;
 		len++;
-		n = -n;
 	}
-	while (n > 0)
+	while (nb > 0)
 	{
-		n = n / 10;
-		len ++;
+		nb /= 10;
+		len++;
 	}
 	return (len);
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(int nb)
 {
-	char	*s;
-	int		len;
+	char	*str;
+	long	n;
+	int		i;
 
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
+	n = nb;
+	i = ft_len(n);
+	str = (char *)malloc(sizeof(char) * (i + 1));
+	if (!str)
+		return (0);
+	str[i] = '\0';
+		i--;
 	if (n == 0)
-		return (ft_strdup("0"));
-	len = nlen(n);
-	s = (char *) malloc (sizeof(char) * (len + 1));
-	if (!s)
-		return (ft_printf("malloc error\n"), NULL);
+		str[0] = '0';
 	if (n < 0)
 	{
-		s[0] = '-';
-		n = -n;
+		str[0] = '-';
+		n *= -1;
 	}
-	s[len] = '\0';
-	while (len >= 0 && n > 0)
+	while (n > 0)
 	{
-		s[--len] = n % 10 + '0';
-		n /= 10;
+		str[i] = n % 10 + '0';
+		n = n / 10;
+		i--;
 	}
-	return (s);
+	return (str);
 }

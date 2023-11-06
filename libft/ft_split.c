@@ -1,90 +1,75 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   ft_split.c										 :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: hnait <hnait@student.42.fr>				+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2022/10/17 21:33:36 by hnait 	   		   #+#	#+#			 */
-/*   Updated: 2023/03/14 17:38:58 by hnait			###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/10 11:17:01 by hachahbo          #+#    #+#             */
+/*   Updated: 2022/10/23 13:55:43 by hachahbo         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	sslen(char const *s, char c)
+static size_t	wc(char *s, char c)
 {
-	int	i;
-	int	len;
+	size_t	i;
+	size_t	counter;
 
 	i = 0;
-	len = 0;
-	while (*s)
+	counter = 0;
+	while (s[i] != '\0')
 	{
-		if (*s == c)
+		while (s[i] == c && s[i])
 			i++;
-		else
-			len++;
-		s++;
+		if (s[i] != c && s[i] != '\0')
+			counter++;
+		while (s[i] != c && s[i])
+			i++;
 	}
-	return (len);
+	return (counter);
 }
 
-void	free_ss(char **ss)
+static char	**check_isfree(char **str)
 {
-	while (*ss)
-	{
-		free(*ss);
-		*ss = NULL;
-		ss++;
-	}
+	while (*str)
+		free (*str++);
+	free (str);
+	return (NULL);
 }
 
-int	next_sep(const char *s, int j, char c)
+static void	ft_skip(char const *s, size_t *start, size_t *end, char c)
 {
-	while (s[j] != c && s[j])
-		j++;
-	return (j);
-}
-
-char	*cut_word(const char *s, int *j, char c)
-{
-	char	*word;
-	int		next;
-
-	next = next_sep(s, *j, c);
-	word = ft_substr(s, *j, next - *j);
-	if (word == NULL)
-		return (NULL);
-	*j = next;
-	return (word);
+	while (s[*start] == c && s[*start] != '\0')
+		*start = *start + 1;
+	*end = *start;
+	while (s[*end] != c && s[*end] != '\0')
+			*end = *end + 1;
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**ss;
-	int		i;
-	int		j;
+	char	**str_split;
+	size_t	start;
+	size_t	end;
+	size_t	i;
 
-	i = 0;
-	j = 0;
 	if (!s)
 		return (0);
-	ss = (char **) malloc (sizeof(char *) * sslen(s, c) + 1);
-	if (!ss)
+	str_split = (char **)malloc((wc((char *)s, c) + 1) * sizeof(char *));
+	if (!str_split)
 		return (0);
-	while (s[j] != 0)
+	start = 0;
+	i = 0;
+	while (i < wc((char *)s, c))
 	{
-		if (s[j] == c)
-			j++;
-		else
-		{
-			ss[i] = cut_word(s, &j, c);
-			if (!ss[i])
-				free_ss(ss);
-			i++;
-		}
+		ft_skip(s, &start, &end, c);
+		str_split[i++] = ft_substr((char *)s, start, end - start);
+		if (!*str_split)
+			return (check_isfree(str_split));
+		start = end;
 	}
-	ss[i] = 0;
-	return (ss);
+	*(str_split + i) = NULL;
+	return (str_split);
 }

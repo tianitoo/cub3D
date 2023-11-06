@@ -1,77 +1,24 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 11:45:43 by hnait             #+#    #+#             */
-/*   Updated: 2023/10/26 17:11:41 by hnait            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#ifndef CUB3D_H
+# ifndef CUB3D_H
 # define CUB3D_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <math.h>
-# include "./MLX42/include/MLX42/MLX42.h"
-# include "libft/libft.h"
-# include "gnl/get_next_line.h"
-# include "ft_printf/ft_printf.h"
 
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
-// # define WIN_WIDTH 920
-// # define WIN_HEIGHT 780
-# define SQUARE_SIZE 32
-# define MINIMAP_SQUARE_SIZE 10
-# define MAP_WIDTH 1920 / 3
-# define MAP_HEIGHT 1080 / 3
-# define FOV 60
-# define NORTH 0
-# define SOUTH 1
-# define EAST 2
-# define WEST 3
-# define ESC 53
-# define HORIZONTAL 0
-# define VERTICAL 1
+#include <stdio.h>
+#include "MLX42/include/MLX42/MLX42.h"
+#include "get_next_line.h"
+#include "libft/libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
-# define PI 3.14159265359
 
-typedef struct s_ray
-{
-	double			distance;
-	double			direction;
-	struct s_ray	*next;
-	struct s_ray	*prev;
-}	t_ray;
-
-typedef struct s_data
-{
-	mlx_t		*mlx_ptr;
-	void		*mlx_win;
-	mlx_image_t	*img;
-	char		**map;
-	int			map_width;
-	int			map_height;
-	double		player_x;
-	double		player_y;
-	double		player_angle;
-	int			player_dir;
-	int			player_walk_direction;
-	int			player_turn_direction;
-	t_ray		*rays;
-}	t_data;
-
-int	get_horizontal_distance(t_data *data, double fov);
-int	get_vertical_distance(t_data *data, double fov);
-int	is_vertical_wall(t_data *data, double player_mini_x, double player_mini_y, double fov);
-int	is_horizontal_wall(t_data *data, double player_mini_x, double player_mini_y, double fov);
-int	is_wall(t_data *data, int x, int y);
-int	get_rgba(int r, int g, int b);
+int check_the_order_and_path(char *str);
+int file_exist(char  *str);
+char *return_the_path(char *str, int i);
+int check_the_order(char *str);
+int skips_spaces(char *str);
+int check_floor_sky(char* str);
+int check_the_color(char *str);
+int find_the_comma(char * str, int i);
+int ft_isspace(char c);
 
 #endif
