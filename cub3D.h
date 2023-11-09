@@ -11,6 +11,30 @@
 #include <stdbool.h>
 
 
+// typedef struct mlx
+// {
+//     void*   window;
+//     void*   context;
+//     int32_t width;
+//     int32_t height;
+//     double delta_time;
+// }   mlx_t;
+
+typedef struct s_data
+{
+    int *c_tab;
+    int *f_tab;
+    char *n_texture;
+    char *s_texture;
+    char *w_texture;
+    char *e_texture;
+    char **map;
+    int x_player;
+    int y_player;
+    char order;
+} t_data;
+
+
 int check_the_order_and_path(char *str);
 int file_exist(char  *str);
 char *return_the_path(char *str, int i);
@@ -20,5 +44,6 @@ int check_floor_sky(char* str);
 int check_the_color(char *str);
 int find_the_comma(char * str, int i);
 int ft_isspace(char c);
+char * delete_last_spaces(char *s);
 
 #endif

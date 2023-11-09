@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:10:34 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/11/06 20:49:19 by hamza            ###   ########.fr       */
+/*   Updated: 2023/11/09 00:14:37 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,7 @@ char *return_the_path(char *str, int i)
  
 int file_exist(char  *str)
 {
-    char *s = return_the_path(str, 0);
-	int fd = open(s, O_RDWR);
+	int fd = open(str, O_RDWR);
     if(fd == -1)
         return (0);
     return (1);
@@ -89,16 +88,30 @@ int file_exist(char  *str)
 int check_the_order_and_path(char *str)
 {
     char    *s;
+    char    *st;
     int     i;
 	i = 0;
     if(!check_the_order(str))
         return(0);
     i = check_the_order(str);
-    s = return_the_path(str, i);
-	if(!file_exist(s))
+    
+    while(str[i])
+    {
+        if(ft_isspace(str[i]))
+            i++;
+        else
+            break;
+    }
+    s = ft_strdup(str + i);
+    st = delete_last_spaces(s);
+    if(!is_empty(st))
+        return(0);
+        
+	if(!file_exist(st))
     {
 	    free(s);
 		return(0);
     }
-	return 1;
+    // free(st);
+	return (1);
 }
