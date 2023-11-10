@@ -11,14 +11,14 @@
 #include <stdbool.h>
 
 
-// typedef struct mlx
-// {
-//     void*   window;
-//     void*   context;
-//     int32_t width;
-//     int32_t height;
-//     double delta_time;
-// }   mlx_t;
+typedef struct s_mlx
+{
+    void    *window;
+    void    *context;
+    int32_t width;
+    int32_t height;
+    double  delta_time;
+}   t_mlx;
 
 typedef struct s_data
 {
