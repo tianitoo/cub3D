@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:08:53 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/11/07 20:32:03 by hamza            ###   ########.fr       */
+/*   Updated: 2023/11/11 00:53:47 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,13 @@ int check_the_color(char *str)
             x++;
         i++;
     }
+    i = 0;
+    while(strs[i])
+    {
+        free(strs[i]);
+        i++;
+    }
+    free(strs);
     if(x == 3)
         return (1);
     return (0);
@@ -113,9 +120,16 @@ int check_floor_sky(char* str)
                 s = ft_strdup(str + i);
                 st = delete_last_spaces(s);
                 if(check_the_color(st))
+                {
+                    free(s);
+                    free(st);
                     return (2);
+                }
+                free(s);
+                free(st);
                 break;
             }
+            
         }
         i++;
     }

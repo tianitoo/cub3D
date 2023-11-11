@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:10:34 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/11/09 00:14:37 by hamza            ###   ########.fr       */
+/*   Updated: 2023/11/11 16:59:08 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,10 @@ int check_the_order_and_path(char *str)
     char    *st;
     int     i;
 	i = 0;
+
     if(!check_the_order(str))
         return(0);
     i = check_the_order(str);
-    
     while(str[i])
     {
         if(ft_isspace(str[i]))
@@ -104,14 +104,13 @@ int check_the_order_and_path(char *str)
     }
     s = ft_strdup(str + i);
     st = delete_last_spaces(s);
-    if(!is_empty(st))
-        return(0);
-        
-	if(!file_exist(st))
+    if(!is_empty(st) || !file_exist(st))
     {
 	    free(s);
-		return(0);
+        free(st);
+        return(0);
     }
-    // free(st);
+	free(s);
+    free(st);
 	return (1);
 }

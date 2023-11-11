@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 19:24:35 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/11/10 16:13:35 by hamza            ###   ########.fr       */
+/*   Updated: 2023/11/11 19:11:07 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ int check_the_map(char *str)
     while (str[i])
     {
 
-        if (str[i] != '0' && str[i] != '1' && str[i] != 'S' && str[i] != 'N' && str[i] != 'W' && str[i] != 'E' && !ft_isspace(str[i]))
+        if (str[i] != '0' && str[i] != '1' 
+        && str[i] != 'S' && str[i] != 'N' 
+        && str[i] != 'W' && str[i] != 'E' 
+        && !ft_isspace(str[i]))
             return (0);
         i++;
     }
@@ -254,9 +257,15 @@ int check_the_orders_is_valid(char **str)
                 break;
             st = fill_the_str_to_check(str[j]);
             if (!ft_strcmp(st, s))
+            {
+                free(s);
+                free(st);
                 return (0);
+            }
+            free(st);
             j++;
         }
+        free(s);
         i++;
     }
     return (1);
@@ -274,6 +283,7 @@ int the_minimalist(char **str, int x)
             return (0);
         i++;
     }
+
     if (!check_the_orders_is_valid(str))
         return (0);
     if (!the_map(str, x, i))
@@ -296,13 +306,14 @@ int count_the_lines(void)
     char *str;
     int i = 0;
 
-    int fd = open("order", O_CREAT | O_RDWR, 0666);
 
+    int fd = open("order", O_CREAT | O_RDWR, 0666);
     str = get_next_line(fd);
     while (str)
     {
         if (check_and_skip_spaces(str))
             i++;
+        free(str);
         str = get_next_line(fd);
     }
     close(fd);
@@ -324,6 +335,8 @@ char **fill_string(int i)
             strs[i] = str;
             i++;
         }
+        else
+            free(str);
         str = get_next_line(fd);
     }
     strs[i] = NULL;
@@ -345,6 +358,14 @@ int *return_color(char *str, int i)
         tab[j] = ft_atoi(d_str[j]);
         j++;
     }
+    i = 0;
+    while(d_str[i])
+    {
+        free(d_str[i]);
+        i++;
+    }
+    free(d_str);
+    free(st);
     return (tab);
 }
 void fill_order_and_path(t_data *data, char *str)
@@ -371,6 +392,8 @@ char **resize_the_map(char **str)
     int i;
     int j;
     int max;
+    char *tmp = NULL;
+    char *tmp2 = NULL;
 
     i = 0;
     max = ft_strlen(str[i]);
@@ -384,13 +407,17 @@ char **resize_the_map(char **str)
     j = 0;
     while (str[i])
     {
+            tmp2 = str[i];
             str[i] = ft_strtrim(str[i], " \n");
+            free(tmp2);
         if (ft_strlen(str[i]) != max)
         {
             j = 0;
             while (ft_strlen(str[i]) < max - 1)
             {
+                tmp = str[i];
                 str[i] = ft_strjoin(str[i], "1");
+                free(tmp);
                 j++;
             }
         }
@@ -489,36 +516,38 @@ int inits_the_data(t_data *data, char **str)
         return (0);
     return (1);
 }
-void display_data(t_data data)
+void display_data(t_data *data)
 {
     int i;
 
     i = 0;
     printf("DATA : \n");
-    printf("NO ->>>> %s\n", data.n_texture);
-    printf("EA ->>>> %s\n", data.e_texture);
-    printf("SO ->>>> %s\n", data.s_texture);
-    printf("WE ->>>> %s\n", data.w_texture);
+    printf("NO ->>>> %s\n", data->n_texture);
+    printf("EA ->>>> %s\n", data->e_texture);
+    printf("SO ->>>> %s\n", data->s_texture);
+    printf("WE ->>>> %s\n", data->w_texture);
     printf("\nC : ");
     while (i < 3)
     {
-        printf(" %d |", data.c_tab[i]);
+        printf(" %d |", data->c_tab[i]);
         i++;
     }
     i = 0;
     printf("\nF  : ");
     while (i < 3)
     {
-        printf(" %d |", data.f_tab[i]);
+        printf(" %d |", data->f_tab[i]);
         i++;
     }
     i = -1;
     printf("\n\n MAP : \n");
-    while (data.map[++i])
-        printf("%s\n", data.map[i]);
-    printf("\n\nthe type  : %c \n", data.order);
-    printf("Coordinate of player x : %d\n", data.x_player);
-    printf("Coordinate of player y : %d\n", data.y_player);
+    while (data->map[++i])
+    {
+        printf("%s\n", data->map[i]);
+    }
+    printf("\n\nthe type  : %c \n", data->order);
+    printf("Coordinate of player x : %d\n", data->x_player);
+    printf("Coordinate of player y : %d\n", data->y_player);
 }
 int fail_the_inits(t_data data)
 {
@@ -544,11 +573,18 @@ int fail_the_inits(t_data data)
         return (0);
     return (1);
 }
+void f()
+{
+    system("leaks cub3D");
+}
 int main()
 {
     int j = count_the_lines();
     char **str = fill_string(j);
     t_data data;
+    int i = 0;
+
+    atexit(f);
 
     if (!the_minimalist(str, j))
     {
@@ -568,7 +604,14 @@ int main()
     else
     {
         printf("VALID\n");
-        display_data(data);
+        display_data(&data);
+        while (str[i])
+        {
+            free(str[i]);
+            i++;
+        }
+        free(str);
+
         // int a = 0;
         // int b = 0;
         // mlx_t *ptr;
@@ -588,5 +631,7 @@ int main()
         // mlx_image_to_window(ptr, img, 0, 0);
         // mlx_loop(ptr);
     }
+    
+    exit(0);
     return (0);
 }
