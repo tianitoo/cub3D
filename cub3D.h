@@ -10,7 +10,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-
 typedef struct s_mlx
 {
     void    *window;

@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:10:34 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/11/11 16:59:08 by hamza            ###   ########.fr       */
+/*   Updated: 2023/11/12 01:24:03 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ int check_the_order_and_path(char *str)
     char    *s;
     char    *st;
     int     i;
-	i = 0;
-
+	
+    i = 0;
     if(!check_the_order(str))
         return(0);
     i = check_the_order(str);

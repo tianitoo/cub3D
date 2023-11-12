@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 19:24:35 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/11/11 19:11:07 by hamza            ###   ########.fr       */
+/*   Updated: 2023/11/12 01:31:37 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,17 +374,35 @@ void fill_order_and_path(t_data *data, char *str)
 
     i = skips_spaces(str);
     if (str[i] == 'N' && str[i + 1] == 'O' && ft_isspace(str[i + 2]))
-        data->n_texture = return_the_path(str, i + 2);
+        {
+            data->n_texture = return_the_path(str, i + 2);
+         printf("->>>> %p\n", data->n_texture);   
+        }
     else if (str[i] == 'S' && str[i + 1] == 'O' && ft_isspace(str[i + 2]))
-        data->s_texture = return_the_path(str, i + 2);
+        {
+            data->s_texture = return_the_path(str, i + 2);
+         printf("->>>> %p\n", data->s_texture);   
+        }
     else if (str[i] == 'W' && str[i + 1] == 'E' && ft_isspace(str[i + 2]))
-        data->w_texture = return_the_path(str, i + 2);
+        {
+            data->w_texture = return_the_path(str, i + 2);
+         printf("->>>> %p\n", data->s_texture);   
+        }
     else if (str[i] == 'E' && str[i + 1] == 'A' && ft_isspace(str[i + 2]))
-        data->e_texture = return_the_path(str, i + 2);
+        {
+            data->e_texture = return_the_path(str, i + 2);
+         printf("->>>> %p\n", data->e_texture);   
+        }
     else if (str[i] == 'C' && ft_isspace(str[i + 1]))
-        data->c_tab = return_color(str, i + 1);
+        {
+            data->c_tab = return_color(str, i + 1);
+        //  printf("->>>> %d", data->c_tab);   
+        }
     else if (str[i] == 'F' && ft_isspace(str[i + 1]))
-        data->f_tab = return_color(str, i + 1);
+        {
+            data->f_tab = return_color(str, i + 1);
+        //  printf("->>>> %d", data->f_tab);   
+        }
 }
 
 char **resize_the_map(char **str)
@@ -585,10 +603,15 @@ int main()
     int i = 0;
 
     atexit(f);
-
     if (!the_minimalist(str, j))
     {
         printf("NOT VALID\n");
+        while (str[i])
+        {
+            free(str[i]);
+            i++;
+        }
+        free(str);
         return (0);
     }
     if (!inits_the_data(&data, str))
@@ -611,7 +634,12 @@ int main()
             i++;
         }
         free(str);
-
+        free(data.n_texture);
+        free(data.e_texture);
+        free(data.w_texture);
+        free(data.s_texture);
+        free(data.c_tab);
+        free(data.f_tab);
         // int a = 0;
         // int b = 0;
         // mlx_t *ptr;
@@ -630,8 +658,7 @@ int main()
         // }
         // mlx_image_to_window(ptr, img, 0, 0);
         // mlx_loop(ptr);
-    }
-    
-    exit(0);
+    }    
+    // exit(0);
     return (0);
 }
