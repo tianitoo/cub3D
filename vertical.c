@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:20:05 by hnait             #+#    #+#             */
-/*   Updated: 2023/10/27 17:18:16 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/21 20:17:37 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int	is_vertical_wall(t_data *data, double player_mini_x, double player_mini_y, d
 		return (1);
 	if (fov >= 0 && fov < 90)
 	{
-		if (is_wall(data, (player_mini_x - 1) / SQUARE_SIZE, (player_mini_y) / SQUARE_SIZE) == 1)
+		if (is_wall(data, (player_mini_x) / SQUARE_SIZE, (player_mini_y) / SQUARE_SIZE) == 1)
 			return (1);
 	}
 	if (fov >= 90 && fov < 180)
 	{
-		if (is_wall(data, (player_mini_x - 1) / SQUARE_SIZE, (player_mini_y - 1) / SQUARE_SIZE) == 1)
+		if (is_wall(data, (player_mini_x) / SQUARE_SIZE, (player_mini_y - 1) / SQUARE_SIZE) == 1)
 			return (1);
 	}
 	if (fov >= 180 && fov < 270)
@@ -42,7 +42,7 @@ int	is_vertical_wall(t_data *data, double player_mini_x, double player_mini_y, d
 
 void	get_vertical_y(t_data *data, double *player_mini_y, double angle)
 {
-	if (*player_mini_y == data->player_y && (int) data->player_y % SQUARE_SIZE != 0)
+	if (*player_mini_y == data->player_y)
 	{
 		if (angle >= 90 && angle < 270)
 			*player_mini_y = floor(data->player_y / SQUARE_SIZE) * SQUARE_SIZE + SQUARE_SIZE;

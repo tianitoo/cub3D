@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:20:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/10/28 13:47:36 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/21 20:12:55 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_horizontal_wall(t_data *data, double player_mini_x, double player_mini_y,
 		return (1);
 	if (fov >= 0 && fov < 90)
 	{
-		if (is_wall(data, (player_mini_x) / SQUARE_SIZE, (player_mini_y - 1) / SQUARE_SIZE) == 1)
+		if (is_wall(data, (player_mini_x) / SQUARE_SIZE, (player_mini_y) / SQUARE_SIZE) == 1)
 			return (1);
 	}
 	if (fov >= 90 && fov < 180)
@@ -34,7 +34,7 @@ int	is_horizontal_wall(t_data *data, double player_mini_x, double player_mini_y,
 	}
 	if (fov >= 270)
 	{
-		if (is_wall(data, (player_mini_x - 1) / SQUARE_SIZE, (player_mini_y - 1) / SQUARE_SIZE) == 1)
+		if (is_wall(data, (player_mini_x - 1) / SQUARE_SIZE, (player_mini_y) / SQUARE_SIZE) == 1)
 			return (1);
 	}
 	return (0);
@@ -42,7 +42,7 @@ int	is_horizontal_wall(t_data *data, double player_mini_x, double player_mini_y,
 
 void	get_horizontal_x(t_data *data, double *player_mini_x, double angle)
 {
-	if (*player_mini_x == data->player_x  && (int) data->player_x % SQUARE_SIZE != 0)
+	if (*player_mini_x == data->player_x)
 	{
 		if (angle >= 0 && angle < 180)
 			*player_mini_x = floor(data->player_x / SQUARE_SIZE) * SQUARE_SIZE;
