@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/10/27 12:10:18 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/22 11:26:00 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	draw_fov(t_data *data)
 	data->rays = NULL;
 	tmp = data->rays;
 	angle = -FOV / 2;
+	
 	color = get_rgba(255, 0, 0);
 	while (angle < FOV / 2)
 	{
@@ -91,6 +92,7 @@ void	draw_fov(t_data *data)
 			else if (ray->next)
 				ray->direction = ray->next->direction;
 		}
+		ray->distance = ray->distance * cos((data->player_angle - ray_angle) * PI / 180);
 		ray->next = NULL;
 		tmp = data->rays;
 		angle += 0.0625;
@@ -269,8 +271,8 @@ void	move_player(t_data *data)
 	}
 	else if (data->player_walk_direction == 2 || data->player_walk_direction == -2)
 	{
-		new_player_x += cos(data->player_angle * PI / 180) * move_step * 2;
-		new_player_y -= sin(data->player_angle * PI / 180) * move_step * 2;
+		new_player_x += cos(data->player_angle * PI / 180) * move_step * 4;
+		new_player_y -= sin(data->player_angle * PI / 180) * move_step * 4;
 	}
 	else
 		return ;

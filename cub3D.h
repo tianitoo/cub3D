@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:43 by hnait             #+#    #+#             */
-/*   Updated: 2023/10/26 17:11:41 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/22 09:50:24 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ typedef struct s_data
 	int			player_dir;
 	int			player_walk_direction;
 	int			player_turn_direction;
+	int			checked_horizontal;
+	int			checked_vertical;
 	t_ray		*rays;
 }	t_data;
 

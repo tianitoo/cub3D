@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:20:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/11/21 20:12:55 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/22 00:39:00 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ int	is_horizontal_wall(t_data *data, double player_mini_x, double player_mini_y,
 
 void	get_horizontal_x(t_data *data, double *player_mini_x, double angle)
 {
-	if (*player_mini_x == data->player_x)
+	
+	if (*player_mini_x == data->player_x && data->checked_horizontal == 0)
 	{
+		data->checked_horizontal = 1;
 		if (angle >= 0 && angle < 180)
 			*player_mini_x = floor(data->player_x / SQUARE_SIZE) * SQUARE_SIZE;
 		else
@@ -119,6 +121,7 @@ int	get_horizontal_distance(t_data *data, double angle)
 
 	player_mini_y = data->player_y;
 	player_mini_x = data->player_x;
+	data->checked_horizontal = 0;
 	if (angle == 0 || angle == 180)
 	{
 		horizontal_distance = horizontal_line(data, angle);
