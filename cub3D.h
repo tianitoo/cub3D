@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:43 by hnait             #+#    #+#             */
-/*   Updated: 2023/11/22 09:50:24 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/22 15:52:22 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define WIN_HEIGHT 1080
 // # define WIN_WIDTH 920
 // # define WIN_HEIGHT 780
-# define SQUARE_SIZE 32
+# define SQUARE_SIZE 200
 # define MINIMAP_SQUARE_SIZE 10
 # define MAP_WIDTH 1920 / 3
 # define MAP_HEIGHT 1080 / 3

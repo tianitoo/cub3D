@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/11/22 11:26:00 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/22 15:57:47 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,13 +266,13 @@ void	move_player(t_data *data)
 	move_step = data->player_walk_direction ;
 	if (data->player_walk_direction == 1 || data->player_walk_direction == -1)
 	{
-		new_player_x += sin(data->player_angle * PI / 180) * move_step * 4;
-		new_player_y += cos(data->player_angle * PI / 180) * move_step * 4;
+		new_player_x += sin(data->player_angle * PI / 180) * move_step * 40;
+		new_player_y += cos(data->player_angle * PI / 180) * move_step * 40;
 	}
 	else if (data->player_walk_direction == 2 || data->player_walk_direction == -2)
 	{
-		new_player_x += cos(data->player_angle * PI / 180) * move_step * 4;
-		new_player_y -= sin(data->player_angle * PI / 180) * move_step * 4;
+		new_player_x += cos(data->player_angle * PI / 180) * move_step * 20;
+		new_player_y -= sin(data->player_angle * PI / 180) * move_step * 20;
 	}
 	else
 		return ;
