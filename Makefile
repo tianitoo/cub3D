@@ -18,7 +18,8 @@ MLX = MLX42/build/libmlx42.a  -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/
 
 SRC = main.c\
 		./horizontal.c\
-		./vertical.c
+		./vertical.c\
+		./textures.c\
 
 LIBFTSRC = ./libft/ft_atoi.c\
 		./libft/ft_bzero.c\

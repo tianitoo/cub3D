@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:20:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/11/22 00:39:00 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/24 15:51:55 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,12 @@ int	is_horizontal_wall(t_data *data, double player_mini_x, double player_mini_y,
 {
 	if (player_mini_x <= 0 || player_mini_y <= 0 || player_mini_x >= data->map_height * SQUARE_SIZE || player_mini_y >= data->map_width * SQUARE_SIZE)
 		return (1);
-	if (fov >= 0 && fov < 90)
+	if (fov >= 0 && fov < 180)
 	{
 		if (is_wall(data, (player_mini_x) / SQUARE_SIZE, (player_mini_y) / SQUARE_SIZE) == 1)
 			return (1);
 	}
-	if (fov >= 90 && fov < 180)
-	{
-		if (is_wall(data, (player_mini_x) / SQUARE_SIZE, (player_mini_y) / SQUARE_SIZE) == 1)
-			return (1);
-	}
-	if (fov >= 180 && fov < 270)
-	{
-		if (is_wall(data, (player_mini_x - 1) / SQUARE_SIZE, (player_mini_y) / SQUARE_SIZE) == 1)
-			return (1);
-	}
-	if (fov >= 270)
+	if (fov >= 180)
 	{
 		if (is_wall(data, (player_mini_x - 1) / SQUARE_SIZE, (player_mini_y) / SQUARE_SIZE) == 1)
 			return (1);
@@ -136,7 +126,9 @@ int	get_horizontal_distance(t_data *data, double angle)
 	}
 	x = player_mini_x - data->player_x;
 	y = player_mini_y - data->player_y;
+	data->ray_hit_horz = player_mini_y;
+	// printf("ray_hit_horz = %f\n", player_mini_x);
+	
 	horizontal_distance = sqrt(pow(x, 2) + pow(y, 2));
 	return (horizontal_distance);
 }
-

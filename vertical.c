@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:20:05 by hnait             #+#    #+#             */
-/*   Updated: 2023/11/22 00:39:35 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/23 21:06:52 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ int	get_vertical_distance(t_data *data, double angle)
 	}
 	x = player_mini_x - data->player_x;
 	y = player_mini_y - data->player_y;
+	data->ray_hit_vert = player_mini_x;
 	vertical_distance = sqrt(pow(x, 2) + pow(y, 2));
 	return (vertical_distance);
 }

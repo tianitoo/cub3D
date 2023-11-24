@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/11/22 15:57:47 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/24 15:13:28 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,20 @@ int	is_wall(t_data *data, int x, int y)
 	return (0);
 }
 
-
-
-
-
 void	draw_fov(t_data *data)
 {
-	// int		j;
 	int		color;
 	double		angle;
 	double		ray_angle;
 	t_ray		*ray;
-	t_ray		*tmp;
 	double		horizontal_distance;
 	double		vertical_distance;
 
-	data->rays = NULL;
-	tmp = data->rays;
+	ray = data->rays;
 	angle = -FOV / 2;
 	
 	color = get_rgba(255, 0, 0);
-	while (angle < FOV / 2)
+	while (ray)
 	{
 		ray_angle = data->player_angle + angle;
 		if (ray_angle >= 360)
@@ -53,23 +46,11 @@ void	draw_fov(t_data *data)
 			ray_angle += 360;
 		horizontal_distance = get_horizontal_distance(data, ray_angle);
 		vertical_distance =  get_vertical_distance(data, ray_angle);
-		ray = (t_ray *)malloc(sizeof(t_ray));
-		if (!tmp)
-		{
-			data->rays = ray;
-			ray->prev = NULL;
-			ray->next = NULL;
-			tmp = ray;
-		}
-		else
-		{
-			while (tmp->next)
-				tmp = tmp->next;
-			tmp->next = ray;
-			ray->prev = tmp;
-		}
 		if (horizontal_distance < vertical_distance)
 		{
+			data->ray_hit_vert = 0;
+			ray->hit = data->ray_hit_horz;
+			// printf("ray_hit_horz = %f\n", data->ray_hit_horz);
 			ray->distance = horizontal_distance;
 			if (ray_angle >= 0 && ray_angle < 180)
 				ray->direction = SOUTH;
@@ -78,6 +59,8 @@ void	draw_fov(t_data *data)
 		}
 		else if (horizontal_distance > vertical_distance)
 		{
+			data->ray_hit_horz = 0;
+			ray->hit = data->ray_hit_vert;
 			ray->distance = vertical_distance;
 			if (ray_angle >= 90 && ray_angle < 270)
 				ray->direction = WEST;
@@ -86,6 +69,8 @@ void	draw_fov(t_data *data)
 		}
 		else
 		{
+			data->ray_hit_vert = 0;
+			ray->hit = data->ray_hit_horz;
 			ray->distance = horizontal_distance;
 			if (ray->prev)
 				ray->direction = ray->prev->direction;
@@ -93,8 +78,7 @@ void	draw_fov(t_data *data)
 				ray->direction = ray->next->direction;
 		}
 		ray->distance = ray->distance * cos((data->player_angle - ray_angle) * PI / 180);
-		ray->next = NULL;
-		tmp = data->rays;
+		ray = ray->next;
 		angle += 0.0625;
 	}
 }
@@ -163,43 +147,95 @@ void	draw_2d_map(t_data *data)
 	draw_fov(data);
 }
 
+int	get_pixel_color(mlx_texture_t *tex_data, uint32_t x, uint32_t y)
+{
+	int	pixel_color;
+	int	index;
+
+	if (x >= 0 && x < tex_data->width && y >= 0 && y < tex_data->height)
+	{
+		index = (y * tex_data->width + x) * tex_data->bytes_per_pixel;
+		pixel_color = get_rgba(tex_data->pixels[index], tex_data->pixels[index
+				+ 1], tex_data->pixels[index + 2]);
+	}
+	else
+		pixel_color = get_rgba(0, 0, 0);
+	return (pixel_color);
+}
+
 void	draw_ray(t_data *data, t_ray *ray, int win_x)
 {
-	int	color;
+	// int	color;
 	double	i;
 	double	projection_distance;
 	double	wall_height;
 	double	wall_top;
-
+	double	tile_x;
+	double	tex_x;
+	double	tex_y;
+	
 	i = 0;
+	if (win_x >= WIN_WIDTH || win_x < 0)
+		return ;
 	projection_distance = (WIN_WIDTH * 4) / tan(FOV / 2);
 	if (projection_distance < 0)
 		projection_distance *= -1;
 	// printf("projection_distance = %f\n", projection_distance);
 	wall_height = (SQUARE_SIZE / ray->distance) * projection_distance;
 	// printf("wall_height = %f\n", wall_height);
-	while (i < WIN_HEIGHT / 2)
+	wall_top = (WIN_HEIGHT / 2) - (wall_height / 2);
+	if (ray->direction == NORTH || ray->direction == SOUTH)
+		tile_x = fmod(ray->hit, SQUARE_SIZE);
+	else
+		tile_x = fmod(ray->hit, SQUARE_SIZE);
+	tex_x = tile_x * (data->textures[ray->direction]->width / SQUARE_SIZE);
+	while (i < WIN_HEIGHT)
 	{
-		// ft_printf("i = %d < %dd\n", i, (WIN_HEIGHT / 2) - (wall_height / 2));
-		wall_top = (WIN_HEIGHT / 2) - (wall_height / 2);
-		if (i < wall_top)
-			color = get_rgba(0, 0, 0);
-		else
+		if (win_x >= 0 && win_x < WIN_WIDTH && i >= 0 && i < WIN_HEIGHT)
 		{
-			if (ray->direction == NORTH)
-				color = get_rgba(255, 0, 0);
-			else if (ray->direction == SOUTH)
-				color = get_rgba(0, 255, 0);
-			else if (ray->direction == EAST)
-				color = get_rgba(0, 0, 255);
-			else if (ray->direction == WEST)
-				color = get_rgba(255, 255, 0);
+			if (i < wall_top)
+				mlx_put_pixel(data->img, win_x, i, get_rgba(100, 150, 255));
+			if (i >= wall_top + wall_height)
+				mlx_put_pixel(data->img, win_x, i, get_rgba(100, 200, 150));
+			if (i < (WIN_HEIGHT / 2) + (wall_height / 2))
+			{
+				tex_y = (i - wall_top) * (data->textures[ray->direction]->height / wall_height);
+				mlx_put_pixel(data->img, win_x, i, get_pixel_color(data->textures[ray->direction], tex_x, tex_y));
+			}
 		}
-		mlx_put_pixel(data->img, win_x, i, color);
-		mlx_put_pixel(data->img, win_x, WIN_HEIGHT - i - 1, color);
-		i = i + 1;
+		i++;
 	}
 }
+
+// void	draw_line_texture(t_game_data *game, t_ray *ray, double height,
+// 		int texture)
+// {
+// 	double	tile_x;
+// 	double	tex_x;
+// 	double	tex_y;
+// 	double	y_start;
+// 	double	y;
+
+// 	y_start = (WINDOW_HEIGHT / 2) - (height / 2);
+// 	if (texture == NORTH || texture == SOUTH)
+// 		tile_x = fmod(ray->wall_hit_x, SQUARE_SIZE);
+// 	else
+// 		tile_x = fmod(ray->wall_hit_y, SQUARE_SIZE);
+// 	tex_x = tile_x * (game->map->textures[texture]->width / SQUARE_SIZE);
+// 	y = y_start;
+// 	while (y < (WINDOW_HEIGHT / 2) + (height / 2))
+// 	{
+// 		if (ray->id >= 0 && ray->id < WINDOW_WIDTH && y >= 0
+// 			&& y < WINDOW_HEIGHT)
+// 		{
+// 			tex_y = (y - y_start) * (game->map->textures[texture]->height
+// 					/ height);
+// 			mlx_put_pixel(game->img, ray->id, y,
+// 				get_pixel_color(game->map->textures[texture], tex_x, tex_y));
+// 		}
+// 		y++;
+// 	}
+// }
 
 void	draw_3d_map(t_data *data)
 {
@@ -237,7 +273,8 @@ void	rotate_player(t_data *data)
 		data->player_turn_direction = -1;
 	else
 		data->player_turn_direction = 0;
-	data->player_angle += data->player_turn_direction * 2;
+		
+	data->player_angle += data->player_turn_direction * 5;
 	if (data->player_angle >= 360)
 		data->player_angle -= 360;
 	else if (data->player_angle < 0)
@@ -266,13 +303,13 @@ void	move_player(t_data *data)
 	move_step = data->player_walk_direction ;
 	if (data->player_walk_direction == 1 || data->player_walk_direction == -1)
 	{
-		new_player_x += sin(data->player_angle * PI / 180) * move_step * 40;
-		new_player_y += cos(data->player_angle * PI / 180) * move_step * 40;
+		new_player_x += sin(data->player_angle * PI / 180) * move_step * 30;
+		new_player_y += cos(data->player_angle * PI / 180) * move_step * 30;
 	}
 	else if (data->player_walk_direction == 2 || data->player_walk_direction == -2)
 	{
-		new_player_x += cos(data->player_angle * PI / 180) * move_step * 20;
-		new_player_y -= sin(data->player_angle * PI / 180) * move_step * 20;
+		new_player_x += cos(data->player_angle * PI / 180) * move_step * 15;
+		new_player_y -= sin(data->player_angle * PI / 180) * move_step * 15;
 	}
 	else
 		return ;
@@ -325,7 +362,7 @@ int	main(void)
 	char	**map;
 	int		i;
 	t_data	*data;
-
+	double	fov;
 	data = (t_data *)malloc(sizeof(t_data));
 	map = (char **)malloc(sizeof(char *) * 110);
 	fd = open("maps/map.cub", O_RDONLY);
@@ -380,6 +417,13 @@ int	main(void)
 			break ;
 		i++;
 	}
+	data->textures = malloc (sizeof(mlx_texture_t *) * 4);
+	if (!data->textures)
+		return (0);
+	data->textures[NORTH] = mlx_load_png("textures/N.png");
+	data->textures[SOUTH] = mlx_load_png("textures/S.png");
+	data->textures[EAST] = mlx_load_png("textures/E.png");
+	data->textures[WEST] = mlx_load_png("textures/W.png");
 	data->player_x = i * SQUARE_SIZE + SQUARE_SIZE / 2;
 	data->player_y = j * SQUARE_SIZE + SQUARE_SIZE / 2;
 	data->player_walk_direction = 0;
@@ -392,7 +436,31 @@ int	main(void)
 		data->player_angle = 0;
 	else if (data->player_dir == WEST)
 		data->player_angle = 180;
-	// sleep(2);
+	i = 0;
+	t_ray	*ray;
+	t_ray	*tmp;
+
+	tmp = NULL;
+	fov = 0;
+	while (fov < FOV)
+	{
+		ray = (t_ray *)malloc(sizeof(t_ray));
+		ray->prev = NULL;
+		ray->next = NULL;
+		if (!tmp)
+		{
+			data->rays = ray;
+			tmp = ray;
+		}
+		else
+		{
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = ray;
+			ray->prev = tmp;
+		}
+		fov += 0.0625;
+	}
 	init_window(data);
 	return (0);
 }

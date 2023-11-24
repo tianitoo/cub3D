@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:43 by hnait             #+#    #+#             */
-/*   Updated: 2023/11/22 15:52:22 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/24 14:44:05 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,28 +45,32 @@
 typedef struct s_ray
 {
 	double			distance;
-	double			direction;
+	int				direction;
+	int				hit;
 	struct s_ray	*next;
 	struct s_ray	*prev;
 }	t_ray;
 
 typedef struct s_data
 {
-	mlx_t		*mlx_ptr;
-	void		*mlx_win;
-	mlx_image_t	*img;
-	char		**map;
-	int			map_width;
-	int			map_height;
-	double		player_x;
-	double		player_y;
-	double		player_angle;
-	int			player_dir;
-	int			player_walk_direction;
-	int			player_turn_direction;
-	int			checked_horizontal;
-	int			checked_vertical;
-	t_ray		*rays;
+	mlx_t			*mlx_ptr;
+	void			*mlx_win;
+	mlx_image_t		*img;
+	char			**map;
+	int				map_width;
+	int				map_height;
+	double			player_x;
+	double			player_y;
+	double			player_angle;
+	int				player_dir;
+	int				player_walk_direction;
+	double			player_turn_direction;
+	double			ray_hit_horz;
+	double			ray_hit_vert;
+	int				checked_horizontal;
+	int				checked_vertical;
+	mlx_texture_t	**textures;
+	t_ray			*rays;
 }	t_data;
 
 int	get_horizontal_distance(t_data *data, double fov);
@@ -74,6 +78,7 @@ int	get_vertical_distance(t_data *data, double fov);
 int	is_vertical_wall(t_data *data, double player_mini_x, double player_mini_y, double fov);
 int	is_horizontal_wall(t_data *data, double player_mini_x, double player_mini_y, double fov);
 int	is_wall(t_data *data, int x, int y);
+int texture_pixel(t_data *data, t_ray *ray, int i, double wall_heith);
 int	get_rgba(int r, int g, int b);
 
 #endif
