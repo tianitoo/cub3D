@@ -21,6 +21,9 @@ typedef struct s_mlx
 
 typedef struct s_data
 {
+    mlx_t *mlx_ptr;
+    void			*mlx_win;
+	mlx_image_t		*img;
     int *c_tab;
     int *f_tab;
     char *n_texture;
@@ -34,15 +37,16 @@ typedef struct s_data
 } t_data;
 
 
-int check_the_order_and_path(char *str);
-int file_exist(char  *str);
-char *return_the_path(char *str, int i);
-int check_the_order(char *str);
-int skips_spaces(char *str);
-int check_floor_sky(char* str);
-int check_the_color(char *str);
-int find_the_comma(char * str, int i);
-int ft_isspace(char c);
-char * delete_last_spaces(char *s);
+int     check_the_order_and_path(char *str);
+int     file_exist(char  *str);
+char    *return_the_path(char *str, int i);
+int     check_the_order(char *str);
+int     skips_spaces(char *str);
+int     check_floor_sky(char* str);
+int     check_the_color(char *str);
+int     find_the_comma(char * str, int i);
+int     ft_isspace(char c);
+char    *delete_last_spaces(char *s);
+void    free_two_d(char **str);
 
 #endif
