@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:43 by hnait             #+#    #+#             */
-/*   Updated: 2023/11/24 14:44:05 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/25 18:48:25 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,10 @@
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
-// # define WIN_WIDTH 920
-// # define WIN_HEIGHT 780
 # define SQUARE_SIZE 200
 # define MINIMAP_SQUARE_SIZE 10
-# define MAP_WIDTH 1920 / 3
-# define MAP_HEIGHT 1080 / 3
+# define MAP_WIDTH WIN_WIDTH / 3
+# define MAP_HEIGHT WIN_HEIGHT / 3
 # define FOV 60
 # define NORTH 0
 # define SOUTH 1
@@ -39,6 +37,7 @@
 # define ESC 53
 # define HORIZONTAL 0
 # define VERTICAL 1
+# define EQUAL 2
 
 # define PI 3.14159265359
 
@@ -47,6 +46,8 @@ typedef struct s_ray
 	double			distance;
 	int				direction;
 	int				hit;
+	double			wall_height;
+	int				wall_top;
 	struct s_ray	*next;
 	struct s_ray	*prev;
 }	t_ray;
@@ -62,6 +63,7 @@ typedef struct s_data
 	double			player_x;
 	double			player_y;
 	double			player_angle;
+	double			projected_distance;
 	int				player_dir;
 	int				player_walk_direction;
 	double			player_turn_direction;
@@ -79,6 +81,7 @@ int	is_vertical_wall(t_data *data, double player_mini_x, double player_mini_y, d
 int	is_horizontal_wall(t_data *data, double player_mini_x, double player_mini_y, double fov);
 int	is_wall(t_data *data, int x, int y);
 int texture_pixel(t_data *data, t_ray *ray, int i, double wall_heith);
+int	is_out_of_map(t_data *data, double player_mini_x, double player_mini_y);
 int	get_rgba(int r, int g, int b);
 
 #endif
