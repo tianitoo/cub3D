@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -6,7 +7,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/11/25 19:23:06 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/27 12:39:20 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +139,7 @@ double	get_texture_x(t_ray *ray, t_data *data)
 	return (texture_x);
 }
 
-void	split_ray(t_data *data, t_ray *ray, int win_x, int i)
+void	draw_column(t_data *data, t_ray *ray, int win_x, int i)
 {
 	int	texture_x;
 	int	texture_y;
@@ -178,13 +179,18 @@ void	draw_ray(t_data *data, t_ray *ray, int win_x)
 		data->projected_distance *= -1;
 	ray->wall_height = (SQUARE_SIZE / ray->distance) * data->projected_distance;
 	ray->wall_top = (WIN_HEIGHT / 2) - (ray->wall_height / 2);
-	split_ray(data, ray, win_x, i);
+	draw_column(data, ray, win_x, i);
 }
 
-void	draw_3d_map(t_data *data)
+/**
+ * Draws the 3D map using the provided data.
+ *
+ * @param data The data structure containing the necessary information for drawing.
+ */
+void draw_3d_map(t_data *data)
 {
-	t_ray	*ray;
-	int		i;
+	t_ray *ray;
+	int i;
 
 	ray = data->rays;
 	i = 0;
@@ -202,6 +208,7 @@ void	draw(t_data *data)
 	draw_3d_map(data);
 }
 
+// rotate the player with the left and right arrows
 void	rotate_player(t_data *data)
 {
 	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_RIGHT))
@@ -217,6 +224,7 @@ void	rotate_player(t_data *data)
 		data->player_angle += 360;
 }
 
+// check if the new position of the player is in a wall or out of the map
 int	is_valid_position(t_data *data, double new_player_x, double new_player_y)
 {
 	if (!is_wall(data, (new_player_x - SQUARE_SIZE / 10) / SQUARE_SIZE,
@@ -231,6 +239,7 @@ int	is_valid_position(t_data *data, double new_player_x, double new_player_y)
 	return (0);
 }
 
+// get the direction the player is walking to
 int	player_direction(t_data *data)
 {
 	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_W))
@@ -244,6 +253,8 @@ int	player_direction(t_data *data)
 	return (0);
 }
 
+// move the player with the A, W, S, D keys
+// the player can only move if the new position is not in a wall or out of the map
 void	move_player(t_data *data)
 {
 	double	move_step;
@@ -285,6 +296,7 @@ void	hook(void *tmp)
 	draw(data);
 }
 
+// create mlx window
 void	init_window(t_data *data)
 {
 	mlx_image_t	*img;
@@ -294,7 +306,7 @@ void	init_window(t_data *data)
 	img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	if (!img || mlx_image_to_window(data->mlx_ptr, img, 0, 0) < 0)
 	{
-		ft_printf("Errord\n");
+		ft_printf("Error\n");
 		return ;
 	}
 	data->img = img;
