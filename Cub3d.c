@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 19:24:35 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/11/29 17:16:55 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/29 18:10:45 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,7 +307,7 @@ int count_the_lines(void)
     int i = 0;
 
 
-    int fd = open("order", O_CREAT | O_RDWR, 0666);
+    int fd = open("maps/map.cub", O_CREAT | O_RDWR, 0666);
     str = get_next_line(fd);
     while (str)
     {
@@ -324,7 +324,7 @@ char **fill_string(int i)
     char *str;
     char **strs;
 
-    int fd = open("order", O_CREAT | O_RDWR, 0666);
+    int fd = open("maps/map.cub", O_CREAT | O_RDWR, 0666);
     strs = (char **)malloc((i + 1) * sizeof(char *));
     str = get_next_line(fd);
     i = 0;
@@ -409,7 +409,7 @@ char **resize_the_map(char **str)
 {
     int i;
     int j;
-    int max;
+    size_t max;
     char *tmp = NULL;
     char *tmp2 = NULL;
 
@@ -494,8 +494,9 @@ int cor_of_player(t_data *data)
         {
             if (data->map[i][j] == 'N' || data->map[i][j] == 'E' || data->map[i][j] == 'W' || data->map[i][j] == 'S')
             {
-                data->player_x = j;
-                data->player_y = i;
+                
+                data->player_x = i * SQUARE_SIZE + SQUARE_SIZE / 2;
+                data->player_y = j * SQUARE_SIZE + SQUARE_SIZE / 2;
                 data->order = data->map[i][j];
                 return (1);
             }
@@ -590,75 +591,4 @@ int fail_the_inits(t_data data)
     else if (!data.player_y)
         return (0);
     return (1);
-}
-void f()
-{
-    system("leaks cub3D");
-}
-int main()
-{
-    int j = count_the_lines();
-    char **str = fill_string(j);
-    t_data data;
-    int i = 0;
-
-    atexit(f);
-    if (!the_minimalist(str, j))
-    {
-        printf("NOT VALID\n");
-        while (str[i])
-        {
-            free(str[i]);
-            i++;
-        }
-        free(str);
-        return (0);
-    }
-    if (!inits_the_data(&data, str))
-    {
-        printf("NOT VALID\n");
-        return (0);
-    }
-    if (!fail_the_inits(data))
-    {
-        printf("NOT VALID\n");
-        return (0);
-    }
-    else
-    {
-        printf("VALID\n");
-        display_data(&data);
-        while (str[i])
-        {
-            free(str[i]);
-            i++;
-        }
-        free(str);
-        free(data.n_texture);
-        free(data.e_texture);
-        free(data.w_texture);
-        free(data.s_texture);
-        free(data.c_tab);
-        free(data.f_tab);
-        // int a = 0;
-        // int b = 0;
-        // mlx_t *ptr;
-        // mlx_image_t *img;
-        // ptr = mlx_init(1000, 1000, "CUB3D", 1);
-        // img = mlx_new_image(ptr, 1000, 1000);
-        // while(a < 1000)
-        // {
-        //     b = 0;
-        //     while(b < 1000)
-        //     {
-        //         mlx_put_pixel(img, a, b , 0xe5555FF);
-        //         b++;
-        //     }
-        //     a++;
-        // }
-        // mlx_image_to_window(ptr, img, 0, 0);
-        // mlx_loop(ptr);
-    }    
-    // exit(0);
-    return (0);
 }

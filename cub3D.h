@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:43 by hnait             #+#    #+#             */
-/*   Updated: 2023/11/29 17:15:50 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/29 17:40:35 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB3D_H
 
 # include <stdio.h>
+# include <stdbool.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -38,13 +39,6 @@
 # define EQUAL 2
 
 
-#include <stdio.h>
-#include "MLX42/include/MLX42/MLX42.h"
-#include "get_next_line.h"
-#include "libft/libft.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
 
 # define PI 3.14159265359
 
@@ -324,6 +318,273 @@ int vertical_line(t_data *data, double angle);
  */
 int get_vertical_distance(t_data *data, double angle);
 
+/**
+ * @brief Checks if a character is a whitespace character.
+ * 
+ * @param c The character to check.
+ * @return int Returns 1 if the character is a whitespace character, 0 otherwise.
+ */
+int ft_isspace(char c);
+
+/**
+ * @brief Checks if a map string is valid.
+ * 
+ * @param str The map string to check.
+ * @return int Returns 1 if the map string is valid, 0 otherwise.
+ */
+int check_the_map(char *str);
+
+/**
+ * @brief Checks if the map is valid.
+ * 
+ * @param str The map array.
+ * @param x The number of rows in the map.
+ * @param i The starting index of the map in the array.
+ * @return int Returns 1 if the map is valid, 0 otherwise.
+ */
+int check_the_map_is_valid(char **str, int x, int i);
+
+/**
+ * @brief Checks if there is only one player in the map.
+ * 
+ * @param str The map array.
+ * @param x The number of rows in the map.
+ * @param c The player character to check.
+ * @param i The starting index of the map in the array.
+ * @return int Returns 1 if there is only one player, 0 otherwise.
+ */
+int check_is_one_player(char **str, int x, char c, int i);
+
+/**
+ * @brief Checks if there is only one order (N, W, E, S) in the map.
+ * 
+ * @param str The map array.
+ * @param x The number of rows in the map.
+ * @param c The order character to check.
+ * @param i The starting index of the map in the array.
+ * @return int Returns 1 if there is only one order, 0 otherwise.
+ */
+int check_is_only_one_order(char **str, int x, char c, int i);
+
+/**
+ * @brief Checks if an element in the map is valid.
+ * 
+ * @param str The map array.
+ * @param x The number of rows in the map.
+ * @param c The element character to check.
+ * @param i The starting index of the map in the array.
+ * @return int Returns 1 if the element is valid, 0 otherwise.
+ */
+int check_element_is_valid(char **str, int x, char c, int i);
+
+/**
+ * @brief Checks if the player elements in the map are valid.
+ * 
+ * @param str The map array.
+ * @param x The number of rows in the map.
+ * @param i The starting index of the map in the array.
+ * @return int Returns 1 if the player elements are valid, 0 otherwise.
+ */
+int check_the_player_is_valid(char **str, int x, int i);
+
+/**
+ * @brief Checks if the map is valid.
+ * 
+ * @param str The map array.
+ * @param x The number of rows in the map.
+ * @param i The starting index of the map in the array.
+ * @return int Returns 1 if the map is valid, 0 otherwise.
+ */
+int the_map(char **str, int x, int i);
+
+/**
+ * @brief Checks if the first line of the map is valid.
+ * 
+ * @param str The map array.
+ * @param i The starting index of the map in the array.
+ * @return int Returns 1 if the first line of the map is valid, 0 otherwise.
+ */
+int check_the_first_of_map(char **str, int i);
+
+/**
+ * @brief Fills a string with characters to check for uniqueness.
+ * 
+ * @param str The input string.
+ * @return char* Returns the filled string.
+ */
+char *fill_the_str_to_check(char *str);
+
+/**
+ * @brief Compares two strings.
+ * 
+ * @param s1 The first string.
+ * @param s2 The second string.
+ * @return int Returns 0 if the strings are equal, a positive value if s1 is greater than s2, and a negative value if s1 is less than s2.
+ */
+int ft_strcmp(char *s1, char *s2);
+
+/**
+ * @brief Checks if the orders in the map are valid and unique.
+ * 
+ * @param str The map array.
+ * @return int Returns 1 if the orders are valid and unique, 0 otherwise.
+ */
+int check_the_orders_is_valid(char **str);
+
+/**
+ * @brief Checks if the minimalist requirements for the map are met.
+ * 
+ * @param str The map array.
+ * @param x The number of rows in the map.
+ * @return int Returns 1 if the minimalist requirements are met, 0 otherwise.
+ */
+int the_minimalist(char **str, int x);
+
+/**
+ * @brief Checks and skips leading spaces in a string.
+ * 
+ * @param str The input string.
+ * @return int Returns the index of the first non-space character.
+ */
+int check_and_skip_spaces(char *str);
+
+
+
+/**
+ * @brief Checks if a character is a whitespace character.
+ *
+ * @param c The character to check.
+ * @return 1 if the character is a whitespace character, 0 otherwise.
+ */
+int ft_isspace(char c);
+
+/**
+ * @brief Checks if a string represents a valid map.
+ *
+ * @param str The string to check.
+ * @return 1 if the string represents a valid map, 0 otherwise.
+ */
+int check_the_map(char *str);
+
+/**
+ * @brief Checks if the map is valid.
+ *
+ * @param str The map as an array of strings.
+ * @param x The number of rows in the map.
+ * @param i The starting index of the map in the array.
+ * @return 1 if the map is valid, 0 otherwise.
+ */
+int check_the_map_is_valid(char **str, int x, int i);
+
+/**
+ * @brief Checks if there is only one player in the map.
+ *
+ * @param str The map as an array of strings.
+ * @param x The number of rows in the map.
+ * @param c The player character to check.
+ * @param i The starting index of the map in the array.
+ * @return 1 if there is only one player, 0 otherwise.
+ */
+int check_is_one_player(char **str, int x, char c, int i);
+
+/**
+ * @brief Checks if there is only one order (N, W, E, S) in the map.
+ *
+ * @param str The map as an array of strings.
+ * @param x The number of rows in the map.
+ * @param c The order character to check.
+ * @param i The starting index of the map in the array.
+ * @return 1 if there is only one order, 0 otherwise.
+ */
+int check_is_only_one_order(char **str, int x, char c, int i);
+
+/**
+ * @brief Checks if an element in the map is valid.
+ *
+ * @param str The map as an array of strings.
+ * @param x The number of rows in the map.
+ * @param c The element character to check.
+ * @param i The starting index of the map in the array.
+ * @return 1 if the element is valid, 0 otherwise.
+ */
+int check_element_is_valid(char **str, int x, char c, int i);
+
+/**
+ * @brief Checks if the player in the map is valid.
+ *
+ * @param str The map as an array of strings.
+ * @param x The number of rows in the map.
+ * @param i The starting index of the map in the array.
+ * @return 1 if the player is valid, 0 otherwise.
+ */
+int check_the_player_is_valid(char **str, int x, int i);
+
+/**
+ * @brief Checks if the map is valid.
+ *
+ * @param str The map as an array of strings.
+ * @param x The number of rows in the map.
+ * @param i The starting index of the map in the array.
+ * @return 1 if the map is valid, 0 otherwise.
+ */
+int the_map(char **str, int x, int i);
+
+/**
+ * @brief Checks if the first line of the map is valid.
+ *
+ * @param str The map as an array of strings.
+ * @param i The starting index of the map in the array.
+ * @return 1 if the first line of the map is valid, 0 otherwise.
+ */
+int check_the_first_of_map(char **str, int i);
+
+/**
+ * @brief Fills a string with characters to check for uniqueness.
+ *
+ * @param str The string to fill.
+ * @return The filled string.
+ */
+char *fill_the_str_to_check(char *str);
+
+/**
+ * @brief Compares two strings.
+ *
+ * @param s1 The first string.
+ * @param s2 The second string.
+ * @return 0 if the strings are equal, a positive or negative value otherwise.
+ */
+int ft_strcmp(char *s1, char *s2);
+
+/**
+ * @brief Checks if the orders in the map are valid and unique.
+ *
+ * @param str The map as an array of strings.
+ * @return 1 if the orders are valid and unique, 0 otherwise.
+ */
+int check_the_orders_is_valid(char **str);
+
+/**
+ * @brief Checks if the map is valid according to the minimalist rules.
+ *
+ * @param str The map as an array of strings.
+ * @param x The number of rows in the map.
+ * @return 1 if the map is valid, 0 otherwise.
+ */
+int the_minimalist(char **str, int x);
+
+/**
+ * @brief Checks and skips leading spaces in a string.
+ *
+ * @param str The string to check.
+ * @return The index of the first non-space character.
+ */
+int check_and_skip_spaces(char *str);
+
+char **fill_string(int i);
+int count_the_lines(void);
+int inits_the_data(t_data *data, char **str);
+int fail_the_inits(t_data data);
+void display_data(t_data *data);
 
 int check_the_order_and_path(char *str);
 int file_exist(char  *str);

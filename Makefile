@@ -1,22 +1,3 @@
-NAME =  cub3D
-HEADER =  cub3D.h
-CFLAG = -Werror -Wall -Werror -Include 
-FRAMEWOKR = -framework Cocoa -framework OpenGL -framework IOKit
-MLX = MLX42/build/libmlx42.a -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
-SRS = Cub3d.c get_next_line.c get_next_line_utils.c c_f_color.c order_path.c 
-OBJS = $(SRS:.c=.o)
-
-all : $(NAME)
-	
-%.o : %.c cub3D.h get_next_line.h
-	cc -Werror -Wall -Werror -c $< -o $@
-	
-$(NAME) : $(OBJS)
-	@cd libft && make
-	 cc   $(CFLAG) $^ $(MLX) $(FRAMEWOKR) ./libft/libft.a -o $@ 
-
-bonus : all
-
 NAME = cub3D
 CC = cc
 FLAGS = -Wall -Wextra -Werror
@@ -37,6 +18,9 @@ SRC = main.c\
 		./horizontal.c\
 		./vertical.c\
 		./textures.c\
+		Cub3d.c\
+		c_f_color.c\
+		order_path.c\
 
 LIBFTSRC = ./libft/ft_atoi.c\
 		./libft/ft_bzero.c\

@@ -359,66 +359,105 @@ int	create_rays(t_data *data)
 
 int	main(void)
 {
-	int		fd;
-	char	*line;
-	char	**map;
+	// int		fd;
+	// char	*line;
+	// char	**map;
 	int		i;
 	t_data	*data;
-	int		j;
 
-	j = 0;
 	data = (t_data *)malloc(sizeof(t_data));
-	map = (char **)malloc(sizeof(char *) * 110);
-	fd = open("maps/map.cub", O_RDONLY);
-	if (fd == -1)
-	{
-		ft_printf("Error\n");
-		return (0);
-	}
 	i = 0;
-	line = get_next_line(fd);
-	data->map_width = 0;
-	data->map_height = 0;
-	while (line)
-	{
-		data->map_height++;
-		if (line && line[ft_strlen(line) - 1] == '\n')
-			line[ft_strlen(line) - 1] = '\0';
-		if (line && line[0] == '1')
-		{
-			if (data->map_width < (int) ft_strlen(line))
-				data->map_width = ft_strlen(line);
-		}
-		map[i] = line;
-		line = get_next_line(fd);
-		i++;
+	int j = count_the_lines();
+    char **str = fill_string(j);\
+    if (!the_minimalist(str, j))
+    {
+        printf("NOT VALID1\n");
+        while (str[i])
+        {
+            free(str[i]);
+            i++;
+        }
+        free(str);
+        return (0);
+    }
+    if (!inits_the_data(data, str))
+    {
+        printf("NOT VALID2\n");
+        return (0);
+    }
+    if (!fail_the_inits(*data))
+    {
+        printf("NOT VALID3\n");
+        return (0);
+    }
+    else
+    {
+        printf("VALID\n");
+        display_data(data);
+        // while (str[i])
+        // {
+        //     free(str[i]);
+        //     i++;
+        // }
+        // free(str);
+        // free(data->n_texture);
+        // free(data->e_texture);
+        // free(data->w_texture);
+        // free(data->s_texture);
+        // free(data->c_tab);
+        // free(data->f_tab);
 	}
-	map[i] = NULL;
-	data->map = map;
-	close(fd);
+
+	// j = 0;
+	// fd = open("maps/map.cub", O_RDONLY);
+	// if (fd == -1)
+	// {
+	// 	ft_printf("Error\n");
+	// 	return (0);
+	// }
+	// i = 0;
+	// line = get_next_line(fd);
+	// data->map_width = 0;
+	// data->map_height = 0;
+	// while (line)
+	// {
+	// 	data->map_height++;
+	// 	if (line && line[ft_strlen(line) - 1] == '\n')
+	// 		line[ft_strlen(line) - 1] = '\0';
+	// 	if (line && line[0] == '1')
+	// 	{
+	// 		if (data->map_width < (int) ft_strlen(line))
+	// 			data->map_width = ft_strlen(line);
+	// 	}
+	// 	map[i] = line;
+	// 	line = get_next_line(fd);
+	// 	i++;
+	// }
+
+
+	// map[i] = NULL;
+	// data->map = map;
+	// close(fd);
 	i = 0;
-	data->player_dir = -1;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == 'N')
+	// while (map[i])
+	// {
+	// 	j = 0;
+	// 	// while (map[i][j])
+	// 	// {
+			if (data->order == 'N')
 				data->player_dir = NORTH;
-			else if (map[i][j] == 'S')
+			else if (data->order == 'S')
 				data->player_dir = SOUTH;
-			else if (map[i][j] == 'E')
+			else if (data->order == 'E')
 				data->player_dir = EAST;
-			else if (map[i][j] == 'W')
+			else if (data->order == 'W')
 				data->player_dir = WEST;
-			if (data->player_dir != -1)
-				break ;
-			j++;
-		}
-		if (data->player_dir != -1)
-			break ;
-		i++;
-	}
+			// j++;
+	// 	}
+	// 	if (data->player_dir != -1)
+	// 		break ;
+	// 	i++;
+	// }
 	data->textures = malloc (sizeof(mlx_texture_t *) * 4);
 	if (!data->textures)
 		return (0);
@@ -426,8 +465,6 @@ int	main(void)
 	data->textures[SOUTH] = mlx_load_png("textures/S.png");
 	data->textures[EAST] = mlx_load_png("textures/E.png");
 	data->textures[WEST] = mlx_load_png("textures/W.png");
-	data->player_x = i * SQUARE_SIZE + SQUARE_SIZE / 2;
-	data->player_y = j * SQUARE_SIZE + SQUARE_SIZE / 2;
 	data->player_walk_direction = 0;
 	data->player_turn_direction = 0;
 	if (data->player_dir == NORTH)
@@ -440,6 +477,8 @@ int	main(void)
 		data->player_angle = 180;
 	if (!create_rays(data))
 		return (0);
+        display_data(data);
+        
 	init_window(data);
 	return (0);
 }
