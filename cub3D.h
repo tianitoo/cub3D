@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:43 by hnait             #+#    #+#             */
-/*   Updated: 2023/11/27 13:34:52 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/29 17:15:50 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include "./MLX42/include/MLX42/MLX42.h"
-# include "libft/libft.h"
 # include "gnl/get_next_line.h"
-# include "ft_printf/ft_printf.h"
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
@@ -38,6 +36,15 @@
 # define HORIZONTAL 0
 # define VERTICAL 1
 # define EQUAL 2
+
+
+#include <stdio.h>
+#include "MLX42/include/MLX42/MLX42.h"
+#include "get_next_line.h"
+#include "libft/libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 # define PI 3.14159265359
 
@@ -71,6 +78,14 @@ typedef struct s_data
 	double			ray_hit_vert;
 	int				checked_horizontal;
 	int				checked_vertical;
+
+	int				order;
+	char			*n_texture;
+	char			*s_texture;
+	char			*w_texture;
+	char			*e_texture;
+	int				*c_tab;
+	int				*f_tab;
 	mlx_texture_t	**textures;
 	t_ray			*rays;
 }	t_data;
@@ -308,5 +323,17 @@ int vertical_line(t_data *data, double angle);
  * @return The vertical distance to the nearest wall.
  */
 int get_vertical_distance(t_data *data, double angle);
+
+
+int check_the_order_and_path(char *str);
+int file_exist(char  *str);
+char *return_the_path(char *str, int i);
+int check_the_order(char *str);
+int skips_spaces(char *str);
+int check_floor_sky(char* str);
+int check_the_color(char *str);
+int find_the_comma(char * str, int i);
+int ft_isspace(char c);
+char * delete_last_spaces(char *s);
 
 #endif

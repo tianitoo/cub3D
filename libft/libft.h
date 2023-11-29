@@ -19,6 +19,7 @@
 # include <fcntl.h> 
 # include <unistd.h>
 # include "../cub3D.h"
+# include "../ft_printf/ft_printf.h"
 
 typedef struct s_list
 {
