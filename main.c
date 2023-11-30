@@ -159,9 +159,11 @@ void	draw_column(t_data *data, t_ray *ray, int win_x, int i)
 						texture_x, texture_y));
 			}
 			if (i < ray->wall_top)
-				mlx_put_pixel(data->img, win_x, i, get_rgba(100, 150, 255));
+				mlx_put_pixel(data->img, win_x, i, get_rgba(data->c_tab[0],
+						data->c_tab[1], data->c_tab[2]));
 			if (i >= ray->wall_top + ray->wall_height)
-				mlx_put_pixel(data->img, win_x, i, get_rgba(100, 200, 150));
+				mlx_put_pixel(data->img, win_x, i, get_rgba(data->f_tab[0],
+						data->f_tab[1], data->f_tab[2]));
 		}
 		i++;
 	}
