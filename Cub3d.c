@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 19:24:35 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/11/29 18:10:45 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/30 14:39:22 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,13 +301,14 @@ int check_and_skip_spaces(char *str)
     return (0);
 }
 
-int count_the_lines(void)
+int count_the_lines(char *path)
 {
     char *str;
     int i = 0;
+    int		fd;
 
-
-    int fd = open("maps/map.cub", O_CREAT | O_RDWR, 0666);
+	i = 0;
+	fd = open(path, O_RDWR, 0666);
     str = get_next_line(fd);
     while (str)
     {
@@ -319,12 +320,13 @@ int count_the_lines(void)
     close(fd);
     return (i);
 }
-char **fill_string(int i)
+char **fill_string(int i, char *path)
 {
     char *str;
     char **strs;
+    int fd;
 
-    int fd = open("maps/map.cub", O_CREAT | O_RDWR, 0666);
+    fd = open(path, O_CREAT | O_RDWR, 0666);
     strs = (char **)malloc((i + 1) * sizeof(char *));
     str = get_next_line(fd);
     i = 0;

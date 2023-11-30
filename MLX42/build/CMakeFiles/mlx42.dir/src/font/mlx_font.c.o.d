@@ -1,6 +1,6 @@
 CMakeFiles/mlx42.dir/src/font/mlx_font.c.o: \
-  /Users/hnait/Desktop/cub/MLX42/src/font/mlx_font.c \
-  /Users/hnait/Desktop/cub/MLX42/src/font/font.h \
+  /Users/hachahbo/Desktop/Cub3d/MLX42/src/font/mlx_font.c \
+  /Users/hachahbo/Desktop/Cub3d/MLX42/src/font/font.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include/stdint.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/stdint.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/sys/_types/_int8_t.h \
@@ -28,12 +28,12 @@ CMakeFiles/mlx42.dir/src/font/mlx_font.c.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/sys/_types/_uintptr_t.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/_types/_intmax_t.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/_types/_uintmax_t.h \
-  /Users/hnait/Desktop/cub/MLX42/include/MLX42/MLX42_Int.h \
-  /Users/hnait/Desktop/cub/MLX42/include/MLX42/MLX42.h \
+  /Users/hachahbo/Desktop/Cub3d/MLX42/include/MLX42/MLX42_Int.h \
+  /Users/hachahbo/Desktop/Cub3d/MLX42/include/MLX42/MLX42.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include/__stddef_max_align_t.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include/stdbool.h \
-  /Users/hnait/Desktop/cub/MLX42/include/lodepng/lodepng.h \
+  /Users/hachahbo/Desktop/Cub3d/MLX42/include/lodepng/lodepng.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/string.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/_types.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/Availability.h \
@@ -46,9 +46,9 @@ CMakeFiles/mlx42.dir/src/font/mlx_font.c.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/secure/_strings.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/secure/_common.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/secure/_string.h \
-  /Users/hnait/Desktop/cub/MLX42/include/glad/glad.h \
-  /Users/hnait/Desktop/cub/MLX42/include/KHR/khrplatform.h \
-  /Users/hnait/.brew/include/GLFW/glfw3.h \
+  /Users/hachahbo/Desktop/Cub3d/MLX42/include/glad/glad.h \
+  /Users/hachahbo/Desktop/Cub3d/MLX42/include/KHR/khrplatform.h \
+  /Users/hachahbo/.brew/include/GLFW/glfw3.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/stdlib.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/sys/wait.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/sys/_types/_pid_t.h \

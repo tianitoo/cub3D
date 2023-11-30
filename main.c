@@ -357,7 +357,7 @@ int	create_rays(t_data *data)
 	return (1);
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	// int		fd;
 	// char	*line;
@@ -367,8 +367,9 @@ int	main(void)
 
 	data = (t_data *)malloc(sizeof(t_data));
 	i = 0;
-	int j = count_the_lines();
-    char **str = fill_string(j);\
+	(void)ac;
+	int j = count_the_lines(av[1]);
+    char **str = fill_string(j, av[1]);
     if (!the_minimalist(str, j))
     {
         printf("NOT VALID1\n");
@@ -407,7 +408,6 @@ int	main(void)
         // free(data->c_tab);
         // free(data->f_tab);
 	}
-
 	// j = 0;
 	// fd = open("maps/map.cub", O_RDONLY);
 	// if (fd == -1)

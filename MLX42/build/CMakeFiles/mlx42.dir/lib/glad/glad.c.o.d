@@ -1,5 +1,5 @@
 CMakeFiles/mlx42.dir/lib/glad/glad.c.o: \
-  /Users/hnait/Desktop/cub/MLX42/lib/glad/glad.c \
+  /Users/hachahbo/Desktop/Cub3d/MLX42/lib/glad/glad.c \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/stdio.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/_stdio.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/sys/cdefs.h \
@@ -77,7 +77,7 @@ CMakeFiles/mlx42.dir/lib/glad/glad.c.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/strings.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/secure/_strings.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/secure/_string.h \
-  /Users/hnait/Desktop/cub/MLX42/include/glad/glad.h \
-  /Users/hnait/Desktop/cub/MLX42/include/KHR/khrplatform.h \
+  /Users/hachahbo/Desktop/Cub3d/MLX42/include/glad/glad.h \
+  /Users/hachahbo/Desktop/Cub3d/MLX42/include/KHR/khrplatform.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/usr/include/dlfcn.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include/stdbool.h

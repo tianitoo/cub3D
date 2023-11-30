@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:43 by hnait             #+#    #+#             */
-/*   Updated: 2023/11/29 17:40:35 by hnait            ###   ########.fr       */
+/*   Updated: 2023/11/30 14:40:50 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,14 @@ typedef struct s_data
 	mlx_t			*mlx_ptr;
 	void			*mlx_win;
 	mlx_image_t		*img;
+	
 	char			**map;
 	int				map_width;
 	int				map_height;
 	double			player_x;
 	double			player_y;
 	double			player_angle;
+
 	double			projected_distance;
 	int				player_dir;
 	int				player_walk_direction;
@@ -580,8 +582,8 @@ int the_minimalist(char **str, int x);
  */
 int check_and_skip_spaces(char *str);
 
-char **fill_string(int i);
-int count_the_lines(void);
+char **fill_string(int i, char *path);
+int count_the_lines(char *path);
 int inits_the_data(t_data *data, char **str);
 int fail_the_inits(t_data data);
 void display_data(t_data *data);
