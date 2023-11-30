@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 19:24:35 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/11/30 14:39:22 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/11/30 17:10:51 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -521,6 +521,20 @@ void init_data(t_data *data)
     data->player_y = 0;
     data->map = NULL;
 }
+void  map_height_width(t_data *data)
+{
+    int i;
+    int j;
+
+    i = 0;
+    j = 0;
+    while(data->map[i])
+        i++;
+    data->map_height = i;
+    data->map_width = ft_strlen(data->map[j]);
+    printf("data->he %d", data->map_height);
+    printf("data->wid %d", data->map_width);
+}
 int inits_the_data(t_data *data, char **str)
 {
     int i;
@@ -535,6 +549,7 @@ int inits_the_data(t_data *data, char **str)
     data->map = fill_the_map(str, i);
     if (!cor_of_player(data))
         return (0);
+    map_height_width(data);
     return (1);
 }
 void display_data(t_data *data)
