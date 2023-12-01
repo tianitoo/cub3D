@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   c_f_color.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:08:53 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/11/11 00:53:47 by hamza            ###   ########.fr       */
+/*   Updated: 2023/12/01 15:30:54 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,39 +99,32 @@ char * delete_last_spaces(char *s)
     // printf("tetse ->>> %s\n" , str);
     return(str);
 }
-int check_floor_sky(char* str)
+
+int	check_floor_sky(char *str)
 {
-    int i;
-    char *s;
-    char *st;
-    
-    i = skips_spaces(str);
-    st = NULL;
-    while(str[i])
-    {
-        if((str[i] == 'C' || str[i] == 'F'))
-        {
-            s = ft_strdup(str + 1);
-            i = skips_spaces(s);
-            free(s);
-            i++;
-            if(ft_isspace(str[i - 1]))
-            {
-                s = ft_strdup(str + i);
-                st = delete_last_spaces(s);
-                if(check_the_color(st))
-                {
-                    free(s);
-                    free(st);
-                    return (2);
-                }
-                free(s);
-                free(st);
-                break;
-            }
-            
-        }
-        i++;
-    }
-    return (0);
+	int		i;
+	char	*s;
+	char	*st;
+
+	i = skips_spaces(str);
+	while (str[i])
+	{
+		if (str[i] == 'C' || str[i] == 'F')
+		{
+			s = ft_strdup(str + 1);
+			i = skips_spaces(s);
+			free(s);
+			i++;
+			if (ft_isspace(str[i - 1]))
+			{
+				s = ft_strdup(str + i);
+				st = delete_last_spaces(s);
+				if (check_the_color(st))
+					return (free(st), free(s), 2);
+				return (free(s), free(st), 0);
+			}
+		}
+		i++;
+	}
+	return (0);
 }

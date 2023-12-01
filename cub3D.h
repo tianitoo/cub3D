@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:43 by hnait             #+#    #+#             */
-/*   Updated: 2023/11/30 14:40:50 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:40:55 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,7 +334,7 @@ int ft_isspace(char c);
  * @param str The map string to check.
  * @return int Returns 1 if the map string is valid, 0 otherwise.
  */
-int check_the_map(char *str);
+int check_the_map(char **str, int i);
 
 /**
  * @brief Checks if the map is valid.
@@ -466,7 +466,7 @@ int ft_isspace(char c);
  * @param str The string to check.
  * @return 1 if the string represents a valid map, 0 otherwise.
  */
-int check_the_map(char *str);
+int check_the_map(char **str, int i);
 
 /**
  * @brief Checks if the map is valid.
@@ -587,6 +587,8 @@ int count_the_lines(char *path);
 int inits_the_data(t_data *data, char **str);
 int fail_the_inits(t_data data);
 void display_data(t_data *data);
+void	free_two_d(char **str);
+int is_empty(char *str);
 
 int check_the_order_and_path(char *str);
 int file_exist(char  *str);

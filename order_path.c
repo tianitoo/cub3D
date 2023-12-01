@@ -3,27 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   order_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:10:34 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/11/29 17:18:44 by hnait            ###   ########.fr       */
+/*   Updated: 2023/12/01 14:35:21 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int skips_spaces(char *str)
+int	skips_spaces(char *str)
 {
-    int  i;
-    i = 0;
-    while(str[i])
-    {
-        if(ft_isspace(str[i]))
-            i++;
-        else
-            break;
-    }
-    return(i);
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isspace(str[i]))
+			i++;
+		else
+			break ;
+	}
+	return (i);
 } 
 
 int check_the_order(char *str)
@@ -85,32 +86,31 @@ int file_exist(char  *str)
     return (1);
 }
 
-int check_the_order_and_path(char *str)
+int	check_the_order_and_path(char *str)
 {
-    char    *s;
-    char    *st;
-    int     i;
-	
-    i = 0;
-    if(!check_the_order(str))
-        return(0);
-    i = check_the_order(str);
-    while(str[i])
-    {
-        if(ft_isspace(str[i]))
-            i++;
-        else
-            break;
-    }
-    s = ft_strdup(str + i);
-    st = delete_last_spaces(s);
-    if(!ft_strlen(st) || !file_exist(st))
-    {
-	    free(s);
-        free(st);
-        return(0);
-    }
+	char	*s;
+	char	*st;
+	int		i;
+
+	i = 0;
+	if (!check_the_order(str))
+		return (0);
+	i = check_the_order(str);
+	while (str[i])
+	{
+		if (ft_isspace(str[i]))
+			i++;
+		else
+			break ;
+	}
+	s = ft_strdup(str + i);
+	st = delete_last_spaces(s);
+	if (!is_empty(st) || !file_exist(st))
+	{
+		free(s);
+		free(st);
+		return (0);
+	}
 	free(s);
-    free(st);
-	return (1);
+	return (free(st), 1);
 }

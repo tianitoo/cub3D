@@ -364,23 +364,19 @@ int	main(int ac, char **av)
 	// char	**map;
 	int		i;
 	t_data	*data;
+	char **str;
 
 	data = (t_data *)malloc(sizeof(t_data));
 	i = 0;
-	(void)ac;
+	if(ac != 2 || !count_the_lines(av[1]))
+		return(printf("NOT VALID\n"),0);
 	int j = count_the_lines(av[1]);
-    char **str = fill_string(j, av[1]);
-    if (!the_minimalist(str, j))
-    {
-        printf("NOT VALID1\n");
-        while (str[i])
-        {
-            free(str[i]);
-            i++;
-        }
-        free(str);
-        return (0);
-    }
+    str = fill_string(j, av[1]);
+ 	if (!the_minimalist(str, j))
+	{
+		printf("NOT VALID\n");
+		return (free_two_d(str), 0);
+	}
     if (!inits_the_data(data, str))
     {
         printf("NOT VALID2\n");
