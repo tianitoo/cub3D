@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/12/02 13:32:14 by hnait            ###   ########.fr       */
+/*   Updated: 2023/12/02 15:38:24 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_wall(t_data *data, int x, int y)
 	return (0);
 }
 
-void	set_ray_direction(t_ray *ray, double ray_angle, int direction)
+void set_ray_direction(t_ray *ray, double ray_angle, int direction)
 {
 	if (direction == HORIZONTAL)
 	{
@@ -203,12 +203,6 @@ void	draw_3d_map(t_data *data)
 	}
 }
 
-void	draw(t_data *data)
-{
-	cast_rays(data);
-	draw_3d_map(data);
-}
-
 void	rotate_player(t_data *data)
 {
 	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_RIGHT))
@@ -289,7 +283,8 @@ void	hook(void *tmp)
 		exit(0);
 	rotate_player(data);
 	move_player(data);
-	draw(data);
+	cast_rays(data);
+	draw_3d_map(data);
 }
 
 // create mlx window
