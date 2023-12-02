@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:08:53 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/02 16:23:12 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/02 18:50:41 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	free_d_strs(char **strs)
 	}
 	free(strs);
 }
+
 
 int	while_of_check_the_color(int i, char *str)
 {
@@ -56,6 +57,8 @@ int	check_the_color(char *str)
 	n = 0;
 	strs = ft_split(str, ',');
 	i = 0;
+	if (!check_coma(str))
+		return (0);
 	while (strs[i])
 	{
 		if (!while_of_check_the_color(i, strs[i]))

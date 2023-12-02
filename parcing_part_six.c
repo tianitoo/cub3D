@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parcing_part_six.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:12:34 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/02 17:15:43 by hnait            ###   ########.fr       */
+/*   Updated: 2023/12/02 18:43:36 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	**allocate_for_d_str(char **str, int i)
 		i++;
 		j++;
 	}
+	d_str[j] = NULL;
 	return (d_str);
 }
 
@@ -41,7 +42,7 @@ char	**fill_the_map(char **str, int i)
 	d_str = allocate_for_d_str(str, i);
 	i = 0;
 	j = 0;
-	while ((d_str[i]))
+	while (d_str[i])
 	{
 		j = 0;
 		while (d_str[i][j])

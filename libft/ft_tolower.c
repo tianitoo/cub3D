@@ -20,3 +20,21 @@ int	ft_tolower(int c)
 	}
 	return (c);
 }
+
+int	check_coma(char *str)
+{
+	int	i;
+	int	x;
+
+	i = 0;
+	x = 0;
+	while (str[i])
+	{
+		if (str[i] == ',')
+			x++;
+		i++;
+	}
+	if (x != 2)
+		return (0);
+	return (1);
+}
