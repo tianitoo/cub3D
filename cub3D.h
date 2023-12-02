@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 11:45:43 by hnait             #+#    #+#             */
-/*   Updated: 2023/12/02 15:50:55 by hachahbo         ###   ########.fr       */
+/*   Created: 2023/12/02 15:53:29 by hachahbo          #+#    #+#             */
+/*   Updated: 2023/12/02 15:53:32 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -185,13 +186,6 @@ void draw_ray(t_data *data, t_ray *ray, int win_x);
  * @param data The data structure containing the map and ray information.
  */
 void draw_3d_map(t_data *data);
-
-/**
- * Draws the entire scene using the provided data.
- *
- * @param data The data structure containing the map and ray information.
- */
-void draw(t_data *data);
 
 /**
  * Rotates the player based on the left and right arrow keys.

@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/11/27 12:39:20 by hnait            ###   ########.fr       */
+/*   Updated: 2023/12/02 15:38:24 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +33,7 @@ int	is_wall(t_data *data, int x, int y)
 	return (0);
 }
 
-void	set_ray_direction(t_ray *ray, double ray_angle, int direction)
+void set_ray_direction(t_ray *ray, double ray_angle, int direction)
 {
 	if (direction == HORIZONTAL)
 	{
@@ -139,6 +138,16 @@ double	get_texture_x(t_ray *ray, t_data *data)
 	return (texture_x);
 }
 
+void	draw_background(t_data *data, int win_x, int i, t_ray *ray)
+{
+	if (i < ray->wall_top)
+		mlx_put_pixel(data->img, win_x, i, get_rgba(data->c_tab[0],
+				data->c_tab[1], data->c_tab[2]));
+	if (i >= ray->wall_top + ray->wall_height)
+		mlx_put_pixel(data->img, win_x, i, get_rgba(data->f_tab[0],
+				data->f_tab[1], data->f_tab[2]));
+}
+
 void	draw_column(t_data *data, t_ray *ray, int win_x, int i)
 {
 	int	texture_x;
@@ -158,12 +167,7 @@ void	draw_column(t_data *data, t_ray *ray, int win_x, int i)
 					get_pixel_color(data->textures[ray->direction],
 						texture_x, texture_y));
 			}
-			if (i < ray->wall_top)
-				mlx_put_pixel(data->img, win_x, i, get_rgba(data->c_tab[0],
-						data->c_tab[1], data->c_tab[2]));
-			if (i >= ray->wall_top + ray->wall_height)
-				mlx_put_pixel(data->img, win_x, i, get_rgba(data->f_tab[0],
-						data->f_tab[1], data->f_tab[2]));
+			draw_background(data, win_x, i, ray);
 		}
 		i++;
 	}
@@ -184,15 +188,10 @@ void	draw_ray(t_data *data, t_ray *ray, int win_x)
 	draw_column(data, ray, win_x, i);
 }
 
-/**
- * Draws the 3D map using the provided data.
- *
- * @param data The data structure containing the necessary information for drawing.
- */
-void draw_3d_map(t_data *data)
+void	draw_3d_map(t_data *data)
 {
-	t_ray *ray;
-	int i;
+	t_ray	*ray;
+	int		i;
 
 	ray = data->rays;
 	i = 0;
@@ -204,13 +203,6 @@ void draw_3d_map(t_data *data)
 	}
 }
 
-void	draw(t_data *data)
-{
-	cast_rays(data);
-	draw_3d_map(data);
-}
-
-// rotate the player with the left and right arrows
 void	rotate_player(t_data *data)
 {
 	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_RIGHT))
@@ -226,7 +218,6 @@ void	rotate_player(t_data *data)
 		data->player_angle += 360;
 }
 
-// check if the new position of the player is in a wall or out of the map
 int	is_valid_position(t_data *data, double new_player_x, double new_player_y)
 {
 	if (!is_wall(data, (new_player_x - SQUARE_SIZE / 10) / SQUARE_SIZE,
@@ -241,7 +232,6 @@ int	is_valid_position(t_data *data, double new_player_x, double new_player_y)
 	return (0);
 }
 
-// get the direction the player is walking to
 int	player_direction(t_data *data)
 {
 	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_W))
@@ -255,8 +245,6 @@ int	player_direction(t_data *data)
 	return (0);
 }
 
-// move the player with the A, W, S, D keys
-// the player can only move if the new position is not in a wall or out of the map
 void	move_player(t_data *data)
 {
 	double	move_step;
@@ -295,7 +283,8 @@ void	hook(void *tmp)
 		exit(0);
 	rotate_player(data);
 	move_player(data);
-	draw(data);
+	cast_rays(data);
+	draw_3d_map(data);
 }
 
 // create mlx window
@@ -359,103 +348,8 @@ int	create_rays(t_data *data)
 	return (1);
 }
 
-int	main(int ac, char **av)
+int	import_textures(t_data *data)
 {
-	// int		fd;
-	// char	*line;
-	// char	**map;
-	int		i;
-	t_data	*data;
-	char **str;
-
-	data = (t_data *)malloc(sizeof(t_data));
-	i = 0;
-	if(ac != 2 || !count_the_lines(av[1]))
-		return(printf("NOT VALID\n"),0);
-	int j = count_the_lines(av[1]);
-    str = fill_string(j, av[1]);
- 	if (!the_minimalist(str, j))
-	{
-		printf("NOT VALID\n");
-		return (free_two_d(str), 0);
-	}
-    if (!inits_the_data(data, str))
-    {
-        printf("NOT VALID2\n");
-        return (0);
-    }
-    if (!fail_the_inits(*data))
-    {
-        printf("NOT VALID3\n");
-        return (0);
-    }
-    else
-    {
-        printf("VALID\n");
-        display_data(data);
-        // while (str[i])
-        // {
-        //     free(str[i]);
-        //     i++;
-        // }
-        // free(str);
-        // free(data->n_texture);
-        // free(data->e_texture);
-        // free(data->w_texture);
-        // free(data->s_texture);
-        // free(data->c_tab);
-        // free(data->f_tab);
-	}
-	// j = 0;
-	// fd = open("maps/map.cub", O_RDONLY);
-	// if (fd == -1)
-	// {
-	// 	ft_printf("Error\n");
-	// 	return (0);
-	// }
-	// i = 0;
-	// line = get_next_line(fd);
-	// data->map_width = 0;
-	// data->map_height = 0;
-	// while (line)
-	// {
-	// 	data->map_height++;
-	// 	if (line && line[ft_strlen(line) - 1] == '\n')
-	// 		line[ft_strlen(line) - 1] = '\0';
-	// 	if (line && line[0] == '1')
-	// 	{
-	// 		if (data->map_width < (int) ft_strlen(line))
-	// 			data->map_width = ft_strlen(line);
-	// 	}
-	// 	map[i] = line;
-	// 	line = get_next_line(fd);
-	// 	i++;
-	// }
-
-
-	// map[i] = NULL;
-	// data->map = map;
-	// close(fd);
-	i = 0;
-	// while (map[i])
-	// {
-	// 	j = 0;
-	// 	// while (map[i][j])
-	// 	// {
-			if (data->order == 'N')
-				data->player_dir = NORTH;
-			else if (data->order == 'S')
-				data->player_dir = SOUTH;
-			else if (data->order == 'E')
-				data->player_dir = EAST;
-			else if (data->order == 'W')
-				data->player_dir = WEST;
-			// j++;
-	// 	}
-	// 	if (data->player_dir != -1)
-	// 		break ;
-	// 	i++;
-	// }
 	data->textures = malloc (sizeof(mlx_texture_t *) * 4);
 	if (!data->textures)
 		return (0);
@@ -463,6 +357,45 @@ int	main(int ac, char **av)
 	data->textures[SOUTH] = mlx_load_png("textures/S.png");
 	data->textures[EAST] = mlx_load_png("textures/E.png");
 	data->textures[WEST] = mlx_load_png("textures/W.png");
+	return (1);
+}
+
+int	check_args(int ac, char **av, t_data *data)
+{
+	char	**str;
+	int		j;
+
+	if (ac != 2 || !count_the_lines(av[1]))
+		return (printf("NOT VALID1\n"), 0);
+	j = count_the_lines(av[1]);
+	str = fill_string(j, av[1]);
+	if (!the_minimalist(str, j))
+	{
+		printf("NOT VALID\n");
+		return (free_two_d(str), 0);
+	}
+	if (!inits_the_data(data, str))
+	{
+		printf("NOT VALID2\n");
+		return (0);
+	}
+	if (!fail_the_inits(*data))
+	{
+		printf("NOT VALID3\n");
+		return (0);
+	}
+	return (1);
+}
+
+int	main(int ac, char **av)
+{
+	t_data	*data;
+
+	data = (t_data *)malloc(sizeof(t_data));
+	if (!check_args(ac, av, data))
+		return (0);
+	if (!import_textures(data))
+		return (0);
 	data->player_walk_direction = 0;
 	data->player_turn_direction = 0;
 	if (data->player_dir == NORTH)
@@ -475,8 +408,8 @@ int	main(int ac, char **av)
 		data->player_angle = 180;
 	if (!create_rays(data))
 		return (0);
-        display_data(data);
-        
 	init_window(data);
 	return (0);
 }
+	// if (!display_data(data))
+	// 	return (0);

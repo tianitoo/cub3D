@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/28 19:24:35 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/02 15:48:53 by hachahbo         ###   ########.fr       */
+/*   Created: 2023/12/02 15:52:49 by hachahbo          #+#    #+#             */
+/*   Updated: 2023/12/02 15:53:18 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,7 +266,20 @@ char	**fill_the_map(char **str, int i)
 	return (new_map);
 }
 
-int	cor_of_player(t_data *data)
+char	set_player_direction(char c, t_data *data)
+{
+	if (c == 'N')
+		data->player_dir = NORTH;
+	else if (c == 'S')
+		data->player_dir = SOUTH;
+	else if (c == 'E')
+		data->player_dir = EAST;
+	else if (c == 'W')
+		data->player_dir = WEST;
+	return (c);
+}
+
+int cor_of_player(t_data *data)
 {
 	int	i;
 	int	j;
@@ -283,7 +296,7 @@ int	cor_of_player(t_data *data)
 			{
 				data->player_x = i * SQUARE_SIZE + SQUARE_SIZE / 2;
 				data->player_y = j * SQUARE_SIZE + SQUARE_SIZE / 2;
-				data->order = data->map[i][j];
+				data->order = set_player_direction(data->map[i][j], data);
 				return (1);
 			}
 			j++;

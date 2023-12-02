@@ -1,7 +1,7 @@
-SO ./map                  
-NO ./map
-EA ./map
-WE ./map
+SO textures/S.png
+NO textures/N.png
+EA textures/E.png
+WE textures/W.png
 
 C 20,24,20
 F 20,45,33
