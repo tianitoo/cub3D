@@ -6,30 +6,11 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:08:53 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/02 15:38:37 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/02 16:23:12 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-int	is_empty(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-	{
-		if (ft_isspace(str[i]))
-			i++;
-		else
-			break ;
-	}
-	if (!str[i])
-		return (0);
-	return (1);
-}
 
 void	free_d_strs(char **strs)
 {

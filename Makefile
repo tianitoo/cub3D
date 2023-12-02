@@ -6,7 +6,7 @@
 #    By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 15:29:47 by hnait             #+#    #+#              #
-#    Updated: 2023/12/02 15:51:11 by hachahbo         ###   ########.fr        #
+#    Updated: 2023/12/02 16:13:40 by hachahbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,9 @@ SRC = main.c\
 		parcing_part_one.c\
 		parcing_part_two.c\
 		parcing_part_three.c\
+		parcing_part_four.c\
+		parcing_part_five.c\
+		parcing_part_six.c\
 
 LIBFTSRC = ./libft/ft_atoi.c\
 		./libft/ft_bzero.c\

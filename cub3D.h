@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:53:29 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/02 15:53:32 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/02 16:13:29 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -611,5 +611,19 @@ int	part_two_of_check_order(char **str, int j, char *s);
 int	ft_strcmp(char *s1, char *s2);
 char	*fill_the_str_to_check(char *str);
 int	check_the_first_of_map(char **str, int i);
-
+int	count_the_lines(char *path);
+int	check_point_cube(char *st);
+int	find_point_cube(char *str, char *to_find);
+int	check_and_skip_spaces(char *str);
+int	the_minimalist(char **str, int x);
+char	**resize_the_map(char **str);
+char	**cont_fill_the_map(char **str, size_t max, char *tmp, char *tmp2);
+void	fill_order_and_path(t_data *data, char *str);
+int	*return_color(char *str, int i);
+char	**fill_string(int i, char *path);
+char	**allocate_for_d_str(char **str, int i);
+char	**fill_the_map(char **str, int i);
+char	set_player_direction(char c, t_data *data);
+int cor_of_player(t_data *data);
+void	init_data(t_data *data);
 #endif
