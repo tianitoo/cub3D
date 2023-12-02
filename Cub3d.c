@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 19:24:35 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/01 15:52:29 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/02 15:48:53 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,286 +15,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-
-void	free_two_d(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
-int ft_isspace(char c)
-{
-
-	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r' || c == '\0')
-		return (1);
-	return (0);
-}
-
-int	check_the_map(char **str, int i)
-{
-	int	j;
-
-	j = 0;
-	while (str[i])
-	{
-		j = 0;
-		while (str[i][j])
-		{
-			if (str[i][j] != '0' && str[i][j] != '1' 
-				&& str[i][j] != 'S' && str[i][j] != 'N' 
-				&& str[i][j] != 'W' && str[i][j] != 'E' 
-				&& !ft_isspace(str[i][j]))
-				return (0);
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
-int	check_each_element(char **str, int x, int i)
-{
-	int	j;
-
-	j = 0;
-	while (i < x - 1)
-	{
-		j = skips_spaces(str[i]);
-		if (str[i][j] != '1')
-			return (0);
-		while (str[i][j] != '\n')
-			j++;
-		j--;
-		while (str[i][j] != '1')
-		{
-			if (str[i][j] == '0' 
-				|| str[i][j] == 'S' || str[i][j] == 'N' 
-				|| str[i][j] == 'W' || str[i][j] == 'E')
-				return (0);
-			if (ft_isspace(str[i][j]))
-				j--;
-		}
-		i++;
-	}
-	return (i);
-}
-
-int	check_the_map_is_valid(char **str, int x, int i)
-{
-	int	j;
-
-	j = 0;
-	if (!check_the_map(str, i))
-		return (0);
-	while (str[i][j] != '\n')
-	{
-		if (str[i][j] != '1' && !ft_isspace(str[i][j]))
-			return (0);
-		j++;
-	}
-	i++;
-	if (!check_each_element(str, x, i))
-		return (0);
-	i = check_each_element(str, x, i);
-	j = 0;
-	while (str[i][j] != '\0')
-	{
-		if (str[i][j] != '1' && !ft_isspace(str[i][j]))
-			return (0);
-		j++;
-	}
-	return (1);
-}
-
-int check_is_one_player(char **str, int x, char c, int i)
-{
-	int j;
-	int l;
-
-	j = 0;
-	l = 0;
-	if (c == '0')
-		return (1);
-	while (i < x - 1)
-	{
-		j = 0;
-		while (str[i][j] != '\n')
-		{
-			if (str[i][j] == c)
-				l++;
-			j++;
-		}
-		i++;
-	}
-	if (l > 1)
-		return (0);
-	return (1);
-}
-
-int	check_is_only_one_order(char **str, int x, char c, int i)
-{
-	int	j;
-	int	l;
-
-	j = 0;
-	l = 0;
-	if (c == '0')
-		return (1);
-	while (i < x - 1)
-	{
-		j = 0;
-		while (str[i][j] != '\n')
-		{
-			if (str[i][j] == 'N' || str[i][j] == 'W' 
-				|| str[i][j] == 'E' || str[i][j] == 'S')
-				l++;
-			j++;
-		}
-		i++;
-	}
-	if (l > 1)
-		return (0);
-	return (1);
-}
-
-int check_element_is_valid(char **str, int x, char c, int i)
-{
-	int j;
-	int l;
-
-	i++;
-	l = i;
-	j = 0;
-	while (i < x - 1)
-	{
-		j = 0;
-		while (str[i][j] != '\n')
-		{
-			if (str[i][j] == c)
-			{
-				if (ft_isspace(str[i][j - 1]) || ft_isspace(str[i][j + 1]))
-					return 0;
-				if (ft_isspace(str[i - 1][j]) || ft_isspace(str[i + 1][j]))
-					return (0);
-			}
-			j++;
-		}
-		i++;
-	}
-	if (!check_is_one_player(str, x, c, l))
-		return (0);
-	if (!check_is_only_one_order(str, x, c, l))
-		return (0);
-	return (1);
-}
-
-int check_the_player_is_valid(char **str, int x, int i)
-{
-
-	if (!check_element_is_valid(str, x, '0', i))
-		return (0);
-	if (!check_element_is_valid(str, x, 'N', i))
-		return (0);
-	if (!check_element_is_valid(str, x, 'E', i))
-		return (0);
-	if (!check_element_is_valid(str, x, 'W', i))
-		return (0);
-	if (!check_element_is_valid(str, x, 'S', i))
-		return (0);
-	return (1);
-}
-int the_map(char **str, int x, int i)
-{
-	if (!check_the_map_is_valid(str, x, i))
-		return (0);
-	if (!check_the_player_is_valid(str, x, i))
-		return (0);
-	return (1);
-}
-
-int	check_the_first_of_map(char **str, int i)
-{
-	int	j;
-
-	j = 0;
-	if (!str[i])
-		return (0);
-	while (str[i][j] != '\n')
-	{
-		if (str[i][j] != '1' && !ft_isspace(str[i][j]))
-			return (0);
-		j++;
-	}
-	return (1);
-}
-char *fill_the_str_to_check(char *str)
-{
-	char *s;
-	int i;
-	int j;
-
-	i = check_the_order(str);
-	s = malloc(i + 1);
-	j = 0;
-	while (j < i)
-	{
-		s[j] = str[j];
-		j++;
-	}
-	s[j] = '\0';
-	return (s);
-}
-int ft_strcmp(char *s1, char *s2)
-{
-	int i;
-
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return (s1[i] - s2[i]);
-}
-int	part_two_of_check_order(char **str, int j, char *s)
-{
-	char	*st;
-
-	while (str[j])
-	{
-		if (check_the_first_of_map(str, j))
-			break ;
-		st = fill_the_str_to_check(str[j]);
-		if (!ft_strcmp(st, s))
-			return (free(st), 0);
-		free(st);
-		j++;
-	}
-	return (1);
-}
-int check_the_orders_is_valid(char **str)
-{
-	int i;
-	char *s;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (check_the_first_of_map(str, j))
-			break;
-			s = fill_the_str_to_check(str[i]);
-		j = i + 1;
-		if (!part_two_of_check_order(str, j, s))
-			return (free(s), 0);
-		free(s);
-		i++;
-	}
-	return (1);
-}
 int	the_minimalist(char **str, int x)
 {
 	int	i;
@@ -315,9 +35,9 @@ int	the_minimalist(char **str, int x)
 	return (1);
 }
 
-int check_and_skip_spaces(char *str)
+int	check_and_skip_spaces(char *str)
 {
-	int i;
+	int	i;
 
 	i = skips_spaces(str);
 	if (str[i] == '\n' || str[i] != '\0')
@@ -325,7 +45,7 @@ int check_and_skip_spaces(char *str)
 	return (0);
 }
 
-int find_point_cube(char *str, char *to_find)
+int	find_point_cube(char *str, char *to_find)
 {
 	int	i;
 	int	j;
@@ -343,24 +63,25 @@ int find_point_cube(char *str, char *to_find)
 	}
 	return (0);
 }
-int check_point_cube(char *st)
+
+int	check_point_cube(char *st)
 {
-	int i;
+	int	i;
 
 	i = find_point_cube(st, ".cube");
-	if(find_point_cube(st, ".cube") && st[i] == '\0')
-		return(1);
-	return(0);
+	if (find_point_cube(st, ".cube") && st[i] == '\0')
+		return (1);
+	return (0);
 }
 
-int count_the_lines(char *path)
+int	count_the_lines(char *path)
 {
 	char	*str;
 	int		i;
 	int		fd;
 
-	if(!check_point_cube(path))
-		return(0);
+	if (!check_point_cube(path))
+		return (0);
 	i = 0;
 	fd = open(path, O_RDWR, 0666);
 	if (fd == -1)
@@ -376,7 +97,8 @@ int count_the_lines(char *path)
 	close(fd);
 	return (i);
 }
-char **fill_string(int i, char *path)
+
+char	**fill_string(int i, char *path)
 {
 	char	*str;
 	char	**strs;
@@ -402,12 +124,14 @@ char **fill_string(int i, char *path)
 	return (strs);
 }
 
-int *return_color(char *str, int i)
+int	*return_color(char *str, int i)
 {
-	char *st = return_the_path(str, i);
-	char **d_str;
-	int *tab;
-	int j;
+	char	*st;
+	char	**d_str;
+	int		*tab;
+	int		j;
+
+	st = return_the_path(str, i);
 	tab = malloc(sizeof(int) * 3);
 	d_str = ft_split(st, ',');
 	j = 0;
@@ -417,7 +141,7 @@ int *return_color(char *str, int i)
 		j++;
 	}
 	i = 0;
-	while(d_str[i])
+	while (d_str[i])
 	{
 		free(d_str[i]);
 		i++;
@@ -426,6 +150,7 @@ int *return_color(char *str, int i)
 	free(st);
 	return (tab);
 }
+
 void	fill_order_and_path(t_data *data, char *str)
 {
 	int	i;
@@ -444,6 +169,7 @@ void	fill_order_and_path(t_data *data, char *str)
 	else if (str[i] == 'F' && ft_isspace(str[i + 1]))
 		data->f_tab = return_color(str, i + 1);
 }
+
 char	**cont_fill_the_map(char **str, size_t max, char *tmp, char *tmp2)
 {
 	int	j;
@@ -473,7 +199,7 @@ char	**cont_fill_the_map(char **str, size_t max, char *tmp, char *tmp2)
 	return (str);
 }
 
-char **resize_the_map(char **str)
+char	**resize_the_map(char **str)
 {
 	int		i;
 	size_t	max;
@@ -516,11 +242,11 @@ char	**allocate_for_d_str(char **str, int i)
 	return (d_str);
 }
 
-char **fill_the_map(char **str, int i)
+char	**fill_the_map(char **str, int i)
 {
-	int j;
-	char **d_str;
-	char **new_map;
+	int		j;
+	char	**d_str;
+	char	**new_map;
 
 	d_str = allocate_for_d_str(str, i);
 	i = 0;
@@ -540,10 +266,10 @@ char **fill_the_map(char **str, int i)
 	return (new_map);
 }
 
-int cor_of_player(t_data *data)
+int	cor_of_player(t_data *data)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -555,7 +281,6 @@ int cor_of_player(t_data *data)
 			if (data->map[i][j] == 'N' || data->map[i][j] == 'E' 
 				|| data->map[i][j] == 'W' || data->map[i][j] == 'S')
 			{
-				
 				data->player_x = i * SQUARE_SIZE + SQUARE_SIZE / 2;
 				data->player_y = j * SQUARE_SIZE + SQUARE_SIZE / 2;
 				data->order = data->map[i][j];
@@ -567,7 +292,8 @@ int cor_of_player(t_data *data)
 	}
 	return (0);
 }
-void init_data(t_data *data)
+
+void	init_data(t_data *data)
 {
 	data->c_tab = NULL;
 	data->f_tab = NULL;
@@ -580,23 +306,23 @@ void init_data(t_data *data)
 	data->player_y = 0;
 	data->map = NULL;
 }
-void  map_height_width(t_data *data)
+
+void	map_height_width(t_data *data)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
-	while(data->map[i])
+	while (data->map[i])
 		i++;
 	data->map_height = i;
 	data->map_width = ft_strlen(data->map[j]);
-	printf("data->he %d", data->map_height);
-	printf("data->wid %d", data->map_width);
 }
-int inits_the_data(t_data *data, char **str)
+
+int	inits_the_data(t_data *data, char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	init_data(data);
@@ -611,9 +337,10 @@ int inits_the_data(t_data *data, char **str)
 	map_height_width(data);
 	return (1);
 }
-void display_data(t_data *data)
+
+void	display_data(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	printf("DATA : \n");
@@ -644,7 +371,8 @@ void display_data(t_data *data)
 	printf("Coordinate of player x : %f\n", data->player_x);
 	printf("Coordinate of player y : %f\n", data->player_y);
 }
-int fail_the_inits(t_data data)
+
+int	fail_the_inits(t_data data)
 {
 	if (!data.e_texture)
 		return (0);

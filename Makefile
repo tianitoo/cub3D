@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hnait <hnait@student.42.fr>                +#+  +:+       +#+         #
+#    By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 15:29:47 by hnait             #+#    #+#              #
-#    Updated: 2023/11/30 15:45:04 by hnait            ###   ########.fr        #
+#    Updated: 2023/12/02 15:51:11 by hachahbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,9 @@ SRC = main.c\
 		Cub3d.c\
 		c_f_color.c\
 		order_path.c\
+		parcing_part_one.c\
+		parcing_part_two.c\
+		parcing_part_three.c\
 
 LIBFTSRC = ./libft/ft_atoi.c\
 		./libft/ft_bzero.c\

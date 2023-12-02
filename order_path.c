@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:10:34 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/01 14:35:21 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/02 14:30:29 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,65 +25,68 @@ int	skips_spaces(char *str)
 			break ;
 	}
 	return (i);
-} 
-
-int check_the_order(char *str)
-{
-    int i;
-
-    i = skips_spaces(str);   
-    while(str[i])
-    {
-        if(str[i] == 'N' && str[i + 1] == 'O' && ft_isspace(str[i+2]))
-            return(i+2);
-        else if(str[i] == 'S' && str[i + 1] == 'O' && ft_isspace(str[i+2]))
-            return(i+2);
-        else if(str[i] == 'W' && str[i + 1] == 'E' && ft_isspace(str[i+2]))
-            return(i+2);
-        else if(str[i] == 'E' && str[i + 1] == 'A' && ft_isspace(str[i+2]))
-            return(i+2);
-        else if(str[i] == 'C' && ft_isspace(str[i + 1]))
-            return(i+1);
-        else if(str[i] == 'F' && ft_isspace(str[i + 1]))
-            return(i+1);
-        i++;
-    }
-    return (0);
 }
 
-char *return_the_path(char *str, int i)
+int	check_the_order(char *str)
 {
-    int j;
-    char *s;
-    j = 0;
-    while(str[i])
-    {
-        if(ft_isspace(str[i]))
-            i++;
-        else
-            break;
-    }
-    j = i;
-    while(!ft_isspace(str[j]))
-        j++;
-    s = (char *)malloc(j + 1 - i);
-    j = 0;
-    while(!ft_isspace(str[i]))
-    {
-        s[j] = str[i];
-        j++;
-        i++;        
-    }
-    s[j] = '\0';
-    return(s);
+	int	i;
+
+	i = skips_spaces(str);
+	while (str[i])
+	{
+		if (str[i] == 'N' && str[i + 1] == 'O' && ft_isspace(str[i + 2]))
+			return (i + 2);
+		else if (str[i] == 'S' && str[i + 1] == 'O' && ft_isspace(str[i + 2]))
+			return (i + 2);
+		else if (str[i] == 'W' && str[i + 1] == 'E' && ft_isspace(str[i + 2]))
+			return (i + 2);
+		else if (str[i] == 'E' && str[i + 1] == 'A' && ft_isspace(str[i + 2]))
+			return (i + 2);
+		else if (str[i] == 'C' && ft_isspace(str[i + 1]))
+			return (i + 1);
+		else if (str[i] == 'F' && ft_isspace(str[i + 1]))
+			return (i + 1);
+		i++;
+	}
+	return (0);
 }
- 
-int file_exist(char  *str)
+
+char	*return_the_path(char *str, int i)
 {
-	int fd = open(str, O_RDWR);
-    if(fd == -1)
-        return (0);
-    return (1);
+	int		j;
+	char	*s;
+
+	j = 0;
+	while (str[i])
+	{
+		if (ft_isspace(str[i]))
+			i++;
+		else
+			break ;
+	}
+	j = i;
+	while (!ft_isspace(str[j]))
+		j++;
+	s = (char *)malloc(j + 1 - i);
+	j = 0;
+	while (!ft_isspace(str[i]))
+	{
+		s[j] = str[i];
+		j++;
+		i++;
+	}
+	s[j] = '\0';
+	return (s);
+}
+
+int	file_exist(char *str)
+{
+	int	fd;
+
+	fd = open(str, O_RDWR);
+	if (fd == -1)
+		return (0);
+	return (1);
 }
 
 int	check_the_order_and_path(char *str)

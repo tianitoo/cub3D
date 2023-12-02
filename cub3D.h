@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:43 by hnait             #+#    #+#             */
-/*   Updated: 2023/12/01 15:40:55 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/02 15:50:55 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -600,5 +600,22 @@ int check_the_color(char *str);
 int find_the_comma(char * str, int i);
 int ft_isspace(char c);
 char * delete_last_spaces(char *s);
+
+//parcing
+int	check_the_map_is_valid(char **str, int x, int i);
+int	check_each_element(char **str, int x, int i);
+int	check_the_map(char **str, int i);
+int	ft_isspace(char c);
+void	free_two_d(char **str);
+int	the_map(char **str, int x, int i);
+int	check_the_player_is_valid(char **str, int x, int i);
+int	check_element_is_valid(char **str, int x, char c, int i);
+int	check_is_only_one_order(char **str, int x, char c, int i);
+int	check_is_one_player(char **str, int x, char c, int i);
+int	check_the_orders_is_valid(char **str);
+int	part_two_of_check_order(char **str, int j, char *s);
+int	ft_strcmp(char *s1, char *s2);
+char	*fill_the_str_to_check(char *str);
+int	check_the_first_of_map(char **str, int i);
 
 #endif
