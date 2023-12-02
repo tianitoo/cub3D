@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 19:24:35 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/01 15:52:29 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/02 12:51:32 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -540,6 +540,19 @@ char **fill_the_map(char **str, int i)
 	return (new_map);
 }
 
+char	set_player_direction(char c, t_data *data)
+{
+	if (c == 'N')
+		data->player_dir = NORTH;
+	else if (c == 'S')
+		data->player_dir = SOUTH;
+	else if (c == 'E')
+		data->player_dir = EAST;
+	else if (c == 'W')
+		data->player_dir = WEST;
+	return (c);
+}
+
 int cor_of_player(t_data *data)
 {
 	int i;
@@ -558,7 +571,7 @@ int cor_of_player(t_data *data)
 				
 				data->player_x = i * SQUARE_SIZE + SQUARE_SIZE / 2;
 				data->player_y = j * SQUARE_SIZE + SQUARE_SIZE / 2;
-				data->order = data->map[i][j];
+				data->order = set_player_direction(data->map[i][j], data);
 				return (1);
 			}
 			j++;
