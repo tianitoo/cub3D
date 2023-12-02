@@ -6,31 +6,11 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:20:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/11/27 12:41:48 by hnait            ###   ########.fr       */
+/*   Updated: 2023/12/02 17:01:13 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3D.h"
-
-int	is_horiz_wall(t_data *data, double player_mini_x,
-	double player_mini_y, double fov)
-{
-	if (is_out_of_map(data, player_mini_x, player_mini_y) == 1)
-		return (1);
-	if (fov >= 0 && fov < 180)
-	{
-		if (is_wall(data, (player_mini_x) / SQUARE_SIZE,
-				(player_mini_y) / SQUARE_SIZE) == 1)
-			return (1);
-	}
-	if (fov >= 180)
-	{
-		if (is_wall(data, (player_mini_x - 1) / SQUARE_SIZE,
-				(player_mini_y) / SQUARE_SIZE) == 1)
-			return (1);
-	}
-	return (0);
-}
 
 void	get_horizontal_x(t_data *data, double *player_mini_x, double angle)
 {

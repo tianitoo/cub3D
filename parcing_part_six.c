@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parcing_part_six.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:12:34 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/02 16:20:44 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/02 17:15:43 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include  "cub3D.h"
+#include "cub3D.h"
 
 char	**allocate_for_d_str(char **str, int i)
 {
@@ -69,7 +69,7 @@ char	set_player_direction(char c, t_data *data)
 	return (c);
 }
 
-int cor_of_player(t_data *data)
+int	cor_of_player(t_data *data)
 {
 	int	i;
 	int	j;

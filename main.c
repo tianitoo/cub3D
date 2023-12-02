@@ -6,193 +6,24 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/12/02 15:38:24 by hnait            ###   ########.fr       */
+/*   Updated: 2023/12/02 17:58:34 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./cub3D.h"
 
-int	is_out_of_map(t_data *data, double player_mini_x, double player_mini_y)
+void	hook(void *tmp)
 {
-	if (player_mini_x <= 0 || player_mini_y <= 0
-		|| player_mini_x >= data->map_height * SQUARE_SIZE
-		|| player_mini_y >= data->map_width * SQUARE_SIZE)
-		return (1);
-	return (0);
-}
-
-int	get_rgba(int r, int g, int b)
-{
-	return (r << 24 | g << 16 | b << 8 | 255);
-}
-
-int	is_wall(t_data *data, int x, int y)
-{
-	if (data->map[x][y] == '1')
-		return (1);
-	return (0);
-}
-
-void set_ray_direction(t_ray *ray, double ray_angle, int direction)
-{
-	if (direction == HORIZONTAL)
-	{
-		if (ray_angle >= 0 && ray_angle < 180)
-			ray->direction = SOUTH;
-		else
-			ray->direction = NORTH;
-	}
-	else if (direction == VERTICAL)
-	{
-		if (ray_angle >= 90 && ray_angle < 270)
-			ray->direction = WEST;
-		else
-			ray->direction = EAST;
-	}
-	else if (direction == EQUAL)
-	{
-		if (ray->prev)
-			ray->direction = ray->prev->direction;
-		else if (ray->next)
-			ray->direction = ray->next->direction;
-	}
-}
-
-void	get_distance(t_data *data, t_ray *ray, double ray_angle)
-{
-	double	horizontal_distance;
-	double	vertical_distance;
-
-	data->ray_hit_vert = 0;
-	data->ray_hit_horz = 0;
-	horizontal_distance = get_horizontal_distance(data, ray_angle);
-	vertical_distance = get_vertical_distance(data, ray_angle);
-	if (horizontal_distance < vertical_distance)
-	{
-		ray->hit = data->ray_hit_horz;
-		ray->distance = horizontal_distance;
-		set_ray_direction(ray, ray_angle, HORIZONTAL);
-	}
-	else if (horizontal_distance > vertical_distance)
-	{
-		ray->hit = data->ray_hit_vert;
-		ray->distance = vertical_distance;
-		set_ray_direction(ray, ray_angle, VERTICAL);
-	}
-	else
-	{
-		ray->hit = data->ray_hit_horz;
-		ray->distance = horizontal_distance;
-		set_ray_direction(ray, ray_angle, EQUAL);
-	}
-}
-
-void	cast_rays(t_data *data)
-{
-	double		angle;
-	double		ray_angle;
-	t_ray		*ray;
-
-	ray = data->rays;
-	angle = -FOV / 2;
-	while (ray)
-	{
-		ray_angle = data->player_angle + angle;
-		if (ray_angle >= 360)
-			ray_angle -= 360;
-		else if (ray_angle < 0)
-			ray_angle += 360;
-		get_distance(data, ray, ray_angle);
-		ray->distance = ray->distance
-			* cos((data->player_angle - ray_angle) * PI / 180);
-		ray = ray->next;
-		angle += (double)FOV / (double)WIN_WIDTH;
-	}
-}
-
-int	get_pixel_color(mlx_texture_t *texture, uint32_t x, uint32_t y)
-{
-	int	pixel_color;
-	int	i;
-
-	if (x >= 0 && x < texture->width && y >= 0 && y < texture->height)
-	{
-		i = (y * texture->width + x) * texture->bytes_per_pixel;
-		pixel_color = get_rgba(texture->pixels[i], texture->pixels[i
-				+ 1], texture->pixels[i + 2]);
-		return (pixel_color);
-	}
-	return (0);
-}
-
-double	get_texture_x(t_ray *ray, t_data *data)
-{
-	double	tile_x;
-	int		texture_x;
-
-	if (ray->direction == NORTH || ray->direction == SOUTH)
-		tile_x = fmod(ray->hit, SQUARE_SIZE);
-	else
-		tile_x = fmod(ray->hit, SQUARE_SIZE);
-	texture_x = tile_x * (data->textures[ray->direction]->width / SQUARE_SIZE);
-	return (texture_x);
-}
-
-void	draw_background(t_data *data, int win_x, int i, t_ray *ray)
-{
-	if (i < ray->wall_top)
-		mlx_put_pixel(data->img, win_x, i, get_rgba(data->c_tab[0],
-				data->c_tab[1], data->c_tab[2]));
-	if (i >= ray->wall_top + ray->wall_height)
-		mlx_put_pixel(data->img, win_x, i, get_rgba(data->f_tab[0],
-				data->f_tab[1], data->f_tab[2]));
-}
-
-void	draw_column(t_data *data, t_ray *ray, int win_x, int i)
-{
-	int	texture_x;
-	int	texture_y;
-
-	texture_x = get_texture_x(ray, data);
-	while (i < WIN_HEIGHT)
-	{
-		if (win_x >= 0 && win_x < WIN_WIDTH && i >= 0 && i < WIN_HEIGHT)
-		{
-			if (i < (WIN_HEIGHT / 2) + (ray->wall_height / 2))
-			{
-				texture_y = (i - ray->wall_top)
-					* (data->textures[ray->direction]->height
-						/ ray->wall_height);
-				mlx_put_pixel(data->img, win_x, i,
-					get_pixel_color(data->textures[ray->direction],
-						texture_x, texture_y));
-			}
-			draw_background(data, win_x, i, ray);
-		}
-		i++;
-	}
-}
-
-void	draw_ray(t_data *data, t_ray *ray, int win_x)
-{
-	double	i;
-
-	i = 0;
-	if (win_x >= WIN_WIDTH || win_x < 0)
-		return ;
-	data->projected_distance = (WIN_WIDTH * 4) / tan(FOV / 2);
-	if (data->projected_distance < 0)
-		data->projected_distance *= -1;
-	ray->wall_height = (SQUARE_SIZE / ray->distance) * data->projected_distance;
-	ray->wall_top = (WIN_HEIGHT / 2) - (ray->wall_height / 2);
-	draw_column(data, ray, win_x, i);
-}
-
-void	draw_3d_map(t_data *data)
-{
+	t_data	*data;
 	t_ray	*ray;
 	int		i;
 
+	data = (t_data *)tmp;
+	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_ESCAPE))
+		exit(0);
+	rotate_player(data);
+	move_player(data);
+	cast_rays(data);
 	ray = data->rays;
 	i = 0;
 	while (ray)
@@ -203,91 +34,6 @@ void	draw_3d_map(t_data *data)
 	}
 }
 
-void	rotate_player(t_data *data)
-{
-	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_RIGHT))
-		data->player_turn_direction = 1;
-	else if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_LEFT))
-		data->player_turn_direction = -1;
-	else
-		data->player_turn_direction = 0;
-	data->player_angle += data->player_turn_direction * 4;
-	if (data->player_angle >= 360)
-		data->player_angle -= 360;
-	else if (data->player_angle < 0)
-		data->player_angle += 360;
-}
-
-int	is_valid_position(t_data *data, double new_player_x, double new_player_y)
-{
-	if (!is_wall(data, (new_player_x - SQUARE_SIZE / 10) / SQUARE_SIZE,
-			(new_player_y - SQUARE_SIZE / 10) / SQUARE_SIZE)
-		&& !is_wall(data, (new_player_x + SQUARE_SIZE / 10) / SQUARE_SIZE,
-			(new_player_y - SQUARE_SIZE / 10) / SQUARE_SIZE)
-		&& !is_wall(data, (new_player_x - SQUARE_SIZE / 10) / SQUARE_SIZE,
-			(new_player_y + SQUARE_SIZE / 10) / SQUARE_SIZE)
-		&& !is_wall(data, (new_player_x + SQUARE_SIZE / 10) / SQUARE_SIZE,
-			(new_player_y + SQUARE_SIZE / 10) / SQUARE_SIZE))
-		return (1);
-	return (0);
-}
-
-int	player_direction(t_data *data)
-{
-	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_W))
-		return (1);
-	else if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_S))
-		return (-1);
-	else if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_D))
-		return (2);
-	else if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_A))
-		return (-2);
-	return (0);
-}
-
-void	move_player(t_data *data)
-{
-	double	move_step;
-	double	new_player_x;
-	double	new_player_y;
-
-	new_player_x = data->player_x;
-	new_player_y = data->player_y;
-	data->player_walk_direction = player_direction(data);
-	if (data->player_walk_direction == 1 || data->player_walk_direction == -1)
-	{
-		move_step = data->player_walk_direction * 20;
-		new_player_x += sin(data->player_angle * PI / 180) * move_step;
-		new_player_y += cos(data->player_angle * PI / 180) * move_step;
-	}
-	else if (data->player_walk_direction == 2
-		|| data->player_walk_direction == -2)
-	{
-		move_step = data->player_walk_direction * 10;
-		new_player_x += cos(data->player_angle * PI / 180) * move_step;
-		new_player_y -= sin(data->player_angle * PI / 180) * move_step;
-	}
-	if (is_valid_position(data, new_player_x, new_player_y) == 1)
-	{
-		data->player_x = new_player_x;
-		data->player_y = new_player_y;
-	}
-}
-
-void	hook(void *tmp)
-{
-	t_data	*data;
-
-	data = (t_data *)tmp;
-	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_ESCAPE))
-		exit(0);
-	rotate_player(data);
-	move_player(data);
-	cast_rays(data);
-	draw_3d_map(data);
-}
-
-// create mlx window
 void	init_window(t_data *data)
 {
 	mlx_image_t	*img;
@@ -303,49 +49,6 @@ void	init_window(t_data *data)
 	data->img = img;
 	mlx_loop_hook(data->mlx_ptr, &hook, data);
 	mlx_loop(data->mlx_ptr);
-}
-
-t_ray	*new_ray(void)
-{
-	t_ray	*ray;
-
-	ray = (t_ray *)malloc(sizeof(t_ray));
-	if (!ray)
-		return (NULL);
-	ray->distance = 0;
-	ray->direction = 0;
-	ray->hit = 0;
-	ray->next = NULL;
-	ray->prev = NULL;
-	return (ray);
-}
-
-int	create_rays(t_data *data)
-{
-	double	fov;
-	t_ray	*ray;
-	t_ray	*tmp;
-
-	tmp = NULL;
-	fov = 0;
-	while (fov < FOV)
-	{
-		ray = new_ray();
-		if (!tmp)
-		{
-			data->rays = ray;
-			tmp = ray;
-		}
-		else
-		{
-			while (tmp->next)
-				tmp = tmp->next;
-			tmp->next = ray;
-			ray->prev = tmp;
-		}
-		fov += (double)FOV / (double)(WIN_WIDTH);
-	}
-	return (1);
 }
 
 int	import_textures(t_data *data)
@@ -394,6 +97,7 @@ int	main(int ac, char **av)
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!check_args(ac, av, data))
 		return (0);
+	printf("VALID\n");
 	if (!import_textures(data))
 		return (0);
 	data->player_walk_direction = 0;
@@ -411,5 +115,3 @@ int	main(int ac, char **av)
 	init_window(data);
 	return (0);
 }
-	// if (!display_data(data))
-	// 	return (0);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+         #
+#    By: hnait <hnait@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 15:29:47 by hnait             #+#    #+#              #
-#    Updated: 2023/12/02 16:13:40 by hachahbo         ###   ########.fr        #
+#    Updated: 2023/12/02 17:38:14 by hnait            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,11 @@ MLX = MLX42/build/libmlx42.a  -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/
 SRC = main.c\
 		./horizontal.c\
 		./vertical.c\
-		./textures.c\
+		./ray.c\
+		./mouvements.c\
+		./draw.c\
+		checkers.c\
+		cast_rays.c\
 		Cub3d.c\
 		c_f_color.c\
 		order_path.c\
