@@ -6,7 +6,7 @@
 #    By: hnait <hnait@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 15:29:47 by hnait             #+#    #+#              #
-#    Updated: 2023/12/02 17:38:14 by hnait            ###   ########.fr        #
+#    Updated: 2023/12/03 11:07:16 by hnait            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,6 @@ HEAD = cub3D.h
 MK = make
 LIBFT = ./libft/libft.a
 HEADLIBFT = ./libft/libft.h
-PRINTF = ./ft_printf/ft_printf.a
-HEADPRINTF = ./ft_printf/ft_printf.h
 BUILD = MLX42/build
 GNL = ./gnl/get_next_line.a
 MLX = MLX42/build/libmlx42.a  -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib"
@@ -82,13 +80,6 @@ LIBFTSRC = ./libft/ft_atoi.c\
 		./libft/ft_putnbr_fd.c\
 		./libft/libft.h
 
-PRINTFSRC = ./ft_printf/ft_printf.c\
-		./ft_printf/ft_putchar.c\
-		./ft_printf/ft_puthex.c\
-		./ft_printf/ft_putnbr.c\
-		./ft_printf/ft_putstr.c\
-		./ft_printf/ft_putunsignednbr.c\
-		./ft_printf/ft_printf.h
 
 GNLSRC = ./gnl/get_next_line.c\
 		./gnl/get_next_line.h
@@ -107,15 +98,13 @@ $(BUILD):
 $(LIBFT): $(LIBFTSRC)
 	$(MK) -C ./libft
 
-$(PRINTF): $(PRINTFSRC)
-	$(MK) -C ./ft_printf
 
 $(GNL): $(GNLSRC)
 	$(MK) -C ./gnl
 
-$(NAME): $(BUILD) $(LIBFT) $(PRINTF) $(GNL) $(OBJ)
+$(NAME): $(BUILD) $(LIBFT) $(GNL) $(OBJ)
 	$(MK) -C MLX42/build
-	$(CC) $(OBJ) $(LIBFT) $(PRINTF) $(GNL)  $(MLX) -o $(NAME)
+	$(CC) $(OBJ) $(LIBFT) $(GNL)  $(MLX) -o $(NAME)
 
 
 %.o : %.c $(HEAD)
@@ -124,13 +113,11 @@ clean:
 	$(RM) $(OBJ)
 	$(RM) main.o
 	$(MK) clean -C ./libft
-	$(MK) clean -C ./ft_printf
 	$(MK) clean -C ./gnl
 
 fclean: clean
 	$(RM) $(NAME)
 	$(RM) $(LIBFT)
-	$(RM) $(PRINTF)
 	$(RM) $(GNL)
 	$(RM) -r MLX42/build
 

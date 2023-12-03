@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/12/02 17:58:34 by hnait            ###   ########.fr       */
+/*   Updated: 2023/12/03 11:07:05 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	init_window(t_data *data)
 	img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	if (!img || mlx_image_to_window(data->mlx_ptr, img, 0, 0) < 0)
 	{
-		ft_printf("Error\n");
+		printf("Error\n");
 		return ;
 	}
 	data->img = img;

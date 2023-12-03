@@ -19,7 +19,6 @@
 # include <fcntl.h> 
 # include <unistd.h>
 # include "../cub3D.h"
-# include "../ft_printf/ft_printf.h"
 
 typedef struct s_list
 {
@@ -76,6 +75,5 @@ size_t	ft_strlcat(char *dst, const char *src,
 			size_t dstsize);
 size_t	ft_strlcpy(char *dst, const char *src,
 			size_t dstsize);
-void	free_garbage(void);
 
 #endif
