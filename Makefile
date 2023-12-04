@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hnait <hnait@student.42.fr>                +#+  +:+       +#+         #
+#    By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 15:29:47 by hnait             #+#    #+#              #
-#    Updated: 2023/12/03 11:07:16 by hnait            ###   ########.fr        #
+#    Updated: 2023/12/03 22:55:03 by hachahbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRC = main.c\
 		parcing_part_four.c\
 		parcing_part_five.c\
 		parcing_part_six.c\
+		temp_file.c\
 
 LIBFTSRC = ./libft/ft_atoi.c\
 		./libft/ft_bzero.c\

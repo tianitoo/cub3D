@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:06:28 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/02 18:31:59 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/03 22:53:19 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ int	count_the_lines(char *path)
 	int		i;
 	int		fd;
 
+	i = count_the_lines_one(path);
+	if (!check_map_is_there_is_there_new_line(i, path))
+		return (0);
 	if (!check_point_cube(path))
 		return (0);
 	i = 0;

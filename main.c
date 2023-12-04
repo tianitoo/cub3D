@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/12/03 11:07:05 by hnait            ###   ########.fr       */
+/*   Updated: 2023/12/03 22:52:00 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,13 @@ void	hook(void *tmp)
 
 	data = (t_data *)tmp;
 	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_ESCAPE))
+	{
+		mlx_delete_texture(data->textures[NORTH]);
+		mlx_delete_texture(data->textures[WEST]);
+		mlx_delete_texture(data->textures[EAST]);
+		mlx_delete_texture(data->textures[SOUTH]);
 		exit(0);
+	}
 	rotate_player(data);
 	move_player(data);
 	cast_rays(data);
@@ -69,24 +75,23 @@ int	check_args(int ac, char **av, t_data *data)
 	int		j;
 
 	if (ac != 2 || !count_the_lines(av[1]))
-		return (printf("NOT VALID1\n"), 0);
+		return (printf("Error\n"), free(data), 0);
 	j = count_the_lines(av[1]);
 	str = fill_string(j, av[1]);
 	if (!the_minimalist(str, j))
-	{
-		printf("NOT VALID\n");
-		return (free_two_d(str), 0);
-	}
+		return (printf("Error\n"), free(data), free_two_d(str), 0);
 	if (!inits_the_data(data, str))
 	{
-		printf("NOT VALID2\n");
-		return (0);
+		printf("Error\n");
+		return (free_two_d(str), 0);
 	}
 	if (!fail_the_inits(*data))
 	{
-		printf("NOT VALID3\n");
-		return (0);
+		printf("Error\n");
+		return (free_the_data(data), free(data), free_two_d(str), 0);
 	}
+	free_ss(str);
+	free(str);
 	return (1);
 }
 

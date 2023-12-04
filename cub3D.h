@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:53:29 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/02 17:39:01 by hnait            ###   ########.fr       */
+/*   Updated: 2023/12/03 22:54:33 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -651,4 +651,9 @@ char	**fill_the_map(char **str, int i);
 char	set_player_direction(char c, t_data *data);
 int		cor_of_player(t_data *data);
 void	init_data(t_data *data);
+void	free_the_data(t_data *data);
+int		complete_check_the_new_line(char **strs, int i);
+int		check_the_new_line(char **strs);
+int		check_map_is_there_is_there_new_line(int i, char *path);
+int		count_the_lines_one(char *path);
 #endif
