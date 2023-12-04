@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:45:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/12/03 11:07:05 by hnait            ###   ########.fr       */
+/*   Updated: 2023/12/04 12:40:12 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	init_window(t_data *data)
 	mlx_image_t	*img;
 
 	data->mlx_ptr = mlx_init(WIN_WIDTH,
-			WIN_HEIGHT, "cub3D", 1);
+			WIN_HEIGHT, "cub3D", 0);
 	img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	if (!img || mlx_image_to_window(data->mlx_ptr, img, 0, 0) < 0)
 	{
@@ -87,6 +87,8 @@ int	check_args(int ac, char **av, t_data *data)
 		printf("NOT VALID3\n");
 		return (0);
 	}
+	free_ss(str);
+	free(str);
 	return (1);
 }
 
