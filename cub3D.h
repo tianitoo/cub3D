@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:53:29 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/03 22:54:33 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/04 16:31:59 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,15 +273,16 @@ int		is_vertical_wall(t_data *data, double player_mini_x,
  * @param new_player_y The y-coordinate of the new player position.
  * @return 1 if the position is valid, 0 otherwise.
  */
-int	is_valid_position(t_data *data, double new_player_x, double new_player_y);
 
+int		is_valid_position(t_data *data,
+			double new_player_x, double new_player_y);
 /**
  * Creates rays for raycasting based on the given data.
  *
  * @param data The data structure containing necessary information.
  * @return 1 if the rays are successfully created, 0 otherwise.
  */
-int create_rays(t_data *data);
+int		create_rays(t_data *data);
 
 /**
  * Adjusts the y-coordinate of the player's position based on the angle.
@@ -297,7 +298,7 @@ void	get_vertical_y(t_data *data, double *player_mini_y, double angle);
  * 
  * @param data A pointer to the game data structure.
  */
-void move_player(t_data *data);
+void	move_player(t_data *data);
 
 /**
  * Adjusts the x-coordinate of the player's position based on the angle.

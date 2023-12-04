@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:10:34 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/03 15:03:28 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/04 16:47:59 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	check_the_order_and_path(char *str)
 	int		i;
 
 	i = 0;
+	s = NULL;
 	if (!check_the_order(str))
 		return (0);
 	i = check_the_order(str);
@@ -106,14 +107,12 @@ int	check_the_order_and_path(char *str)
 		else
 			break ;
 	}
+	if (!str[i])
+		return (free(s), 0);
 	s = ft_strdup(str + i);
 	st = delete_last_spaces(s);
 	if (!is_empty(st) || !file_exist(st))
-	{
-		free(s);
-		free(st);
-		return (0);
-	}
+		return (free(s), free(st), 0);
 	free(s);
 	return (free(st), 1);
 }

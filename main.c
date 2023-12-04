@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 11:45:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/12/03 22:52:00 by hachahbo         ###   ########.fr       */
+/*   Created: 2023/12/04 13:35:17 by hachahbo          #+#    #+#             */
+/*   Updated: 2023/12/04 16:41:16 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	init_window(t_data *data)
 	mlx_image_t	*img;
 
 	data->mlx_ptr = mlx_init(WIN_WIDTH,
-			WIN_HEIGHT, "cub3D", 1);
+			WIN_HEIGHT, "cub3D", 0);
 	img = mlx_new_image(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
 	if (!img || mlx_image_to_window(data->mlx_ptr, img, 0, 0) < 0)
 	{
@@ -75,15 +75,16 @@ int	check_args(int ac, char **av, t_data *data)
 	int		j;
 
 	if (ac != 2 || !count_the_lines(av[1]))
-		return (printf("Error\n"), free(data), 0);
+		return (printf("Error1\n"), free(data), 0);
 	j = count_the_lines(av[1]);
 	str = fill_string(j, av[1]);
 	if (!the_minimalist(str, j))
-		return (printf("Error\n"), free(data), free_two_d(str), 0);
+		return (printf("Error2\n"), free(data), free_two_d(str), 0);
 	if (!inits_the_data(data, str))
 	{
-		printf("Error\n");
-		return (free_two_d(str), 0);
+		printf("Error3\n");
+		free_the_data(data);
+		return (free_two_d(str), free(data), 0);
 	}
 	if (!fail_the_inits(*data))
 	{

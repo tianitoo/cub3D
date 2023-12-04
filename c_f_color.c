@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:08:53 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/03 21:47:17 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/04 16:47:34 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	free_d_strs(char **strs)
 	}
 	free(strs);
 }
-
 
 int	while_of_check_the_color(int i, char *str)
 {
@@ -103,8 +102,9 @@ int	check_floor_sky(char *str)
 	char	*s;
 	char	*st;
 
-	i = skips_spaces(str);
-	while (str[i])
+	st = NULL;
+	i = skips_spaces(str) - 1;
+	while (str[++i])
 	{
 		if (str[i] == 'C' || str[i] == 'F')
 		{
@@ -112,16 +112,15 @@ int	check_floor_sky(char *str)
 			i = skips_spaces(s);
 			free(s);
 			i++;
+			if (!str[i])
+				return (0);
 			if (ft_isspace(str[i - 1]))
 			{
-				s = ft_strdup(str + i);
-				st = delete_last_spaces(s);
-				if (check_the_color(st))
-					return (free(st), free(s), 2);
-				return (free(s), free(st), 0);
+				if (complete_check(s, st, str, i))
+					return (2);
+				return (0);
 			}
 		}
-		i++;
 	}
 	return (0);
 }
