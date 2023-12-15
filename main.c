@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:35:17 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/04 16:41:16 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:07:18 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,20 +75,19 @@ int	check_args(int ac, char **av, t_data *data)
 	int		j;
 
 	if (ac != 2 || !count_the_lines(av[1]))
-		return (printf("Error1\n"), free(data), 0);
+		return (free(data), 0);
 	j = count_the_lines(av[1]);
 	str = fill_string(j, av[1]);
 	if (!the_minimalist(str, j))
-		return (printf("Error2\n"), free(data), free_two_d(str), 0);
+		return (free(data), free_two_d(str), 0);
 	if (!inits_the_data(data, str))
 	{
-		printf("Error3\n");
 		free_the_data(data);
 		return (free_two_d(str), free(data), 0);
 	}
 	if (!fail_the_inits(*data))
 	{
-		printf("Error\n");
+		printf("Error : the data\n");
 		return (free_the_data(data), free(data), free_two_d(str), 0);
 	}
 	free_ss(str);

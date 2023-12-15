@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:39:23 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/02 15:40:39 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/12 00:10:47 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_two_d(char **str)
 
 int	ft_isspace(char c)
 {
-	if (c == ' ' || c == '\t' 
+	if (c == ' ' || c == '\t'
 		|| c == '\n' || c == '\v'
 		|| c == '\f' || c == '\r'
 		|| c == '\0')
@@ -45,11 +45,12 @@ int	check_the_map(char **str, int i)
 		j = 0;
 		while (str[i][j])
 		{
-			if (str[i][j] != '0' && str[i][j] != '1' 
-				&& str[i][j] != 'S' && str[i][j] != 'N' 
-				&& str[i][j] != 'W' && str[i][j] != 'E' 
+			if (str[i][j] != '0' && str[i][j] != '1'
+				&& str[i][j] != 'S' && str[i][j] != 'N'
+				&& str[i][j] != 'W' && str[i][j] != 'E'
 				&& !ft_isspace(str[i][j]))
-				return (0);
+				return (printf("Error map : \"%c\" inccorect element ",
+						str[i][j]), 0);
 			j++;
 		}
 		i++;
@@ -72,8 +73,8 @@ int	check_each_element(char **str, int x, int i)
 		j--;
 		while (str[i][j] != '1')
 		{
-			if (str[i][j] == '0' 
-				|| str[i][j] == 'S' || str[i][j] == 'N' 
+			if (str[i][j] == '0'
+				|| str[i][j] == 'S' || str[i][j] == 'N'
 				|| str[i][j] == 'W' || str[i][j] == 'E')
 				return (0);
 			if (ft_isspace(str[i][j]))

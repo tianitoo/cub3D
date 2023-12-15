@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 22:51:45 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/03 22:53:59 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:50:07 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,22 @@ void	free_the_data(t_data *data)
 
 int	complete_check_the_new_line(char **strs, int i)
 {
+	int	j;
+
 	while (strs[i])
 	{
 		if (!strs[i + 1])
 			break ;
-		if (!is_empty(strs[i]) && strs[i + 1][0] == '1')
-			return (0);
+		if (!is_empty(strs[i]))
+		{
+			j = 0;
+			while (strs[i + 1][j] != '\n')
+			{
+				if (strs[i + 1][j] == '1' || strs[i + 1][j] == '0')
+					return (0);
+				j++;
+			}
+		}
 		i++;
 	}
 	return (1);
@@ -58,7 +68,6 @@ int	check_the_new_line(char **strs)
 			break ;
 		i++;
 	}
-	i++;
 	if (!complete_check_the_new_line(strs, i))
 		return (0);
 	return (1);

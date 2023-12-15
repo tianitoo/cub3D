@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:12:34 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/02 18:43:36 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:57:24 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	cor_of_player(t_data *data)
 		j = 0;
 		while (data->map[i][j])
 		{
-			if (data->map[i][j] == 'N' || data->map[i][j] == 'E' 
+			if (data->map[i][j] == 'N' || data->map[i][j] == 'E'
 				|| data->map[i][j] == 'W' || data->map[i][j] == 'S')
 			{
 				data->player_x = i * SQUARE_SIZE + SQUARE_SIZE / 2;
@@ -94,7 +94,7 @@ int	cor_of_player(t_data *data)
 		}
 		i++;
 	}
-	return (0);
+	return (printf("Error : there is no player in the map "), 0);
 }
 
 void	init_data(t_data *data)
