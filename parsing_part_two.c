@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcing_part_two.c                                 :+:      :+:    :+:   */
+/*   parsing_part_two.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:45:38 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/15 18:58:44 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/16 14:20:11 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	check_is_only_one_order(char **str, int x, char c, int i)
 		i++;
 	}
 	if (l > 1)
-		return (printf("Error: there is more than one order"), 0);
+		return (0);
 	return (1);
 }
 

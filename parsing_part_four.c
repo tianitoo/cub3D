@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcing_part_four.c                                :+:      :+:    :+:   */
+/*   parsing_part_four.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:06:28 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/15 19:08:09 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/16 14:17:04 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	the_minimalist(char **str, int x)
 	while (!check_the_first_of_map(str, i))
 	{
 		if (!str[i])
-			return (0);
+			return (printf("Error : there is no map\n"), 0);
 		if (!check_the_order_and_path(str[i]) && !check_floor_sky(str[i]))
 			return (printf("Error : incorrect path or the color\n"), 0);
 		i++;
