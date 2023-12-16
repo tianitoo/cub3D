@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:52:49 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/02 18:32:44 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:11:44 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,39 +64,6 @@ int	inits_the_data(t_data *data, char **str)
 	map_height_width(data);
 	return (1);
 }
-// void	display_data(t_data *data)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	printf("DATA : \n");
-// 	printf("NO ->>>> %s\n", data->n_texture);
-// 	printf("EA ->>>> %s\n", data->e_texture);
-// 	printf("SO ->>>> %s\n", data->s_texture);
-// 	printf("WE ->>>> %s\n", data->w_texture);
-// 	printf("\nC : ");
-// 	while (i < 3)
-// 	{
-// 		printf(" %d |", data->c_tab[i]);
-// 		i++;
-// 	}
-// 	i = 0;
-// 	printf("\nF  : ");
-// 	while (i < 3)
-// 	{
-// 		printf(" %d |", data->f_tab[i]);
-// 		i++;
-// 	}
-// 	i = -1;
-// 	printf("\n\n MAP : \n");
-// 	while (data->map[++i])
-// 	{
-// 		printf("%s\n", data->map[i]);
-// 	}
-// 	printf("\n\nthe type  : %c \n", data->order);
-// 	printf("Coordinate of player x : %f\n", data->player_x);
-// 	printf("Coordinate of player y : %f\n", data->player_y);
-// }
 
 int	fail_the_inits(t_data data)
 {

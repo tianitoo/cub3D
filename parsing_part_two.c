@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:45:38 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/02 16:20:59 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:58:44 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	check_is_only_one_order(char **str, int x, char c, int i)
 		j = 0;
 		while (str[i][j] != '\n')
 		{
-			if (str[i][j] == 'N' || str[i][j] == 'W' 
+			if (str[i][j] == 'N' || str[i][j] == 'W'
 				|| str[i][j] == 'E' || str[i][j] == 'S')
 				l++;
 			j++;
@@ -59,7 +59,7 @@ int	check_is_only_one_order(char **str, int x, char c, int i)
 		i++;
 	}
 	if (l > 1)
-		return (0);
+		return (printf("Error: there is more than one order"), 0);
 	return (1);
 }
 
@@ -78,9 +78,9 @@ int	check_element_is_valid(char **str, int x, char c, int i)
 		{
 			if (str[i][j] == c)
 			{
-				if (ft_isspace(str[i][j - 1]) || ft_isspace(str[i][j + 1]) 
+				if (ft_isspace(str[i][j - 1]) || ft_isspace(str[i][j + 1])
 					|| ft_isspace(str[i - 1][j]) || ft_isspace(str[i + 1][j]))
-					return (0);
+					return (printf("Error : there is space in the map"), 0);
 			}
 			j++;
 		}
@@ -88,7 +88,7 @@ int	check_element_is_valid(char **str, int x, char c, int i)
 	}
 	if (!check_is_one_player(str, x, c, l)
 		|| !check_is_only_one_order(str, x, c, l))
-		return (0);
+		return (printf("Error : there is more than one order\n"), 0);
 	return (1);
 }
 
@@ -110,7 +110,7 @@ int	check_the_player_is_valid(char **str, int x, int i)
 int	the_map(char **str, int x, int i)
 {
 	if (!check_the_map_is_valid(str, x, i))
-		return (0);
+		return (printf("Error : the map is inccorrect\n"), 0);
 	if (!check_the_player_is_valid(str, x, i))
 		return (0);
 	return (1);

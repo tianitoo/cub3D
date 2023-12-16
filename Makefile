@@ -6,13 +6,13 @@
 #    By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 15:29:47 by hnait             #+#    #+#              #
-#    Updated: 2023/12/03 22:55:03 by hachahbo         ###   ########.fr        #
+#    Updated: 2023/12/15 19:10:18 by hachahbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 AR = ar -r
 RM = rm -f
 HEAD = cub3D.h
@@ -35,12 +35,12 @@ SRC = main.c\
 		Cub3d.c\
 		c_f_color.c\
 		order_path.c\
-		parcing_part_one.c\
-		parcing_part_two.c\
-		parcing_part_three.c\
-		parcing_part_four.c\
-		parcing_part_five.c\
-		parcing_part_six.c\
+		parsing_part_one.c\
+		parsing_part_two.c\
+		parsing_part_three.c\
+		parsing_part_four.c\
+		parsing_part_five.c\
+		parsing_part_six.c\
 		temp_file.c\
 
 LIBFTSRC = ./libft/ft_atoi.c\
