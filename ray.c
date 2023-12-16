@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 17:02:49 by hnait             #+#    #+#             */
-/*   Updated: 2023/12/02 17:37:22 by hnait            ###   ########.fr       */
+/*   Updated: 2023/12/15 16:49:58 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_ray	*new_ray(void)
 	if (!ray)
 		return (NULL);
 	ray->distance = 0;
-	ray->direction = 0;
+	ray->direction = 0; 
 	ray->hit = 0;
 	ray->next = NULL;
 	ray->prev = NULL;

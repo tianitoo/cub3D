@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:20:05 by hnait             #+#    #+#             */
-/*   Updated: 2023/12/02 17:01:34 by hnait            ###   ########.fr       */
+/*   Updated: 2023/12/15 17:31:47 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,14 @@ void	get_vertical_x(t_data *data, double *player_mini_x,
 {
 	double	step;
 
-	step = SQUARE_SIZE * tan((angle) * PI / 180);
 	if (*player_mini_x == data->player_x)
-		*player_mini_x = data->player_x + (*player_mini_y - data->player_y)
-			* tan((angle) * PI / 180);
+	{
+		step = (*player_mini_y - data->player_y) * tan((angle) * PI / 180);
+		*player_mini_x = data->player_x + step;
+	}
 	else
 	{
+		step = SQUARE_SIZE * tan((angle) * PI / 180);
 		if (angle >= 0 && angle < 180 && step > 0)
 			*player_mini_x = *player_mini_x + step;
 		else if (angle >= 180 && angle < 360 && step < 0)

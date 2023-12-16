@@ -6,7 +6,7 @@
 /*   By: hnait <hnait@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:20:47 by hnait             #+#    #+#             */
-/*   Updated: 2023/12/02 17:01:13 by hnait            ###   ########.fr       */
+/*   Updated: 2023/12/15 17:30:14 by hnait            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,14 @@ void	get_horizontal_y(t_data *data, double *player_mini_y,
 {
 	double	step;
 
-	step = SQUARE_SIZE / tan((angle) * PI / 180);
 	if (*player_mini_y == data->player_y)
-		*player_mini_y = data->player_y + (*player_mini_x - data->player_x)
-			/ tan((angle) * PI / 180);
+	{
+		step = (*player_mini_x - data->player_x) / tan((angle) * PI / 180);
+		*player_mini_y = data->player_y + step;
+	}
 	else
 	{
+		step = SQUARE_SIZE / tan((angle) * PI / 180);
 		if (angle > 90 && angle < 270 && step > 0)
 			*player_mini_y = *player_mini_y - step;
 		else if ((angle < 90 || angle > 270) && step < 0)
