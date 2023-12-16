@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:53:29 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/12 00:06:30 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/16 18:00:18 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_data
 	int					*f_tab;
 	mlx_texture_t		**textures;
 	t_ray				*rays;
+	int					count;
 }	t_data;
 
 /**
@@ -603,7 +604,7 @@ int		the_minimalist(char **str, int x);
  */
 int		check_and_skip_spaces(char *str);
 char	**fill_string(int i, char *path);
-int		count_the_lines(char *path);
+int		count_the_lines(char *path, t_data *data);
 int		inits_the_data(t_data *data, char **str);
 int		fail_the_inits(t_data data);
 void	display_data(t_data *data);
@@ -637,7 +638,6 @@ int		part_two_of_check_order(char **str, int j, char *s);
 int		ft_strcmp(char *s1, char *s2);
 char	*fill_the_str_to_check(char *str);
 int		check_the_first_of_map(char **str, int i);
-int		count_the_lines(char *path);
 int		check_point_cube(char *st);
 int		find_point_cube(char *str, char *to_find);
 int		check_and_skip_spaces(char *str);
@@ -655,6 +655,7 @@ void	init_data(t_data *data);
 void	free_the_data(t_data *data);
 int		complete_check_the_new_line(char **strs, int i);
 int		check_the_new_line(char **strs);
-int		check_map_is_there_is_there_new_line(int i, char *path);
+int		check_map_is_there_is_there_new_line(int i, char *path, t_data *data);
 int		count_the_lines_one(char *path);
+int		check_the_file_is_empty(char **strs);
 #endif

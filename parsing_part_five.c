@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcing_part_five.c                                :+:      :+:    :+:   */
+/*   parsing_part_five.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:09:38 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/03 17:26:28 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/16 15:07:41 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**fill_string(int i, char *path)
 	char	**strs;
 	int		fd;
 
-	fd = open(path, O_CREAT | O_RDWR, 0666);
+	fd = open(path, O_RDWR, 0666);
 	strs = (char **)malloc((i + 1) * sizeof(char *));
 	str = get_next_line(fd);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:06:28 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/16 14:17:04 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/16 17:57:05 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	the_minimalist(char **str, int x)
 		i++;
 	}
 	if (!check_the_orders_is_valid(str))
-		return (printf("Error : there is double orders\n"), 0);
+		return (printf("Error : there is double orders or double colors\n"), 0);
 	if (!the_map(str, x, i))
 		return (0);
 	return (1);
@@ -71,15 +71,15 @@ int	check_point_cube(char *st)
 	return (0);
 }
 
-int	count_the_lines(char *path)
+int	count_the_lines(char *path, t_data *data)
 {
 	char	*str;
 	int		i;
 	int		fd;
 
 	i = count_the_lines_one(path);
-	if (!check_map_is_there_is_there_new_line(i, path))
-		return (printf("Error : the map inccorrect\n"), 0);
+	if (!check_map_is_there_is_there_new_line(i, path, data))
+		return (0);
 	if (!check_point_cube(path))
 		return (printf("Error : the path doesn't have .cub\n"), 0);
 	i = 0;

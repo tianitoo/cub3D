@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:35:17 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/15 19:07:18 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/16 17:48:40 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,11 @@ int	check_args(int ac, char **av, t_data *data)
 	char	**str;
 	int		j;
 
-	if (ac != 2 || !count_the_lines(av[1]))
+	if (ac != 2)
+		return (printf("Error : wrong input\n"), 0);
+	if (!count_the_lines(av[1], data))
 		return (free(data), 0);
-	j = count_the_lines(av[1]);
+	j = count_the_lines(av[1], data);
 	str = fill_string(j, av[1]);
 	if (!the_minimalist(str, j))
 		return (free(data), free_two_d(str), 0);

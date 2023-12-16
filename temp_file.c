@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 22:51:45 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/15 17:50:07 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/16 18:02:26 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ int	check_the_new_line(char **strs)
 	return (1);
 }
 
-int	check_map_is_there_is_there_new_line(int i, char *path)
+int	check_map_is_there_is_there_new_line(int i, char *path, t_data *data)
 {
 	char	*str;
 	char	**strs;
 	int		fd;
 
-	fd = open(path, O_CREAT | O_RDWR, 0666);
+	fd = open(path, O_RDWR, 0666);
 	strs = (char **)malloc((i + 1) * sizeof(char *));
 	str = get_next_line(fd);
 	i = 0;
@@ -91,12 +91,12 @@ int	check_map_is_there_is_there_new_line(int i, char *path)
 		i++;
 	}
 	strs[i] = NULL;
+	if (!check_the_file_is_empty(strs))
+		return (printf("Error :empty file"), free_two_d(strs), 0);
 	close(fd);
-	if (!check_the_new_line(strs))
-	{
-		free_two_d(strs);
-		return (0);
-	}
+	if (data->count && !check_the_new_line(strs))
+		return (printf("Error : the map inccorrect\n"), free_two_d(strs), 0);
+	data->count++;
 	return (free_two_d(strs), 1);
 }
 
@@ -111,7 +111,7 @@ int	count_the_lines_one(char *path)
 	i = 0;
 	fd = open(path, O_RDWR, 0666);
 	if (fd == -1)
-		return (0);
+		return (printf("Error : file doesn't exist"), 0);
 	str = get_next_line(fd);
 	while (str)
 	{
