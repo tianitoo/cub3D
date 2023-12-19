@@ -6,7 +6,7 @@
 #    By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 15:29:47 by hnait             #+#    #+#              #
-#    Updated: 2023/12/16 18:00:42 by hachahbo         ###   ########.fr        #
+#    Updated: 2023/12/19 14:23:40 by hachahbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRC = main.c\
 		parsing_part_six.c\
 		temp_file.c\
 		file_is_empty.c\
+		rendring_mouse.c\
 
 LIBFTSRC = ./libft/ft_atoi.c\
 		./libft/ft_bzero.c\

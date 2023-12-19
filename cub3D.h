@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:53:29 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/16 18:00:18 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/19 14:22:17 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -658,4 +658,6 @@ int		check_the_new_line(char **strs);
 int		check_map_is_there_is_there_new_line(int i, char *path, t_data *data);
 int		count_the_lines_one(char *path);
 int		check_the_file_is_empty(char **strs);
+void	ft_mouse(t_data *data);
+
 #endif

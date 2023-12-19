@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:52:49 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/16 14:11:07 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/19 14:18:09 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,24 +68,24 @@ int	inits_the_data(t_data *data, char **str)
 int	fail_the_inits(t_data data)
 {
 	if (!data.e_texture)
-		return (0);
+		return (printf("Error : fail to initialize E-texture"), 0);
 	else if (!data.n_texture)
-		return (0);
+		return (printf("Error : fail to initialize N-texture"), 0);
 	else if (!data.s_texture)
-		return (0);
+		return (printf("Error : fail to initialize S-texture"), 0);
 	else if (!data.w_texture)
-		return (0);
+		return (printf("Error : fail to initialize W-texture"), 0);
 	else if (!data.c_tab)
-		return (0);
+		return (printf("Error : fail to initialize the Ceiling"), 0);
 	else if (!data.f_tab)
-		return (0);
+		return (printf("Error : fail to initialize the Floor"), 0);
 	else if (!data.map)
-		return (0);
+		return (printf("Error : fail to initialize map"), 0);
 	else if (!data.order)
-		return (0);
+		return (printf("Error : fail to initialize order"), 0);
 	else if (!data.player_x)
-		return (0);
+		return (printf("Error : fail to initialize x"), 0);
 	else if (!data.player_y)
-		return (0);
+		return (printf("Error : fail to initialize y"), 0);
 	return (1);
 }

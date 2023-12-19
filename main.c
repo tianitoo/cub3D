@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:35:17 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/16 17:48:40 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/19 15:13:57 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	hook(void *tmp)
 	int		i;
 
 	data = (t_data *)tmp;
+	ft_mouse(data);
 	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_ESCAPE))
 	{
 		mlx_delete_texture(data->textures[NORTH]);
@@ -88,10 +89,7 @@ int	check_args(int ac, char **av, t_data *data)
 		return (free_two_d(str), free(data), 0);
 	}
 	if (!fail_the_inits(*data))
-	{
-		printf("Error : the data\n");
 		return (free_the_data(data), free(data), free_two_d(str), 0);
-	}
 	free_ss(str);
 	free(str);
 	return (1);

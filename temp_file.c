@@ -6,27 +6,17 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 22:51:45 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/16 18:02:26 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/19 15:21:40 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	free_the_data(t_data *data)
-{
-	free_two_d(data->map);
-	free(data->n_texture);
-	free(data->e_texture);
-	free(data->w_texture);
-	free(data->s_texture);
-	free(data->c_tab);
-	free(data->f_tab);
-}
-
 int	complete_check_the_new_line(char **strs, int i)
 {
 	int	j;
 
+	j = 0;
 	while (strs[i])
 	{
 		if (!strs[i + 1])
@@ -46,30 +36,36 @@ int	complete_check_the_new_line(char **strs, int i)
 	return (1);
 }
 
+int	findmap(char **str, int i)
+{
+	int	j;
+
+	j = 0;
+	i = 0;
+	while (str[i])
+	{
+		j = skips_spaces(str[i]);
+		while (str[i][j] == '1')
+			j++;
+		if (str[i][j] == '\n' && j != 0)
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
 int	check_the_new_line(char **strs)
 {
 	int	i;
 	int	j;
-	int	x;
 
-	i = 0;
 	j = 0;
-	x = 0;
-	while (strs[i])
-	{
-		j = 0;
-		while (strs[i][j] != '\n')
-		{
-			if (strs[i][j] == '1')
-				x = 1;
-			j++;
-		}
-		if (x)
-			break ;
-		i++;
-	}
+	i = findmap(strs, 0);
+	if (!i)
+		return (printf("Error : invalid"), 0);
+	i++;
 	if (!complete_check_the_new_line(strs, i))
-		return (0);
+		return (printf("Error : the map is inccorrect\n"), 0);
 	return (1);
 }
 
@@ -94,9 +90,9 @@ int	check_map_is_there_is_there_new_line(int i, char *path, t_data *data)
 	if (!check_the_file_is_empty(strs))
 		return (printf("Error :empty file"), free_two_d(strs), 0);
 	close(fd);
-	if (data->count && !check_the_new_line(strs))
-		return (printf("Error : the map inccorrect\n"), free_two_d(strs), 0);
-	data->count++;
+	(void)data;
+	if (!check_the_new_line(strs))
+		return (free_two_d(strs), 0);
 	return (free_two_d(strs), 1);
 }
 
@@ -106,12 +102,10 @@ int	count_the_lines_one(char *path)
 	int		i;
 	int		fd;
 
-	if (!check_point_cube(path))
-		return (0);
-	i = 0;
 	fd = open(path, O_RDWR, 0666);
 	if (fd == -1)
 		return (printf("Error : file doesn't exist"), 0);
+	i = 0;
 	str = get_next_line(fd);
 	while (str)
 	{
@@ -120,5 +114,7 @@ int	count_the_lines_one(char *path)
 		str = get_next_line(fd);
 	}
 	close(fd);
+	if (!i)
+		return (printf("Error : file is empty\n"), 0);
 	return (i);
 }
