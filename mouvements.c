@@ -40,23 +40,23 @@ int	player_direction(t_data *data)
 	return (0);
 }
 
-void move_player(t_data *data)
+void	move_player(t_data *data)
 {
-	double move_step;
-	double new_player_x;
-	double new_player_y;
+	double	move_step;
+	double	new_player_x;
+	double	new_player_y;
 
 	new_player_x = data->player_x;
 	new_player_y = data->player_y;
 	data->player_walk_direction = player_direction(data);
-
 	if (data->player_walk_direction == 1 || data->player_walk_direction == -1)
 	{
 		move_step = data->player_walk_direction * 20;
 		new_player_x += sin(data->player_angle * PI / 180) * move_step;
 		new_player_y += cos(data->player_angle * PI / 180) * move_step;
 	}
-	else if (data->player_walk_direction == 2 || data->player_walk_direction == -2)
+	else if (data->player_walk_direction == 2
+		|| data->player_walk_direction == -2)
 	{
 		move_step = data->player_walk_direction * 10;
 		new_player_x += cos(data->player_angle * PI / 180) * move_step;

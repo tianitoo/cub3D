@@ -45,18 +45,18 @@ t_ray	*new_ray(void)
 	if (!ray)
 		return (NULL);
 	ray->distance = 0;
-	ray->direction = 0; 
+	ray->direction = 0;
 	ray->hit = 0;
 	ray->next = NULL;
 	ray->prev = NULL;
 	return (ray);
 }
 
-int create_rays(t_data *data)
+int	create_rays(t_data *data)
 {
-	double fov;
-	t_ray *ray;
-	t_ray *tmp;
+	double	fov;
+	t_ray	*ray;
+	t_ray	*tmp;
 
 	tmp = NULL;
 	fov = 0;
@@ -77,7 +77,7 @@ int create_rays(t_data *data)
 		}
 		fov += (double)FOV / (double)(WIN_WIDTH);
 	}
-	return 1;
+	return (1);
 }
 
 int	get_rgba(int r, int g, int b)

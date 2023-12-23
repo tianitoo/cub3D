@@ -28,7 +28,6 @@ int	is_out_of_map(t_data *data, double player_mini_x, double player_mini_y)
 	return (0);
 }
 
-
 int	is_valid_position(t_data *data, double new_player_x, double new_player_y)
 {
 	if (!is_wall(data, (new_player_x - SQUARE_SIZE / 10) / SQUARE_SIZE,

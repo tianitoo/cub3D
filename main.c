@@ -19,7 +19,6 @@ void	hook(void *tmp)
 	int		i;
 
 	data = (t_data *)tmp;
-	ft_mouse(data);
 	if (mlx_is_key_down(data->mlx_ptr, MLX_KEY_ESCAPE))
 	{
 		mlx_delete_texture(data->textures[NORTH]);
@@ -63,10 +62,24 @@ int	import_textures(t_data *data)
 	data->textures = malloc (sizeof(mlx_texture_t *) * 4);
 	if (!data->textures)
 		return (0);
-	data->textures[NORTH] = mlx_load_png("textures/N.png");
-	data->textures[SOUTH] = mlx_load_png("textures/S.png");
-	data->textures[EAST] = mlx_load_png("textures/E.png");
-	data->textures[WEST] = mlx_load_png("textures/W.png");
+	data->textures[NORTH] = mlx_load_png(data->n_texture);
+	data->textures[SOUTH] = mlx_load_png(data->s_texture);
+	data->textures[EAST] = mlx_load_png(data->e_texture);
+	data->textures[WEST] = mlx_load_png(data->w_texture);
+	if (!data->textures[NORTH] || !data->textures[SOUTH]
+		|| !data->textures[EAST] || !data->textures[WEST])
+	{
+		if (data->textures[NORTH])
+			mlx_delete_texture(data->textures[NORTH]);
+		if (data->textures[SOUTH])
+			mlx_delete_texture(data->textures[SOUTH]);
+		if (data->textures[EAST])
+			mlx_delete_texture(data->textures[EAST]);
+		if (data->textures[WEST])
+			mlx_delete_texture(data->textures[WEST]);
+		free(data->textures);
+		return (0);
+	}
 	return (1);
 }
 
@@ -104,7 +117,7 @@ int	main(int ac, char **av)
 		return (0);
 	printf("VALID\n");
 	if (!import_textures(data))
-		return (0);
+		return (free_the_data(data), free(data), 0);
 	data->player_walk_direction = 0;
 	data->player_turn_direction = 0;
 	if (data->player_dir == NORTH)
