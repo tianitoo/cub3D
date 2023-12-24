@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   c_f_color.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:08:53 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/24 16:58:41 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/24 17:34:11 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@ void	free_d_strs(char **strs)
 
 int	while_of_check_the_color(int i, char *str)
 {
-	int		j;
-	int		n;
+	int	j;
 
-	n = 0;
 	j = 0;
 	if (i >= 3 || !is_empty(str))
 		return (0);

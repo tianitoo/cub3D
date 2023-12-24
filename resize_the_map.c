@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_part_five.c                                :+:      :+:    :+:   */
+/*   resize_the_map.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:09:38 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/24 17:02:29 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/24 17:32:15 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,8 @@ int	complet_fill_the_map(char **str, size_t max, int i, char *tmp)
 
 char	**cont_fill_the_map(char **str, size_t max, char *tmp, char *tmp2)
 {
-	int	j;
 	int	i;
 
-	j = 0;
 	i = 0;
 	while (str[i])
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   temp_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 22:51:45 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/24 16:47:49 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/24 17:32:29 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ int	findmap(char **str, int i)
 int	check_the_new_line(char **strs)
 {
 	int	i;
-	int	j;
 
-	j = 0;
 	i = findmap(strs, 0);
 	if (!i)
 		return (printf("Error : invalid"), 0);
