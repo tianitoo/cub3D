@@ -69,7 +69,8 @@ int	vertical_line(t_data *data, double angle)
 	player_mini_y = data->player_y;
 	player_mini_x = data->player_x;
 	vertical_distance = 0;
-	if (angle == 90)
+	if (angle < 90 + (double)FOV / WIN_WIDTH
+		&& angle > 90 - (double)FOV / WIN_WIDTH)
 	{
 		while (is_vertical_wall(data, player_mini_x, player_mini_y, angle) == 0)
 		{
@@ -77,7 +78,7 @@ int	vertical_line(t_data *data, double angle)
 			vertical_distance += SQUARE_SIZE;
 		}
 	}
-	else if (angle == 270)
+	else
 	{
 		while (is_vertical_wall(data, player_mini_x, player_mini_y, angle) == 0)
 		{
@@ -99,7 +100,10 @@ int	get_vertical_distance(t_data *data, double angle)
 	player_mini_y = data->player_y;
 	player_mini_x = data->player_x;
 	data->checked_vertical = 0;
-	if (angle == 90 || angle == 270)
+	if ((angle < 90 + (double)FOV / WIN_WIDTH
+			&& angle > 90 - (double)FOV / WIN_WIDTH)
+		|| (angle < 270 + (double)FOV / WIN_WIDTH
+			&& angle > 270 - (double)FOV / WIN_WIDTH))
 		return (vertical_line(data, angle));
 	while (is_vertical_wall(data, player_mini_x, player_mini_y, angle) == 0)
 	{

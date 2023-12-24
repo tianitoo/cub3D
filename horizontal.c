@@ -69,7 +69,8 @@ int	horizontal_line(t_data *data, double angle)
 	player_mini_y = data->player_y;
 	player_mini_x = data->player_x;
 	horizontal_distance = 0;
-	if (angle == 0)
+	if (angle < (double) FOV / WIN_WIDTH || angle > 360
+		- (double) FOV / WIN_WIDTH)
 	{
 		while (is_horiz_wall(data, player_mini_x, player_mini_y, angle) == 0)
 		{
@@ -77,7 +78,7 @@ int	horizontal_line(t_data *data, double angle)
 			horizontal_distance += SQUARE_SIZE;
 		}
 	}
-	else if (angle == 180)
+	else
 	{
 		while (is_horiz_wall(data, player_mini_x, player_mini_y, angle) == 0)
 		{
@@ -99,7 +100,10 @@ int	get_horizontal_distance(t_data *data, double angle)
 	player_mini_y = data->player_y;
 	player_mini_x = data->player_x;
 	data->checked_horizontal = 0;
-	if (angle == 0 || angle == 180)
+	if ((angle < (double)FOV / WIN_WIDTH
+			|| angle > 360 - (double)FOV / WIN_WIDTH)
+		|| (angle < 180 + (double) FOV / WIN_WIDTH
+			&& angle > 180 - (double) FOV / WIN_WIDTH))
 		return (horizontal_line(data, angle));
 	while (is_horiz_wall(data, player_mini_x, player_mini_y, angle) == 0)
 	{

@@ -21,8 +21,8 @@
 # include "./MLX42/include/MLX42/MLX42.h"
 # include "gnl/get_next_line.h"
 
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
+# define WIN_WIDTH 1080
+# define WIN_HEIGHT 720
 # define SQUARE_SIZE 200
 # define MINIMAP_SQUARE_SIZE 10
 # define FOV 60

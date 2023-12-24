@@ -113,6 +113,8 @@ int	main(int ac, char **av)
 	t_data	*data;
 
 	data = (t_data *)malloc(sizeof(t_data));
+	if (!data)
+		return (0);
 	if (!check_args(ac, av, data))
 		return (0);
 	printf("VALID\n");

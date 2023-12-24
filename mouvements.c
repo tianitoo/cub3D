@@ -68,3 +68,8 @@ void	move_player(t_data *data)
 		data->player_y = new_player_y;
 	}
 }
+
+int	get_rgba(int r, int g, int b)
+{
+	return (r << 24 | g << 16 | b << 8 | 255);
+}

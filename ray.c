@@ -52,35 +52,49 @@ t_ray	*new_ray(void)
 	return (ray);
 }
 
+int	free_rays(t_data *data)
+{
+	t_ray	*tmp;
+
+	tmp = NULL;
+	while (data->rays)
+	{
+		tmp = data->rays->next;
+		free(data->rays);
+		data->rays = tmp;
+	}
+	return (0);
+}
+
+void	add_ray(t_ray *tmp, t_ray *ray)
+{
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = ray;
+	ray->prev = tmp;
+}
+
 int	create_rays(t_data *data)
 {
-	double	fov;
+	int		win_width;
 	t_ray	*ray;
 	t_ray	*tmp;
 
 	tmp = NULL;
-	fov = 0;
-	while (fov < FOV)
+	win_width = 0;
+	while (win_width < WIN_WIDTH)
 	{
 		ray = new_ray();
+		if (!ray)
+			return (free_rays(data));
 		if (!tmp)
 		{
 			data->rays = ray;
 			tmp = ray;
 		}
 		else
-		{
-			while (tmp->next)
-				tmp = tmp->next;
-			tmp->next = ray;
-			ray->prev = tmp;
-		}
-		fov += (double)FOV / (double)(WIN_WIDTH);
+			add_ray(tmp, ray);
+		win_width++;
 	}
 	return (1);
-}
-
-int	get_rgba(int r, int g, int b)
-{
-	return (r << 24 | g << 16 | b << 8 | 255);
 }
