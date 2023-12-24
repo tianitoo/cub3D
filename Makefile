@@ -6,7 +6,7 @@
 #    By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 15:29:47 by hnait             #+#    #+#              #
-#    Updated: 2023/12/19 14:23:40 by hachahbo         ###   ########.fr        #
+#    Updated: 2023/12/24 17:09:04 by hachahbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,12 +35,12 @@ SRC = main.c\
 		Cub3d.c\
 		c_f_color.c\
 		order_path.c\
-		parsing_part_one.c\
-		parsing_part_two.c\
-		parsing_part_three.c\
-		parsing_part_four.c\
-		parsing_part_five.c\
-		parsing_part_six.c\
+		check_the_map.c\
+		check_the_player.c\
+		fill_the_str.c\
+		minimalist.c\
+		resize_the_map.c\
+		fill_the_map.c\
 		temp_file.c\
 		file_is_empty.c\
 		rendring_mouse.c\

@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 22:51:45 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/19 15:21:40 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/24 16:47:49 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	check_the_new_line(char **strs)
 	return (1);
 }
 
-int	check_map_is_there_is_there_new_line(int i, char *path, t_data *data)
+int	check_map_is_there_is_there_new_line(int i, char *path)
 {
 	char	*str;
 	char	**strs;
@@ -77,22 +77,23 @@ int	check_map_is_there_is_there_new_line(int i, char *path, t_data *data)
 
 	fd = open(path, O_RDWR, 0666);
 	strs = (char **)malloc((i + 1) * sizeof(char *));
+	if (!strs)
+		return (0);
 	str = get_next_line(fd);
 	i = 0;
 	while (str)
 	{
 		strs[i] = ft_strdup(str);
+		if (!strs)
+			return (0);
 		free(str);
 		str = get_next_line(fd);
 		i++;
 	}
 	strs[i] = NULL;
-	if (!check_the_file_is_empty(strs))
+	if (!check_the_new_line(strs) || !check_the_file_is_empty(strs))
 		return (printf("Error :empty file"), free_two_d(strs), 0);
 	close(fd);
-	(void)data;
-	if (!check_the_new_line(strs))
-		return (free_two_d(strs), 0);
 	return (free_two_d(strs), 1);
 }
 

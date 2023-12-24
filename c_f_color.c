@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:08:53 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/04 16:47:34 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/24 16:58:41 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ char	*delete_last_spaces(char *s)
 	while (ft_isspace(s[i]))
 		i--;
 	str = malloc(i + 1);
+	if (!str)
+		return (NULL);
 	while (j <= i)
 	{
 		str[j] = s[j];
@@ -109,11 +111,11 @@ int	check_floor_sky(char *str)
 		if (str[i] == 'C' || str[i] == 'F')
 		{
 			s = ft_strdup(str + 1);
+			if (!s || !str[i])
+				return (0);
 			i = skips_spaces(s);
 			free(s);
 			i++;
-			if (!str[i])
-				return (0);
 			if (ft_isspace(str[i - 1]))
 			{
 				if (complete_check(s, st, str, i))

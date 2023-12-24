@@ -55,7 +55,11 @@ int	ft_atoi(const char *str)
 int	complete_check(char *st, char *s, char *str, int i)
 {
 	s = ft_strdup(str + i);
+	if (!s)
+		return (free(s), free(st), 0);
 	st = delete_last_spaces(s);
+	if (!st)
+		return (free(s), free(st), 0);
 	if (check_the_color(st))
 		return (free(st), free(s), 2);
 	return (free(s), free(st), 0);

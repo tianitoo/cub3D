@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:12:34 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/16 17:35:00 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/24 16:42:59 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,15 @@ char	**allocate_for_d_str(char **str, int i)
 	while (str[i])
 		i++;
 	d_str = malloc(sizeof(char *) * i - j + 1);
+	if (!d_str)
+		return (0);
 	i = j;
 	j = 0;
 	while (str[i])
 	{
 		d_str[j] = ft_strdup(str[i]);
+		if (!d_str)
+			return (NULL);
 		i++;
 		j++;
 	}
@@ -40,6 +44,8 @@ char	**fill_the_map(char **str, int i)
 	char	**new_map;
 
 	d_str = allocate_for_d_str(str, i);
+	if (!d_str)
+		return (NULL);
 	i = 0;
 	j = 0;
 	while (d_str[i])
@@ -54,6 +60,8 @@ char	**fill_the_map(char **str, int i)
 		i++;
 	}
 	new_map = resize_the_map(d_str);
+	if (!new_map)
+		return (NULL);
 	return (new_map);
 }
 

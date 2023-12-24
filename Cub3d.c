@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:52:49 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/19 14:18:09 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/24 16:27:24 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,13 @@ int	inits_the_data(t_data *data, char **str)
 	init_data(data);
 	while (!check_the_first_of_map(str, i))
 	{
-		fill_order_and_path(data, str[i]);
+		if (!fill_order_and_path(data, str[i]))
+			return (0);
 		i++;
 	}
 	data->map = fill_the_map(str, i);
+	if (!data->map)
+		return (0);
 	if (!cor_of_player(data))
 		return (0);
 	map_height_width(data);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parcing_part_three.c                               :+:      :+:    :+:   */
+/*   parsing_part_three.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:49:17 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/15 18:55:14 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/24 16:22:51 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char	*fill_the_str_to_check(char *str)
 
 	i = check_the_order(str);
 	s = malloc(i + 1);
+	if (!s)
+		return (NULL);
 	j = 0;
 	while (j < i)
 	{
@@ -65,6 +67,8 @@ int	part_two_of_check_order(char **str, int j, char *s)
 		if (check_the_first_of_map(str, j))
 			break ;
 		st = fill_the_str_to_check(str[j]);
+		if (!st)
+			return (free(st), 0);
 		if (!ft_strcmp(st, s))
 			return (free(st), 0);
 		free(st);
@@ -86,6 +90,8 @@ int	check_the_orders_is_valid(char **str)
 		if (check_the_first_of_map(str, j))
 			break ;
 		s = fill_the_str_to_check(str[i]);
+		if (!s)
+			return (free(s), 0);
 		j = i + 1;
 		if (!part_two_of_check_order(str, j, s))
 			return (free(s), 0);

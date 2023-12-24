@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 16:06:28 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/19 15:16:45 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/24 16:44:55 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	check_point_cube(char *st)
 	return (0);
 }
 
-int	count_the_lines(char *path, t_data *data)
+int	count_the_lines(char *path)
 {
 	char	*str;
 	int		i;
@@ -80,7 +80,7 @@ int	count_the_lines(char *path, t_data *data)
 	if (!count_the_lines_one(path))
 		return (0);
 	i = count_the_lines_one(path);
-	if (!check_map_is_there_is_there_new_line(i, path, data))
+	if (!check_map_is_there_is_there_new_line(i, path))
 		return (0);
 	if (!check_point_cube(path))
 		return (printf("Error : the path doesn't have .cub\n"), 0);

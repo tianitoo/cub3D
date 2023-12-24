@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 15:53:29 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/19 14:22:17 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/24 16:46:19 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -604,7 +604,7 @@ int		the_minimalist(char **str, int x);
  */
 int		check_and_skip_spaces(char *str);
 char	**fill_string(int i, char *path);
-int		count_the_lines(char *path, t_data *data);
+int		count_the_lines(char *path);
 int		inits_the_data(t_data *data, char **str);
 int		fail_the_inits(t_data data);
 void	display_data(t_data *data);
@@ -644,7 +644,7 @@ int		check_and_skip_spaces(char *str);
 int		the_minimalist(char **str, int x);
 char	**resize_the_map(char **str);
 char	**cont_fill_the_map(char **str, size_t max, char *tmp, char *tmp2);
-void	fill_order_and_path(t_data *data, char *str);
+int		fill_order_and_path(t_data *data, char *str);
 int		*return_color(char *str, int i);
 char	**fill_string(int i, char *path);
 char	**allocate_for_d_str(char **str, int i);
@@ -655,7 +655,7 @@ void	init_data(t_data *data);
 void	free_the_data(t_data *data);
 int		complete_check_the_new_line(char **strs, int i);
 int		check_the_new_line(char **strs);
-int		check_map_is_there_is_there_new_line(int i, char *path, t_data *data);
+int		check_map_is_there_is_there_new_line(int i, char *path);
 int		count_the_lines_one(char *path);
 int		check_the_file_is_empty(char **strs);
 void	ft_mouse(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: hachahbo <hachahbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 19:10:34 by hachahbo          #+#    #+#             */
-/*   Updated: 2023/12/16 15:06:09 by hachahbo         ###   ########.fr       */
+/*   Updated: 2023/12/24 16:30:42 by hachahbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ char	*return_the_path(char *str, int i)
 	int		j;
 	char	*s;
 
-	j = 0;
 	while (str[i])
 	{
 		if (ft_isspace(str[i]))
@@ -68,6 +67,8 @@ char	*return_the_path(char *str, int i)
 	while (!ft_isspace(str[j]))
 		j++;
 	s = (char *)malloc(j + 1 - i);
+	if (!s)
+		return (NULL);
 	j = 0;
 	while (!ft_isspace(str[i]))
 	{
@@ -111,8 +112,9 @@ int	check_the_order_and_path(char *str)
 		return (free(s), 0);
 	s = ft_strdup(str + i);
 	st = delete_last_spaces(s);
+	if (!st || !s)
+		return (free(s), 0);
 	if (!is_empty(st) || !file_exist(st))
 		return (free(s), free(st), 0);
-	free(s);
-	return (free(st), 1);
+	return (free(st), free(s), 1);
 }
