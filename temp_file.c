@@ -60,10 +60,10 @@ int	check_the_new_line(char **strs)
 
 	i = findmap(strs, 0);
 	if (!i)
-		return (printf("Error : invalid"), 0);
+		return (printf("Error\ninvalid"), 0);
 	i++;
 	if (!complete_check_the_new_line(strs, i))
-		return (printf("Error : the map is inccorrect\n"), 0);
+		return (printf("Error\nthe map is inccorrect\n"), 0);
 	return (1);
 }
 
@@ -92,7 +92,7 @@ int	check_map_is_there_is_there_new_line(int i, char *path)
 	}
 	strs[i] = NULL;
 	if (!check_the_new_line(strs) || !check_the_file_is_empty(strs))
-		return (printf("Error :empty file"), free_two_d(strs), close(fd), 0);
+		return (printf("Error\nempty file"), free_two_d(strs), close(fd), 0);
 	return (free_two_d(strs), close(fd), 1);
 }
 
@@ -104,7 +104,7 @@ int	count_the_lines_one(char *path)
 
 	fd = open(path, O_RDWR, 0666);
 	if (fd == -1)
-		return (printf("Error : file doesn't exist"), close(fd), 0);
+		return (printf("Error\nfile doesn't exist"), close(fd), 0);
 	i = 0;
 	str = get_next_line(fd);
 	while (str)
@@ -115,6 +115,6 @@ int	count_the_lines_one(char *path)
 	}
 	close(fd);
 	if (!i)
-		return (printf("Error : file is empty\n"), 0);
+		return (printf("Error\nfile is empty\n"), 0);
 	return (i);
 }

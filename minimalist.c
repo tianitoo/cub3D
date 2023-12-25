@@ -20,13 +20,13 @@ int	the_minimalist(char **str, int x)
 	while (!check_the_first_of_map(str, i))
 	{
 		if (!str[i])
-			return (printf("Error : there is no map\n"), 0);
+			return (printf("Error\nthere is no map\n"), 0);
 		if (!check_the_order_and_path(str[i]) && !check_floor_sky(str[i]))
-			return (printf("Error : incorrect path or the color\n"), 0);
+			return (printf("Error\nincorrect path or the color\n"), 0);
 		i++;
 	}
 	if (!check_the_orders_is_valid(str))
-		return (printf("Error : there is double orders or double colors\n"), 0);
+		return (printf("Error\nthere is double orders or double colors\n"), 0);
 	if (!the_map(str, x, i))
 		return (0);
 	return (1);
@@ -83,7 +83,7 @@ int	count_the_lines(char *path)
 	if (!check_map_is_there_is_there_new_line(i, path))
 		return (0);
 	if (!check_point_cube(path))
-		return (printf("Error : the path doesn't have .cub\n"), 0);
+		return (printf("Error\nthe path doesn't have .cub\n"), 0);
 	i = 0;
 	fd = open(path, O_RDWR, 0666);
 	if (fd == -1)

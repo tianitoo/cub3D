@@ -71,24 +71,24 @@ int	inits_the_data(t_data *data, char **str)
 int	fail_the_inits(t_data data)
 {
 	if (!data.e_texture)
-		return (printf("Error : fail to initialize E-texture"), 0);
+		return (printf("Error\nfail to initialize E-texture"), 0);
 	else if (!data.n_texture)
-		return (printf("Error : fail to initialize N-texture"), 0);
+		return (printf("Error\nfail to initialize N-texture"), 0);
 	else if (!data.s_texture)
-		return (printf("Error : fail to initialize S-texture"), 0);
+		return (printf("Error\nfail to initialize S-texture"), 0);
 	else if (!data.w_texture)
-		return (printf("Error : fail to initialize W-texture"), 0);
+		return (printf("Error\nfail to initialize W-texture"), 0);
 	else if (!data.c_tab)
-		return (printf("Error : fail to initialize the Ceiling"), 0);
+		return (printf("Error\nfail to initialize the Ceiling"), 0);
 	else if (!data.f_tab)
-		return (printf("Error : fail to initialize the Floor"), 0);
+		return (printf("Error\nfail to initialize the Floor"), 0);
 	else if (!data.map)
-		return (printf("Error : fail to initialize map"), 0);
+		return (printf("Error\nfail to initialize map"), 0);
 	else if (!data.order)
-		return (printf("Error : fail to initialize order"), 0);
+		return (printf("Error\nfail to initialize order"), 0);
 	else if (!data.player_x)
-		return (printf("Error : fail to initialize x"), 0);
+		return (printf("Error\nfail to initialize x"), 0);
 	else if (!data.player_y)
-		return (printf("Error : fail to initialize y"), 0);
+		return (printf("Error\nfail to initialize y"), 0);
 	return (1);
 }

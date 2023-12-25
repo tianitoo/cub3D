@@ -80,7 +80,7 @@ int	check_element_is_valid(char **str, int x, char c, int i)
 			{
 				if (ft_isspace(str[i][j - 1]) || ft_isspace(str[i][j + 1])
 					|| ft_isspace(str[i - 1][j]) || ft_isspace(str[i + 1][j]))
-					return (printf("Error : there is space in the map"), 0);
+					return (printf("Error\nthere is space in the map"), 0);
 			}
 			j++;
 		}
@@ -88,7 +88,7 @@ int	check_element_is_valid(char **str, int x, char c, int i)
 	}
 	if (!check_is_one_player(str, x, c, l)
 		|| !check_is_only_one_order(str, x, c, l))
-		return (printf("Error : there is more than one order\n"), 0);
+		return (printf("Error\nthere is more than one order\n"), 0);
 	return (1);
 }
 
@@ -110,7 +110,7 @@ int	check_the_player_is_valid(char **str, int x, int i)
 int	the_map(char **str, int x, int i)
 {
 	if (!check_the_map_is_valid(str, x, i))
-		return (printf("Error : the map is inccorrect\n"), 0);
+		return (printf("Error\nthe map is inccorrect\n"), 0);
 	if (!check_the_player_is_valid(str, x, i))
 		return (0);
 	return (1);

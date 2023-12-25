@@ -102,7 +102,7 @@ int	cor_of_player(t_data *data)
 		}
 		i++;
 	}
-	return (printf("Error : there is no player in the map "), 0);
+	return (printf("Error\nthere is no player in the map "), 0);
 }
 
 void	init_data(t_data *data)

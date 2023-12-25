@@ -89,7 +89,7 @@ int	check_args(int ac, char **av, t_data *data)
 	int		j;
 
 	if (ac < 2)
-		return (printf("Error : wrong input\n"), 0);
+		return (printf("Error\nwrong input\n"), 0);
 	if (!count_the_lines(av[1]))
 		return (free(data), 0);
 	j = count_the_lines(av[1]);

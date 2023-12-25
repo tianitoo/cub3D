@@ -49,7 +49,7 @@ int	check_the_map(char **str, int i)
 				&& str[i][j] != 'S' && str[i][j] != 'N'
 				&& str[i][j] != 'W' && str[i][j] != 'E'
 				&& !ft_isspace(str[i][j]))
-				return (printf("Error map : \"%c\" inccorect element ",
+				return (printf("Error\n\"%c\" inccorect element ",
 						str[i][j]), 0);
 			j++;
 		}
