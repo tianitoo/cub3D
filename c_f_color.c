@@ -67,10 +67,9 @@ int	check_the_color(char *str)
 			x++;
 		i++;
 	}
-	free_d_strs(strs);
 	if (x == 3)
-		return (1);
-	return (0);
+		return (free_d_strs(strs), 1);
+	return (free_d_strs(strs), 0);
 }
 
 char	*delete_last_spaces(char *s)
