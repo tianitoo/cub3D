@@ -36,9 +36,11 @@ char	**fill_string(int i, char *path)
 	int		fd;
 
 	fd = open(path, O_RDWR, 0666);
+	if (fd < 0)
+		return (NULL);
 	strs = (char **)malloc((i + 1) * sizeof(char *));
 	if (!strs)
-		return (NULL);
+		return (close(fd), NULL);
 	str = get_next_line(fd);
 	i = 0;
 	while (str)
@@ -53,8 +55,7 @@ char	**fill_string(int i, char *path)
 		str = get_next_line(fd);
 	}
 	strs[i] = NULL;
-	close(fd);
-	return (strs);
+	return (close(fd), strs);
 }
 
 int	*return_color(char *str, int i)

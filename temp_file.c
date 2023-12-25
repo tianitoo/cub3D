@@ -74,25 +74,26 @@ int	check_map_is_there_is_there_new_line(int i, char *path)
 	int		fd;
 
 	fd = open(path, O_RDWR, 0666);
+	if (fd == -1)
+		return (0);
 	strs = (char **)malloc((i + 1) * sizeof(char *));
 	if (!strs)
-		return (0);
+		return (close(fd), 0);
 	str = get_next_line(fd);
 	i = 0;
 	while (str)
 	{
 		strs[i] = ft_strdup(str);
 		if (!strs)
-			return (0);
+			return (close(fd), 0);
 		free(str);
 		str = get_next_line(fd);
 		i++;
 	}
 	strs[i] = NULL;
 	if (!check_the_new_line(strs) || !check_the_file_is_empty(strs))
-		return (printf("Error :empty file"), free_two_d(strs), 0);
-	close(fd);
-	return (free_two_d(strs), 1);
+		return (printf("Error :empty file"), free_two_d(strs), close(fd), 0);
+	return (free_two_d(strs), close(fd), 1);
 }
 
 int	count_the_lines_one(char *path)
@@ -103,7 +104,7 @@ int	count_the_lines_one(char *path)
 
 	fd = open(path, O_RDWR, 0666);
 	if (fd == -1)
-		return (printf("Error : file doesn't exist"), 0);
+		return (printf("Error : file doesn't exist"), close(fd), 0);
 	i = 0;
 	str = get_next_line(fd);
 	while (str)

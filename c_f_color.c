@@ -53,6 +53,8 @@ int	check_the_color(char *str)
 	x = 0;
 	n = 0;
 	strs = ft_split(str, ',');
+	if (!strs)
+		return (0);
 	i = 0;
 	if (!check_coma(str))
 		return (free_d_strs(strs), 0);

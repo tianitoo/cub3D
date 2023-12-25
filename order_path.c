@@ -87,6 +87,7 @@ int	file_exist(char *str)
 	fd = open(str, O_RDWR);
 	if (fd == -1)
 		return (0);
+	close(fd);
 	return (1);
 }
 

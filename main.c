@@ -88,7 +88,7 @@ int	check_args(int ac, char **av, t_data *data)
 	char	**str;
 	int		j;
 
-	if (ac != 2)
+	if (ac < 2)
 		return (printf("Error : wrong input\n"), 0);
 	if (!count_the_lines(av[1]))
 		return (free(data), 0);
@@ -119,7 +119,6 @@ int	main(int ac, char **av)
 		return (0);
 	if (!check_args(ac, av, data))
 		return (0);
-	printf("VALID\n");
 	if (!import_textures(data))
 		return (free_the_data(data), free(data), 0);
 	data->player_walk_direction = 0;
